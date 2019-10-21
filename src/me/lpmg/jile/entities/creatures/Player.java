@@ -8,17 +8,20 @@ import me.lpmg.jile.Handler;
 import me.lpmg.jile.entities.Entity;
 import me.lpmg.jile.gfx.Animation;
 import me.lpmg.jile.gfx.Assets;
+import me.lpmg.jile.healthbar.Healthbar;
 import me.lpmg.jile.inventory.Inventory;
-import me.lpmg.jile.tiles.Tile;
+import me.lpmg.jile.states.MenuState;
+import me.lpmg.jile.states.State;
 
 public class Player extends Creature {
 	
 	//Animations
 	private Animation animDown, animUp, animLeft, animRight, animIdle, animAttackDown, animAttackUp, animAttackLeft, animAttackRight;
 	// Attack timer
-	private long lastAttackTimer, attackCooldown = 800, attackTimer = attackCooldown;
+	private long lastAttackTimer, attackCooldown = 100, attackTimer = attackCooldown;
 	// Inventory
 	private Inventory inventory;
+	private Healthbar healthbar;
 	private int attackDirection = 0;
 	
 	public Player(Handler handler, float x, float y) {
@@ -41,6 +44,7 @@ public class Player extends Creature {
 		animAttackRight = new Animation(100, Assets.player_attack_right);
 		
 		inventory = new Inventory(handler);
+		healthbar = new Healthbar(handler, this);
 	}
 
 	@Override
@@ -63,6 +67,7 @@ public class Player extends Creature {
 		checkAttacks();
 		// Inventory
 		inventory.tick();
+		healthbar.tick();
 	}
 	
 	private void checkAttacks(){
@@ -80,19 +85,19 @@ public class Player extends Creature {
 		ar.width = arSize;
 		ar.height = arSize;
 		
-		if(handler.getKeyManager().aUp){
+		if(handler.getKeyManager().up&&handler.getMouseManager().isRightPressed()){
 			ar.x = cb.x + cb.width / 2 - arSize / 2;
 			ar.y = cb.y - arSize;
 			attackDirection = 1;
-		}else if(handler.getKeyManager().aDown){
+		}else if(handler.getKeyManager().down&&handler.getMouseManager().isRightPressed()){
 			ar.x = cb.x + cb.width / 2 - arSize / 2;
 			ar.y = cb.y + cb.height;
 			attackDirection = 2;
-		}else if(handler.getKeyManager().aLeft){
+		}else if(handler.getKeyManager().left&&handler.getMouseManager().isRightPressed()){
 			ar.x = cb.x - arSize;
 			ar.y = cb.y + cb.height / 2 - arSize / 2;
 			attackDirection = 3;
-		}else if(handler.getKeyManager().aRight){
+		}else if(handler.getKeyManager().right&&handler.getMouseManager().isRightPressed()){
 			ar.x = cb.x + cb.width;
 			ar.y = cb.y + cb.height / 2 - arSize / 2;
 			attackDirection = 4;
@@ -135,6 +140,13 @@ public class Player extends Creature {
 			xMove = -speed;
 		if(handler.getKeyManager().right)
 			xMove = speed;
+		
+		if(handler.getKeyManager().esc) {
+			State.setState(new MenuState(handler));
+		}
+		if(handler.getKeyManager().h) {
+			this.hurt(1);
+		}
 	}
 
 	@Override
@@ -144,6 +156,7 @@ public class Player extends Creature {
 	
 	public void postRender(Graphics g){
 		inventory.render(g);
+		healthbar.render(g);
 	}
 	
 	private BufferedImage getCurrentAnimationFrame(){

@@ -2,10 +2,7 @@ package me.lpmg.jile.states;
 
 import java.awt.Graphics;
 
-import javax.swing.JLabel;
-
 import me.lpmg.jile.Handler;
-import me.lpmg.jile.display.Display;
 import me.lpmg.jile.gfx.Assets;
 import me.lpmg.jile.ui.ClickListener;
 import me.lpmg.jile.ui.UIBackground;
@@ -23,10 +20,10 @@ public class MenuState extends State {
 		uiManager = new UIManager(handler);
 		handler.getMouseManager().setUIManager(uiManager);
 		
-		uiManager.addObject(new UIBackground(0, 0, 640, 480, Assets.grass_full));
-		uiManager.addObject(new UITitle(245, 100, 0, 0, "Jile"));
-		uiManager.addObject(new UISubtitle(5, 150, 0, 0, "by LPMG Game Studios"));
-		uiManager.addObject(new UIImageButton(260, 200, 128, 64, Assets.btn_start, new ClickListener() {
+		uiManager.addObject(new UIBackground(0, 0, handler.getWidth(), handler.getHeight(), Assets.grass_dirtBottom));
+		uiManager.addObject(new UITitle(0, 180, handler.getWidth(), handler.getHeight(), "Jile", handler.getVersion()));
+		uiManager.addObject(new UISubtitle(5,  handler.getHeight()-10, handler.getWidth(), handler.getHeight(), "by LPMG Game Studios"));
+		uiManager.addObject(new UIImageButton((handler.getWidth()-128)/2, 200, 128, 64, Assets.btn_start, new ClickListener() {
 			@Override
 			public void onClick() {
 				handler.getMouseManager().setUIManager(null);

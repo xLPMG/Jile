@@ -7,11 +7,13 @@ import me.lpmg.jile.Handler;
 
 public abstract class Entity {
 
-	public static final int DEFAULT_HEALTH = 3;
+	public static final int DEFAULT_HEALTH = 30;
+	public static final int DEFAULT_MAX_HEALTH = 30;
 	protected Handler handler;
 	protected float x, y;
 	protected int width, height;
 	protected int health;
+	protected int maxHealth;
 	protected boolean active = true;
 	protected Rectangle bounds;
 	
@@ -22,6 +24,7 @@ public abstract class Entity {
 		this.width = width;
 		this.height = height;
 		health = DEFAULT_HEALTH;
+		maxHealth = DEFAULT_MAX_HEALTH;
 		
 		bounds = new Rectangle(0, 0, width, height);
 	}
@@ -92,6 +95,14 @@ public abstract class Entity {
 
 	public void setHealth(int health) {
 		this.health = health;
+	}
+	
+	public int getMaxHealth() {
+		return maxHealth;
+	}
+
+	public void setMaxHealth(int health) {
+		this.maxHealth = maxHealth;
 	}
 
 	public boolean isActive() {

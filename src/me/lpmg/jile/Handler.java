@@ -49,5 +49,9 @@ public class Handler {
 	public void setWorld(World world) {
 		this.world = world;
 	}
+	
+	public String getVersion() {
+		return game.getVersion();
+	}
 
 }

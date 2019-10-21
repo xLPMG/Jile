@@ -21,7 +21,7 @@ public class Assets {
 	public static BufferedImage dirt_full, stone;
 	public static BufferedImage grass_full, grass_dirtBottom, grass_dirtTop, grass_dirtLeft, grass_dirtRight;
 	public static BufferedImage tree, rock, pebble;
-	public static BufferedImage wood;
+	public static BufferedImage woodItem, rockItem;
 	public static BufferedImage[] player_down, player_up, player_left, player_right, player_idle, player_attack_down, player_attack_up, player_attack_left, player_attack_right;
 	public static BufferedImage[] log_down, log_up, log_left, log_right, log_idle;
 	public static BufferedImage[] btn_start;
@@ -39,7 +39,8 @@ public class Assets {
 		
 		inventoryScreen = ImageLoader.loadImage("/textures/inventoryScreen.png");
 		
-		wood = sheet.crop(default_width, default_height, default_width, default_height);
+		woodItem = sheet.crop(default_width, default_height, default_width, default_height);
+		rockItem = sheet.crop(default_width, default_height*2, default_width, default_height);
 		
 		btn_start = new BufferedImage[2];
 		btn_start[0] = sheet.crop(default_width * 6, default_height * 4, default_width * 2, default_height);

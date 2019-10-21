@@ -2,10 +2,10 @@ package me.lpmg.jile;
 
 public class Launcher {
 
-	private final static String VERSION = "v0.1";
+	private final static String VERSION = "v0.2";
 	
 	public static void main(String[] args){		
-		Game game = new Game("Jile "+VERSION+" | LPMG Game Studios", 640, 480);
+		Game game = new Game("Jile "+VERSION+" | LPMG Game Studios", 750, 600, VERSION);
 		game.start();
 	}
 	

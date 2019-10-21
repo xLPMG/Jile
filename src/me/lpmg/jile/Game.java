@@ -18,6 +18,7 @@ public class Game implements Runnable {
 	private Display display;
 	private int width, height;
 	public String title;
+	private String version;
 	
 	private boolean running = false;
 	private Thread thread;
@@ -39,10 +40,11 @@ public class Game implements Runnable {
 	//Handler
 	private Handler handler;
 	
-	public Game(String title, int width, int height){
+	public Game(String title, int width, int height, String version){
 		this.width = width;
 		this.height = height;
 		this.title = title;
+		this.version = version;
 		keyManager = new KeyManager();
 		mouseManager = new MouseManager();
 	}
@@ -165,6 +167,10 @@ public class Game implements Runnable {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public String getVersion() {
+		return version;
 	}
 	
 }
