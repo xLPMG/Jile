@@ -1,10 +1,11 @@
 package me.lpmg.jile.healthbar;
 
-import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 
 import me.lpmg.jile.Handler;
 import me.lpmg.jile.entities.creatures.Player;
+import me.lpmg.jile.gfx.Assets;
 
 public class Healthbar {
 
@@ -12,22 +13,27 @@ public class Healthbar {
 	private Player player;
 	private float health;
 	private float maxHealth;
+	private BufferedImage healthBar;
+	private int x;
+	private int y;
 	
 	public Healthbar(Handler handler, Player player) {
 		this.handler = handler;
 		this.player = player;
 		maxHealth = player.getMaxHealth();
+		x = 10;
+		y = 10;
 	}
 	
 	public void tick(){
 		health = player.getHealth();
 	}
 	public void render(Graphics g) {
-
-		 g.setColor(Color.black);
-		 g.fillRect(5, 200, (int)maxHealth*5, 5);
-		 g.setColor(Color.red);
-		 g.fillRect(5, 200, (int) (maxHealth * (health / maxHealth))*5, 5); 
+		g.drawImage(Assets.healthbar_empty, x,y, 320, 50, null);
+		healthBar = Assets.healthbar_health_full.getSubimage(0, 0, (int) (64 * (health / maxHealth)), 10);
+		g.drawImage(healthBar, x,y, (int) (320 * (health / maxHealth)), 50,  null);
+		
+		g.drawImage(Assets.healthbar_mana_full, x,y, 320, 50, null);
 	}
 	
 	// GETTERS SETTERS

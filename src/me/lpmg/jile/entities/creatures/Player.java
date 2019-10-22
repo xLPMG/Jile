@@ -10,6 +10,7 @@ import me.lpmg.jile.gfx.Animation;
 import me.lpmg.jile.gfx.Assets;
 import me.lpmg.jile.healthbar.Healthbar;
 import me.lpmg.jile.inventory.Inventory;
+import me.lpmg.jile.states.DeadState;
 import me.lpmg.jile.states.MenuState;
 import me.lpmg.jile.states.State;
 
@@ -23,6 +24,7 @@ public class Player extends Creature {
 	private Inventory inventory;
 	private Healthbar healthbar;
 	private int attackDirection = 0;
+	private int tickCount;
 	
 	public Player(Handler handler, float x, float y) {
 		super(handler, x, y, Creature.PLAYER_WIDTH, Creature.PLAYER_HEIGHT);
@@ -65,6 +67,8 @@ public class Player extends Creature {
 		handler.getGameCamera().centerOnEntity(this);
 		// Attack
 		checkAttacks();
+		//Health
+		regenerate();
 		// Inventory
 		inventory.tick();
 		healthbar.tick();
@@ -112,7 +116,7 @@ public class Player extends Creature {
 			if(e.equals(this))
 				continue;
 			if(e.getCollisionBounds(0, 0).intersects(ar)){
-				e.hurt(1);
+				e.hurt(2);
 				System.out.println("Hitting "+e);
 				return;
 			}
@@ -122,7 +126,7 @@ public class Player extends Creature {
 	
 	@Override
 	public void die(){
-		System.out.println("You lose");
+		State.setState(new DeadState(handler));
 	}
 	
 	private void getInput(){
@@ -145,7 +149,7 @@ public class Player extends Creature {
 			State.setState(new MenuState(handler));
 		}
 		if(handler.getKeyManager().h) {
-			this.hurt(1);
+			this.hurt(1 );
 		}
 	}
 
@@ -155,8 +159,8 @@ public class Player extends Creature {
 	}
 	
 	public void postRender(Graphics g){
-		inventory.render(g);
 		healthbar.render(g);
+		inventory.render(g);
 	}
 	
 	private BufferedImage getCurrentAnimationFrame(){
@@ -181,6 +185,16 @@ public class Player extends Creature {
 		}
 	}
 
+	private void regenerate() {
+		if(health<maxHealth) {
+			tickCount++;
+			if(tickCount>=120) {
+				health+=1;
+				tickCount = 0;
+			}
+		}
+	}
+	
 	public Inventory getInventory() {
 		return inventory;
 	}

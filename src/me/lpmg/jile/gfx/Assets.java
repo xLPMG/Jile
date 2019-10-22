@@ -9,6 +9,7 @@ public class Assets {
 	private static final int player_sheet_width = 16, player_sheet_height = 23;
 	private static final int log_sheet_width = 32, log_sheet_height = 32;
 	private static final int wall_sheet_width = 16, wall_sheet_height = 16;
+	private static final int healthbar_width = 64, healthbar_height = 10;
 	
 	public static Font font28;
 	
@@ -24,9 +25,11 @@ public class Assets {
 	public static BufferedImage woodItem, rockItem;
 	public static BufferedImage[] player_down, player_up, player_left, player_right, player_idle, player_attack_down, player_attack_up, player_attack_left, player_attack_right;
 	public static BufferedImage[] log_down, log_up, log_left, log_right, log_idle;
+	
 	public static BufferedImage[] btn_start;
 	public static BufferedImage inventoryScreen;
-
+	public static BufferedImage healthbar, healthbar_empty, healthbar_health_full, healthbar_mana_full;
+	
 	public static void init(){
 		font28 = FontLoader.loadFont("jileresources/fonts/slkscr.ttf", 28);
 
@@ -36,6 +39,7 @@ public class Assets {
 		SpriteSheet floor_sheet = new SpriteSheet(ImageLoader.loadImage("/textures/floor_sheet.png"));
 		SpriteSheet static_entities_sheet = new SpriteSheet(ImageLoader.loadImage("/textures/static_entities_sheet.png"));
 		SpriteSheet wall_sheet = new SpriteSheet(ImageLoader.loadImage("/textures/walls_sheet.png"));
+		SpriteSheet healthbar_sheet = new SpriteSheet(ImageLoader.loadImage("/textures/healthbar_sheet.png"));
 		
 		inventoryScreen = ImageLoader.loadImage("/textures/inventoryScreen.png");
 		
@@ -45,6 +49,10 @@ public class Assets {
 		btn_start = new BufferedImage[2];
 		btn_start[0] = sheet.crop(default_width * 6, default_height * 4, default_width * 2, default_height);
 		btn_start[1] = sheet.crop(default_width * 6, default_height * 5, default_width * 2, default_height);
+		
+		healthbar_empty = healthbar_sheet.crop(0, 0, healthbar_width, healthbar_height);
+		healthbar_health_full = healthbar_sheet.crop(0, healthbar_height, healthbar_width, healthbar_height);
+		healthbar_mana_full = healthbar_sheet.crop(0, healthbar_height*2, healthbar_width, healthbar_height);
 		
 		player_down = new BufferedImage[2];
 		player_up = new BufferedImage[2];
