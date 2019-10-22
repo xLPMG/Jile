@@ -9,6 +9,7 @@ import me.lpmg.jile.gfx.Assets;
 import me.lpmg.jile.gfx.GameCamera;
 import me.lpmg.jile.input.KeyManager;
 import me.lpmg.jile.input.MouseManager;
+import me.lpmg.jile.states.DeadState;
 import me.lpmg.jile.states.GameState;
 import me.lpmg.jile.states.MenuState;
 import me.lpmg.jile.states.State;
@@ -28,6 +29,7 @@ public class Game implements Runnable {
 	
 	//States
 	public State gameState;
+	public State deadState;
 	public State menuState;
 	
 	//Input
@@ -64,6 +66,7 @@ public class Game implements Runnable {
 		gameCamera = new GameCamera(handler, 0, 0);
 		
 		gameState = new GameState(handler);
+		deadState = new DeadState(handler);
 		menuState = new MenuState(handler);
 		State.setState(menuState);
 	}

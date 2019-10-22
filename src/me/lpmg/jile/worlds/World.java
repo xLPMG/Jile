@@ -26,6 +26,8 @@ public class World {
 	private ItemManager itemManager;
 	public Player player;
 	
+	private final int SPAWN_CHANCE_LOG_DEFAULT = 85;
+	
 //	public World(Handler handler, String firstLayer){
 //		this.handler = handler;
 //		itemManager = new ItemManager(handler);
@@ -105,7 +107,7 @@ public class World {
 		
 		Tile t = Tile.tiles[tiles[x][y]];
 		if(t == null)
-			return Tile.grassTile;
+			return Tile.placeHolderTile;
 		return t;
 	}
 	
@@ -184,9 +186,9 @@ public class World {
 	
 	for(int y = yStart;y < yEnd;y++){
 		for(int x = xStart;x < xEnd;x++){
-			if(getTile(x, y) == Tile.grassTile) {
+			if(getTile(x, y) == Tile.grassTile&&getSecondLayerTile(x, y)==Tile.placeHolderTile&&getThirdLayerTile(x, y)==Tile.placeHolderTile) {
 				int spawnChance = (int)(Math.random() * 100) + 1; 
-				if(spawnChance>95) {
+				if(spawnChance>SPAWN_CHANCE_LOG_DEFAULT) {
 					System.out.println("spawnChance: "+spawnChance);
 				    entityManager.addEntity(new Log(handler, x*100, y*100));
 				}
