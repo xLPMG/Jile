@@ -11,7 +11,7 @@ public class GameState extends State {
 	
 	public GameState(Handler handler){
 		super(handler);
-		world = new World(handler, "jileresources/worlds/world1-firstLayer.txt", "jileresources/worlds/world1-secondLayer.txt", "jileresources/worlds/world1-thirdLayer.txt");
+		world = new World(handler, "/worlds/world1-firstLayer.txt", "/worlds/world1-secondLayer.txt", "/worlds/world1-thirdLayer.txt");
 		handler.setWorld(world);
 	}
 	

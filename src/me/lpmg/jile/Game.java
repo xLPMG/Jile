@@ -60,7 +60,6 @@ public class Game implements Runnable {
 		display.getFrame().addMouseMotionListener(mouseManager);
 		display.getCanvas().addMouseListener(mouseManager);
 		display.getCanvas().addMouseMotionListener(mouseManager);
-		Assets.init();
 		
 		handler = new Handler(this);
 		gameCamera = new GameCamera(handler, 0, 0);
@@ -123,7 +122,7 @@ public class Game implements Runnable {
 			}
 			
 			if(timer >= 1000000000){
-				System.out.println("Ticks and Frames: " + ticks);
+				System.out.println("FPS: " + ticks);
 				ticks = 0;
 				timer = 0;
 			}

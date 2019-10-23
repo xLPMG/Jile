@@ -11,7 +11,7 @@ public class Assets {
 	private static final int wall_sheet_width = 16, wall_sheet_height = 16;
 	private static final int healthbar_width = 64, healthbar_height = 10;
 	
-	public static Font font28;
+	public static Font font28, font96;
 	
 	public static BufferedImage placeholder, debug;
 	
@@ -30,8 +30,9 @@ public class Assets {
 	public static BufferedImage inventoryScreen;
 	public static BufferedImage healthbar, healthbar_empty, healthbar_health_full, healthbar_mana_full;
 	
-	public static void init(){
-		font28 = FontLoader.loadFont("jileresources/fonts/slkscr.ttf", 28);
+	static {
+		font28 = FontLoader.loadFont("/fonts/slkscr.ttf", 28);
+		font96 = FontLoader.loadFont("/fonts/slkscr.ttf", 96);
 
 		SpriteSheet sheet = new SpriteSheet(ImageLoader.loadImage("/textures/sheet.png"));
 		SpriteSheet player_sheet = new SpriteSheet(ImageLoader.loadImage("/textures/player_sheet.png"));

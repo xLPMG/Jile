@@ -40,7 +40,13 @@ public class LogoScreen extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        ImageIcon image = new ImageIcon(getClass().getClassLoader().getResource("logo/lpmggamestudios.gif"));
+        //TODO
+        //JAVA 12
+        //ImageIcon image = new ImageIcon(getClass().getClassLoader().getResource("logo/lpmggamestudios.gif"));
+        
+        //JAVA 8
+        ImageIcon image = new ImageIcon(getClass().getClassLoader().getResource("logo/own-logo.png"));
+        
         imageIcon.setIcon(image);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
