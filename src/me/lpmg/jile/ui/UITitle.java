@@ -5,6 +5,7 @@ import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
+import me.lpmg.jile.gfx.Assets;
 import me.lpmg.jile.gfx.FontLoader;
 
 public class UITitle extends UIObject{
@@ -28,17 +29,15 @@ public class UITitle extends UIObject{
 
 	@Override
 	public void render(Graphics g) {	
-		Font font96 = FontLoader.loadFont("jileresources/fonts/slkscr.ttf", 96);
-		Font font28 = FontLoader.loadFont("jileresources/fonts/slkscr.ttf", 28);
 		Rectangle rect = new Rectangle(width, height);
-		FontMetrics metrics = g.getFontMetrics(font96);
+		FontMetrics metrics = g.getFontMetrics(Assets.font96);
 	    int x = rect.x + (rect.width - metrics.stringWidth(text)) / 2;
 	    //int y = rect.y + ((rect.height - metrics.getHeight()) / 2) + metrics.getAscent();
-	    g.setFont(font96);
+	    g.setFont(Assets.font96);
 	    g.drawString(text, x, (int) y);
 	    
 	    Graphics g2 = g;
-	    g2.setFont(font28);
+	    g2.setFont(Assets.font28);
 	    g2.drawString(version, x+metrics.stringWidth(text), (int) y);
 	}
 

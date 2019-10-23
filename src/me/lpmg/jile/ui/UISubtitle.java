@@ -5,6 +5,7 @@ import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
+import me.lpmg.jile.gfx.Assets;
 import me.lpmg.jile.gfx.FontLoader;
 
 public class UISubtitle extends UIObject{
@@ -22,12 +23,11 @@ public class UISubtitle extends UIObject{
 
 	@Override
 	public void render(Graphics g) {	
-		Font font28 = FontLoader.loadFont("jileresources/fonts/slkscr.ttf", 48);
 		Rectangle rect = new Rectangle(width, height);
-		FontMetrics metrics = g.getFontMetrics(font28);
+		FontMetrics metrics = g.getFontMetrics(Assets.font28);
 	    int x = rect.x + (rect.width - metrics.stringWidth(text)) / 2;
 	    //int y = rect.y + ((rect.height - metrics.getHeight()) / 2) + metrics.getAscent();
-	    g.setFont(font28);
+	    g.setFont(Assets.font28);
 	    g.drawString(text, x, (int) y);
 	}
 
