@@ -104,4 +104,8 @@ public class Inventory {
 		return active;
 	}
 	
+	public ArrayList getInventoryItems() {
+		return inventoryItems;
+	}
+	
 }

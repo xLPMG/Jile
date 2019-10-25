@@ -21,14 +21,16 @@ public class Assets {
 	
 	public static BufferedImage dirt_full, stone;
 	public static BufferedImage grass_full, grass_dirtBottom, grass_dirtTop, grass_dirtLeft, grass_dirtRight;
-	public static BufferedImage tree, rock, pebble;
+	public static BufferedImage tree, pebble;
+	public static BufferedImage bush, bush_dmg1, bush_dmg2, bush_dmg3;
+	public static BufferedImage rock, rock_dmg1, rock_dmg2, rock_dmg3;
 	public static BufferedImage woodItem, rockItem;
 	public static BufferedImage[] player_down, player_up, player_left, player_right, player_idle, player_attack_down, player_attack_up, player_attack_left, player_attack_right;
 	public static BufferedImage[] log_down, log_up, log_left, log_right, log_idle;
 	
 	public static BufferedImage[] btn_start;
-	public static BufferedImage inventoryScreen;
-	public static BufferedImage healthbar, healthbar_empty, healthbar_health_full, healthbar_mana_full;
+	public static BufferedImage inventoryScreen, itemBar, itemBar_highlighted;
+	public static BufferedImage healthbar, healthbar_empty, healthbar_health_full, healthbar_mana_full, healthbar_corner_full;
 	
 	static {
 		font28 = FontLoader.loadFont("/fonts/slkscr.ttf", 28);
@@ -38,14 +40,17 @@ public class Assets {
 		SpriteSheet player_sheet = new SpriteSheet(ImageLoader.loadImage("/textures/player_sheet.png"));
 		SpriteSheet log_sheet = new SpriteSheet(ImageLoader.loadImage("/textures/log_sheet.png"));
 		SpriteSheet floor_sheet = new SpriteSheet(ImageLoader.loadImage("/textures/floor_sheet.png"));
+		SpriteSheet item_sheet = new SpriteSheet(ImageLoader.loadImage("/textures/item_sheet.png"));
 		SpriteSheet static_entities_sheet = new SpriteSheet(ImageLoader.loadImage("/textures/static_entities_sheet.png"));
 		SpriteSheet wall_sheet = new SpriteSheet(ImageLoader.loadImage("/textures/walls_sheet.png"));
 		SpriteSheet healthbar_sheet = new SpriteSheet(ImageLoader.loadImage("/textures/healthbar_sheet.png"));
 		
 		inventoryScreen = ImageLoader.loadImage("/textures/inventoryScreen.png");
+		itemBar = ImageLoader.loadImage("/textures/item_bar.png");
+		itemBar_highlighted = ImageLoader.loadImage("/textures/item_bar_highlighted.png");
 		
-		woodItem = sheet.crop(default_width, default_height, default_width, default_height);
-		rockItem = sheet.crop(default_width, default_height*2, default_width, default_height);
+		woodItem = item_sheet.crop(0, 0, default_width, default_height);
+		rockItem = item_sheet.crop(default_width, 0, default_width, default_height);
 		
 		btn_start = new BufferedImage[2];
 		btn_start[0] = sheet.crop(default_width * 6, default_height * 4, default_width * 2, default_height);
@@ -54,6 +59,7 @@ public class Assets {
 		healthbar_empty = healthbar_sheet.crop(0, 0, healthbar_width, healthbar_height);
 		healthbar_health_full = healthbar_sheet.crop(0, healthbar_height, healthbar_width, healthbar_height);
 		healthbar_mana_full = healthbar_sheet.crop(0, healthbar_height*2, healthbar_width, healthbar_height);
+		healthbar_corner_full = healthbar_sheet.crop(0, healthbar_height*3, healthbar_width, healthbar_height);
 		
 		player_down = new BufferedImage[2];
 		player_up = new BufferedImage[2];
@@ -131,8 +137,17 @@ public class Assets {
 		wall_right_top_high = wall_sheet.crop(wall_sheet_width * 2, 0, wall_sheet_height, wall_sheet_height);
 		
 		stone = sheet.crop(default_width * 3, 0, default_width, default_height);
-		tree = sheet.crop(0, 0, default_width, default_height * 2);
+		
+		bush = sheet.crop(0, default_height, default_width, default_height);
+		bush_dmg1 = sheet.crop(default_width, default_height, default_width, default_height);
+		bush_dmg2 = sheet.crop(default_width*2, default_height, default_width, default_height);
+		bush_dmg3 = sheet.crop(default_width*3, default_height, default_width, default_height);
+		
 		rock = sheet.crop(0, default_height * 2, default_width, default_height);
+		rock_dmg1 = sheet.crop(default_width, default_height * 2, default_width, default_height);
+		rock_dmg2 = sheet.crop(default_width*2, default_height * 2, default_width, default_height);
+		rock_dmg3 = sheet.crop(default_width*3, default_height * 2, default_width, default_height);
+		
 		pebble = static_entities_sheet.crop(0, default_height * 3, default_width, default_height);
 	}
 	

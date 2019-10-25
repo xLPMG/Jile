@@ -1,16 +1,25 @@
 package me.lpmg.jile.input;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
+
+import javax.swing.Timer;
 
 import me.lpmg.jile.ui.UIManager;
 
-public class MouseManager implements MouseListener, MouseMotionListener {
+public class MouseManager implements MouseListener, MouseMotionListener, MouseWheelListener {
 
 	private boolean leftPressed, rightPressed;
+	private boolean scrolledUp, scrolledDown;
 	private int mouseX, mouseY;
 	private UIManager uiManager;
+	public static final int TIMER_DELAY = 10;
+	private Timer wheelMovementTimer;
 	
 	public MouseManager(){
 		
@@ -29,6 +38,15 @@ public class MouseManager implements MouseListener, MouseMotionListener {
 	public boolean isRightPressed(){
 		return rightPressed;
 	}
+	
+	public boolean didScrollUp(){
+		return scrolledUp;
+	}
+	
+	public boolean didScrollDown(){
+		return scrolledDown;
+	}
+	
 	
 	public int getMouseX(){
 		return mouseX;
@@ -91,5 +109,30 @@ public class MouseManager implements MouseListener, MouseMotionListener {
 		// TODO Auto-generated method stub
 		
 	}
+
+    @Override
+    public void mouseWheelMoved(MouseWheelEvent e) {
+    	if(e.getWheelRotation()>0) {
+    		scrolledUp=true;
+    	}else if(e.getWheelRotation()<0) {
+    		scrolledDown=true;
+    	}
+    	
+        if (wheelMovementTimer != null && wheelMovementTimer.isRunning()) {
+            wheelMovementTimer.stop();
+        }
+        wheelMovementTimer = new Timer(TIMER_DELAY, new WheelMovementTimerActionListener());
+        wheelMovementTimer.setRepeats(false);
+        wheelMovementTimer.start();
+    }
+    private class WheelMovementTimerActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+        	scrolledUp=false;
+        	scrolledDown=false;
+        }
+    }
+	
+
 
 }

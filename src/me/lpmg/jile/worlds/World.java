@@ -7,7 +7,7 @@ import me.lpmg.jile.entities.EntityManager;
 import me.lpmg.jile.entities.creatures.Log;
 import me.lpmg.jile.entities.creatures.Player;
 import me.lpmg.jile.entities.statics.Rock;
-import me.lpmg.jile.entities.statics.Tree;
+import me.lpmg.jile.entities.statics.Bush;
 import me.lpmg.jile.items.ItemManager;
 import me.lpmg.jile.tiles.Tile;
 import me.lpmg.jile.utils.Utils;
@@ -177,7 +177,7 @@ public class World {
 		entityManager.getPlayer().setX(spawnX);
 		entityManager.getPlayer().setY(spawnY);
 		entityManager.addEntity(new Rock(handler, 350, 300));
-		entityManager.addEntity(new Tree(handler, 200, 500));
+		entityManager.addEntity(new Bush(handler, 200, 500));
 		
 	int xStart = (int) Math.max(0, handler.getGameCamera().getxOffset() / Tile.TILEWIDTH);
 	int xEnd = (int) Math.min(width, (handler.getGameCamera().getxOffset() + handler.getWidth()) / Tile.TILEWIDTH + 1);

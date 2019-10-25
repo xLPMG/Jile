@@ -10,6 +10,7 @@ import me.lpmg.jile.gfx.Animation;
 import me.lpmg.jile.gfx.Assets;
 import me.lpmg.jile.healthbar.Healthbar;
 import me.lpmg.jile.inventory.Inventory;
+import me.lpmg.jile.inventory.ItemBar;
 import me.lpmg.jile.states.DeadState;
 import me.lpmg.jile.states.MenuState;
 import me.lpmg.jile.states.State;
@@ -22,6 +23,7 @@ public class Player extends Creature {
 	private long lastAttackTimer, attackCooldown = 100, attackTimer = attackCooldown;
 	// Inventory
 	private Inventory inventory;
+	private ItemBar itemBar;
 	private Healthbar healthbar;
 	private int attackDirection = 0;
 	private int tickCount;
@@ -33,6 +35,7 @@ public class Player extends Creature {
 		bounds.y = 18*3; //19*3
 		bounds.width = 9*3; //9*3
 		bounds.height = 4*3; //4*3
+		speed = 2.5f;
 		
 		//Animatons
 		animDown = new Animation(250, Assets.player_down);
@@ -46,6 +49,7 @@ public class Player extends Creature {
 		animAttackRight = new Animation(100, Assets.player_attack_right);
 		
 		inventory = new Inventory(handler);
+		itemBar = new ItemBar(handler, inventory);
 		healthbar = new Healthbar(handler, this);
 	}
 
@@ -71,6 +75,7 @@ public class Player extends Creature {
 		regenerate();
 		// Inventory
 		inventory.tick();
+		itemBar.tick();
 		healthbar.tick();
 	}
 	
@@ -83,6 +88,7 @@ public class Player extends Creature {
 		if(inventory.isActive())
 			return;
 		
+		healthbar.hideCorner();
 		Rectangle cb = getCollisionBounds(0, 0);
 		Rectangle ar = new Rectangle();
 		int arSize = 20;
@@ -116,6 +122,7 @@ public class Player extends Creature {
 			if(e.equals(this))
 				continue;
 			if(e.getCollisionBounds(0, 0).intersects(ar)){
+				healthbar.showCorner();
 				e.hurt(2);
 				System.out.println("Hitting "+e);
 				return;
@@ -160,6 +167,7 @@ public class Player extends Creature {
 	
 	public void postRender(Graphics g){
 		healthbar.render(g);
+		itemBar.render(g);
 		inventory.render(g);
 	}
 	

@@ -17,6 +17,8 @@ public class Healthbar {
 	private int x;
 	private int y;
 	
+	private boolean showCorner=false;
+	
 	public Healthbar(Handler handler, Player player) {
 		this.handler = handler;
 		this.player = player;
@@ -34,6 +36,10 @@ public class Healthbar {
 		g.drawImage(healthBar, x,y, (int) (320 * (health / maxHealth)), 50,  null);
 		
 		g.drawImage(Assets.healthbar_mana_full, x,y, 320, 50, null);
+		
+		if(showCorner) {
+			g.drawImage(Assets.healthbar_corner_full, x,y, 320, 50, null);
+		}
 	}
 	
 	// GETTERS SETTERS
@@ -44,5 +50,13 @@ public class Healthbar {
 
 	public void setHandler(Handler handler) {
 		this.handler = handler;
+	}
+	
+	public void showCorner() {
+		showCorner=true;
+	}
+	
+	public void hideCorner() {
+		showCorner=false;
 	}
 }

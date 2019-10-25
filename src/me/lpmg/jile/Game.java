@@ -60,6 +60,7 @@ public class Game implements Runnable {
 		display.getFrame().addMouseMotionListener(mouseManager);
 		display.getCanvas().addMouseListener(mouseManager);
 		display.getCanvas().addMouseMotionListener(mouseManager);
+		display.getCanvas().addMouseWheelListener(mouseManager);
 		
 		handler = new Handler(this);
 		gameCamera = new GameCamera(handler, 0, 0);
