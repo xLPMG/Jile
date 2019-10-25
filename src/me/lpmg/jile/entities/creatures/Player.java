@@ -210,5 +210,9 @@ public class Player extends Creature {
 	public void setInventory(Inventory inventory) {
 		this.inventory = inventory;
 	}
+	
+	public ItemBar getItemBar(){
+		return itemBar;
+	}
 
 }
