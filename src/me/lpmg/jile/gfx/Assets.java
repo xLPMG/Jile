@@ -43,11 +43,12 @@ public class Assets {
 		SpriteSheet item_sheet = new SpriteSheet(ImageLoader.loadImage("/textures/item_sheet.png"));
 		SpriteSheet static_entities_sheet = new SpriteSheet(ImageLoader.loadImage("/textures/static_entities_sheet.png"));
 		SpriteSheet wall_sheet = new SpriteSheet(ImageLoader.loadImage("/textures/walls_sheet.png"));
-		SpriteSheet healthbar_sheet = new SpriteSheet(ImageLoader.loadImage("/textures/healthbar_sheet.png"));
+		SpriteSheet healthbar_sheet = new SpriteSheet(ImageLoader.loadImage("/textures/gui/healthbar_sheet.png"));
+		SpriteSheet startBtn = new SpriteSheet(ImageLoader.loadImage("/textures/gui/button_start.png"));
 		
-		inventoryScreen = ImageLoader.loadImage("/textures/inventoryScreen.png");
-		itemBar = ImageLoader.loadImage("/textures/item_bar.png");
-		itemBar_highlighted = ImageLoader.loadImage("/textures/item_bar_highlighted.png");
+		inventoryScreen = ImageLoader.loadImage("/textures/gui/inventoryScreen.png");
+		itemBar = ImageLoader.loadImage("/textures/gui/item_bar.png");
+		itemBar_highlighted = ImageLoader.loadImage("/textures/gui/item_bar_highlighted.png");
 		
 		woodItem = item_sheet.crop(0, 0, default_width, default_height);
 		rockItem = item_sheet.crop(default_width, 0, default_width, default_height);

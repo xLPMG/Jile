@@ -49,6 +49,18 @@ public class Inventory {
 			selectedItem = inventoryItems.size() - 1;
 		else if(selectedItem >= inventoryItems.size())
 			selectedItem = 0;
+		
+		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_Q)) {
+			int itemCount=inventoryItems.get(selectedItem).getCount();
+			if(itemCount<1) {
+			inventoryItems.get(selectedItem).setCount(itemCount-1);
+			}else if(itemCount==1) {
+			inventoryItems.remove(selectedItem);
+			}else {
+				//do nothing
+			}
+		}
+			
 	}
 	
 	public void render(Graphics g){
@@ -106,6 +118,12 @@ public class Inventory {
 	
 	public ArrayList getInventoryItems() {
 		return inventoryItems;
+	}
+	
+	public void setSelectedItem(int slotID) {
+		if(inventoryItems.size()>slotID) {
+		selectedItem=slotID;
+		}
 	}
 	
 }

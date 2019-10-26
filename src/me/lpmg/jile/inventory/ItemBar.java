@@ -32,9 +32,11 @@ public class ItemBar {
 	
 	private Handler handler;
 	private ArrayList<Item> inventoryItems;
+	private Inventory inventory;
 	
 	public ItemBar(Handler handler, Inventory inventory) {
 		this.handler = handler;
+		this.inventory = inventory;
 		inventoryItems = inventory.getInventoryItems();
 		
 		barX = (handler.getWidth()/2)-(barWidth/2);
@@ -61,6 +63,8 @@ public class ItemBar {
 			selectedSlot = 8;
 		else if(selectedSlot > 8)
 			selectedSlot = 0;
+		
+		inventory.setSelectedItem(selectedSlot);
 	}
 	public void render(Graphics g) {		
 		g.drawImage(Assets.itemBar, barX,barY, barWidth, barHeight, null);
