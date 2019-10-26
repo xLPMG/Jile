@@ -54,8 +54,8 @@ public class Assets {
 		rockItem = item_sheet.crop(default_width, 0, default_width, default_height);
 		
 		btn_start = new BufferedImage[2];
-		btn_start[0] = sheet.crop(default_width * 6, default_height * 4, default_width * 2, default_height);
-		btn_start[1] = sheet.crop(default_width * 6, default_height * 5, default_width * 2, default_height);
+		btn_start[0] = startBtn.crop(0, 0, default_width * 2, default_height);
+		btn_start[1] = startBtn.crop(0, default_height, default_width * 2, default_height);
 		
 		healthbar_empty = healthbar_sheet.crop(0, 0, healthbar_width, healthbar_height);
 		healthbar_health_full = healthbar_sheet.crop(0, healthbar_height, healthbar_width, healthbar_height);

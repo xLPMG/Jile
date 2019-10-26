@@ -63,10 +63,8 @@ public class ItemBar {
 			selectedSlot = 8;
 		else if(selectedSlot > 8)
 			selectedSlot = 0;
-		
-		inventory.setSelectedItem(selectedSlot);
 	}
-	public void render(Graphics g) {		
+	public void render(Graphics g) {	
 		g.drawImage(Assets.itemBar, barX,barY, barWidth, barHeight, null);
 		if(selectedSlot==0) {
 		g.drawImage(Assets.itemBar_highlighted, itemX1-marginWidth, itemY-marginHeight, itemHighlightWidth, itemHighlightHeight, null);
@@ -150,9 +148,11 @@ public class ItemBar {
 	//SCROLL
 	public void scrollUpByOne() {
 		selectedSlot+=1;
+		inventory.setSelectedItem(selectedSlot);
 	}
-public void scrollDownByOne() {
+	public void scrollDownByOne() {
 	selectedSlot-=1;
+	inventory.setSelectedItem(selectedSlot);
 	}
 	
 	// GETTERS SETTERS
