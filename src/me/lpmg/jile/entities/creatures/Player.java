@@ -26,7 +26,13 @@ public class Player extends Creature {
 	private ItemBar itemBar;
 	private Healthbar healthbar;
 	private int attackDirection = 0;
-	private int tickCount;
+	private int healthTickCount;
+	private int manaTickCount;
+	private float defSpeed;
+	private float sprintSpeed;
+	
+	private int healthRegenSpeed = 200;
+	private int manaRegenSpeed = 260;
 	
 	public Player(Handler handler, float x, float y) {
 		super(handler, x, y, Creature.PLAYER_WIDTH, Creature.PLAYER_HEIGHT);
@@ -35,8 +41,11 @@ public class Player extends Creature {
 		bounds.y = 18*3; //19*3
 		bounds.width = 9*3; //9*3
 		bounds.height = 4*3; //4*3
-		speed = 2.5f;
+		speed = 2.4f;
+		defSpeed = speed;
+		sprintSpeed = 3.2f;
 		
+	
 		//Animatons
 		animDown = new Animation(250, Assets.player_down);
 		animUp = new Animation(250, Assets.player_up);
@@ -143,6 +152,12 @@ public class Player extends Creature {
 		if(inventory.isActive())
 			return;
 		
+		if(handler.getKeyManager().shift) {
+			speed = sprintSpeed;
+		}else if(!handler.getKeyManager().shift){
+			speed = defSpeed;
+		}
+		
 		if(handler.getKeyManager().up)
 			yMove = -speed;
 		if(handler.getKeyManager().down)
@@ -156,7 +171,7 @@ public class Player extends Creature {
 			State.setState(new MenuState(handler));
 		}
 		if(handler.getKeyManager().h) {
-			this.hurt(1 );
+			healthWithMana(15);
 		}
 	}
 
@@ -192,13 +207,39 @@ public class Player extends Creature {
 			return animIdle.getCurrentFrame();
 		}
 	}
+	
+	private void healthWithMana(int amount) {
+		if(amount>mana) {
+			amount=mana;
+		}
+		if(health+amount>maxHealth) {
+			amount=maxHealth-health;
+		}
+		if(health<maxHealth&&mana>=amount) {
+			health+=amount;
+			mana-=amount;
+		}
+		if(mana>maxMana) {
+			mana=maxMana;
+		}
+		if(health>maxHealth) {
+			health=maxHealth;
+		}
+	}
 
 	private void regenerate() {
 		if(health<maxHealth) {
-			tickCount++;
-			if(tickCount>=120) {
+			healthTickCount++;
+			if(healthTickCount>=healthRegenSpeed) {
 				health+=1;
-				tickCount = 0;
+				healthTickCount = 0;
+			}
+		}
+		if(mana<maxMana) {
+			manaTickCount++;
+			if(manaTickCount>=manaRegenSpeed) {
+				mana+=1;
+				manaTickCount = 0;
 			}
 		}
 	}
@@ -209,6 +250,10 @@ public class Player extends Creature {
 
 	public void setInventory(Inventory inventory) {
 		this.inventory = inventory;
+	}
+	
+	public ItemBar getItemBar(){
+		return itemBar;
 	}
 
 }

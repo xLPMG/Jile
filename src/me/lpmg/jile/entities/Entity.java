@@ -9,11 +9,15 @@ public abstract class Entity {
 
 	public static final int DEFAULT_HEALTH = 30;
 	public static final int DEFAULT_MAX_HEALTH = 30;
+	public static final int DEFAULT_MANA = 30;
+	public static final int DEFAULT_MAX_MANA = 30;
 	protected Handler handler;
 	protected float x, y;
 	protected int width, height;
 	protected int health;
 	protected int maxHealth;
+	protected int mana;
+	protected int maxMana;
 	protected boolean active = true;
 	protected Rectangle bounds;
 	
@@ -25,6 +29,8 @@ public abstract class Entity {
 		this.height = height;
 		health = DEFAULT_HEALTH;
 		maxHealth = DEFAULT_MAX_HEALTH;
+		mana = DEFAULT_MANA;
+		maxMana = DEFAULT_MAX_MANA;
 		
 		bounds = new Rectangle(0, 0, width, height);
 	}
@@ -103,6 +109,22 @@ public abstract class Entity {
 
 	public void setMaxHealth(int health) {
 		this.maxHealth = maxHealth;
+	}
+	//mana
+	public int getMana() {
+		return mana;
+	}
+
+	public void setMana(int mana) {
+		this.mana = mana;
+	}
+	
+	public int getMaxMana() {
+		return maxMana;
+	}
+
+	public void setMaxMana(int mana) {
+		this.maxMana = maxMana;
 	}
 
 	public boolean isActive() {

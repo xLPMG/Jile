@@ -7,6 +7,7 @@ import me.lpmg.jile.display.Display;
 import me.lpmg.jile.display.LogoScreen;
 import me.lpmg.jile.gfx.Assets;
 import me.lpmg.jile.gfx.GameCamera;
+import me.lpmg.jile.input.ItemBarScroll;
 import me.lpmg.jile.input.KeyManager;
 import me.lpmg.jile.input.MouseManager;
 import me.lpmg.jile.states.DeadState;
@@ -35,6 +36,7 @@ public class Game implements Runnable {
 	//Input
 	private KeyManager keyManager;
 	private MouseManager mouseManager;
+	private ItemBarScroll itembarScroll;
 	
 	//Camera
 	private GameCamera gameCamera;
@@ -49,6 +51,7 @@ public class Game implements Runnable {
 		this.version = version;
 		keyManager = new KeyManager();
 		mouseManager = new MouseManager();
+		itembarScroll = new ItemBarScroll();
 	}
 	
 	private void init(){
@@ -60,10 +63,12 @@ public class Game implements Runnable {
 		display.getFrame().addMouseMotionListener(mouseManager);
 		display.getCanvas().addMouseListener(mouseManager);
 		display.getCanvas().addMouseMotionListener(mouseManager);
-		display.getCanvas().addMouseWheelListener(mouseManager);
 		
 		handler = new Handler(this);
+		itembarScroll.transmitHandler(handler);
 		gameCamera = new GameCamera(handler, 0, 0);
+		
+		display.getCanvas().addMouseWheelListener(itembarScroll);
 		
 		gameState = new GameState(handler);
 		deadState = new DeadState(handler);

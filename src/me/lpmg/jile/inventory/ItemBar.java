@@ -28,12 +28,15 @@ public class ItemBar {
 	private int itemCountX, itemCountY;
 	
 	private int selectedItem = 0;
+	private int selectedSlot = 0;
 	
 	private Handler handler;
 	private ArrayList<Item> inventoryItems;
+	private Inventory inventory;
 	
 	public ItemBar(Handler handler, Inventory inventory) {
 		this.handler = handler;
+		this.inventory = inventory;
 		inventoryItems = inventory.getInventoryItems();
 		
 		barX = (handler.getWidth()/2)-(barWidth/2);
@@ -55,45 +58,61 @@ public class ItemBar {
 		itemCountY = (26*zoom)+itemY;
 	}
 	
-	public void tick(){
-		if(handler.getMouseManager().didScrollUp())
-			selectedItem--;
-		if(handler.getMouseManager().didScrollDown())
-			selectedItem++;
+	public void tick(){		
+		if(selectedSlot < 0)
+			selectedSlot = 8;
+		else if(selectedSlot > 8)
+			selectedSlot = 0;
 		
-		if(selectedItem < 0)
-			selectedItem = inventoryItems.size() - 1;
-		else if(selectedItem >= inventoryItems.size())
-			selectedItem = 0;
+		inventoryItems = inventory.getInventoryItems();
 	}
-	public void render(Graphics g) {		
+	public void render(Graphics g) {	
 		g.drawImage(Assets.itemBar, barX,barY, barWidth, barHeight, null);
+		if(selectedSlot==0) {
+		g.drawImage(Assets.itemBar_highlighted, itemX1-marginWidth, itemY-marginHeight, itemHighlightWidth, itemHighlightHeight, null);
+	}else if(selectedSlot==1) {
+		g.drawImage(Assets.itemBar_highlighted, itemX2-marginWidth, itemY-marginHeight, itemHighlightWidth, itemHighlightHeight, null);	
+	}else if(selectedSlot==2) {
+		g.drawImage(Assets.itemBar_highlighted, itemX3-marginWidth, itemY-marginHeight, itemHighlightWidth, itemHighlightHeight, null);	
+	}else if(selectedSlot==3) {
+		g.drawImage(Assets.itemBar_highlighted, itemX4-marginWidth, itemY-marginHeight, itemHighlightWidth, itemHighlightHeight, null);	
+	}else if(selectedSlot==4) {
+		g.drawImage(Assets.itemBar_highlighted, itemX5-marginWidth, itemY-marginHeight, itemHighlightWidth, itemHighlightHeight, null);	
+	}else if(selectedSlot==5) {
+		g.drawImage(Assets.itemBar_highlighted, itemX6-marginWidth, itemY-marginHeight, itemHighlightWidth, itemHighlightHeight, null);	
+	}else if(selectedSlot==6) {
+		g.drawImage(Assets.itemBar_highlighted, itemX7-marginWidth, itemY-marginHeight, itemHighlightWidth, itemHighlightHeight, null);	
+	}else if(selectedSlot==7) {
+		g.drawImage(Assets.itemBar_highlighted, itemX8-marginWidth, itemY-marginHeight, itemHighlightWidth, itemHighlightHeight, null);	
+	}else if(selectedSlot==8) {
+		g.drawImage(Assets.itemBar_highlighted, itemX9-marginWidth, itemY-marginHeight, itemHighlightWidth, itemHighlightHeight, null);	
+	}
 		
 		
 		if(inventoryItems.size()!=0) {		
 		for(Item item : inventoryItems) {
 		//mark selected item
 		if(item == inventoryItems.get(selectedItem)) {
-			int itemNumberSelected = inventoryItems.indexOf(item);
-			if(itemNumberSelected==0) {
-				g.drawImage(Assets.itemBar_highlighted, itemX1-marginWidth, itemY-marginHeight, itemHighlightWidth, itemHighlightHeight, null);
-			}else if(itemNumberSelected==1) {
-				g.drawImage(Assets.itemBar_highlighted, itemX2-marginWidth, itemY-marginHeight, itemHighlightWidth, itemHighlightHeight, null);	
-			}else if(itemNumberSelected==2) {
-				g.drawImage(Assets.itemBar_highlighted, itemX3-marginWidth, itemY-marginHeight, itemHighlightWidth, itemHighlightHeight, null);	
-			}else if(itemNumberSelected==3) {
-				g.drawImage(Assets.itemBar_highlighted, itemX4-marginWidth, itemY-marginHeight, itemHighlightWidth, itemHighlightHeight, null);	
-			}else if(itemNumberSelected==4) {
-				g.drawImage(Assets.itemBar_highlighted, itemX5-marginWidth, itemY-marginHeight, itemHighlightWidth, itemHighlightHeight, null);	
-			}else if(itemNumberSelected==5) {
-				g.drawImage(Assets.itemBar_highlighted, itemX6-marginWidth, itemY-marginHeight, itemHighlightWidth, itemHighlightHeight, null);	
-			}else if(itemNumberSelected==6) {
-				g.drawImage(Assets.itemBar_highlighted, itemX7-marginWidth, itemY-marginHeight, itemHighlightWidth, itemHighlightHeight, null);	
-			}else if(itemNumberSelected==7) {
-				g.drawImage(Assets.itemBar_highlighted, itemX8-marginWidth, itemY-marginHeight, itemHighlightWidth, itemHighlightHeight, null);	
-			}else if(itemNumberSelected==8) {
-				g.drawImage(Assets.itemBar_highlighted, itemX9-marginWidth, itemY-marginHeight, itemHighlightWidth, itemHighlightHeight, null);	
-			}
+//			int itemNumberSelected = inventoryItems.indexOf(item);
+//			if(itemNumberSelected==0) {
+//				g.drawImage(Assets.itemBar_highlighted, itemX1-marginWidth, itemY-marginHeight, itemHighlightWidth, itemHighlightHeight, null);
+//			}else if(itemNumberSelected==1) {
+//				g.drawImage(Assets.itemBar_highlighted, itemX2-marginWidth, itemY-marginHeight, itemHighlightWidth, itemHighlightHeight, null);	
+//			}else if(itemNumberSelected==2) {
+//				g.drawImage(Assets.itemBar_highlighted, itemX3-marginWidth, itemY-marginHeight, itemHighlightWidth, itemHighlightHeight, null);	
+//			}else if(itemNumberSelected==3) {
+//				g.drawImage(Assets.itemBar_highlighted, itemX4-marginWidth, itemY-marginHeight, itemHighlightWidth, itemHighlightHeight, null);	
+//			}else if(itemNumberSelected==4) {
+//				g.drawImage(Assets.itemBar_highlighted, itemX5-marginWidth, itemY-marginHeight, itemHighlightWidth, itemHighlightHeight, null);	
+//			}else if(itemNumberSelected==5) {
+//				g.drawImage(Assets.itemBar_highlighted, itemX6-marginWidth, itemY-marginHeight, itemHighlightWidth, itemHighlightHeight, null);	
+//			}else if(itemNumberSelected==6) {
+//				g.drawImage(Assets.itemBar_highlighted, itemX7-marginWidth, itemY-marginHeight, itemHighlightWidth, itemHighlightHeight, null);	
+//			}else if(itemNumberSelected==7) {
+//				g.drawImage(Assets.itemBar_highlighted, itemX8-marginWidth, itemY-marginHeight, itemHighlightWidth, itemHighlightHeight, null);	
+//			}else if(itemNumberSelected==8) {
+//				g.drawImage(Assets.itemBar_highlighted, itemX9-marginWidth, itemY-marginHeight, itemHighlightWidth, itemHighlightHeight, null);	
+//			}
 		}
 		//display items
 		int itemNumber = inventoryItems.indexOf(item);
@@ -126,6 +145,16 @@ public class ItemBar {
 		}
 		}
 		}
+	}
+	
+	//SCROLL
+	public void scrollUpByOne() {
+		selectedSlot+=1;
+		inventory.setSelectedItem(selectedSlot);
+	}
+	public void scrollDownByOne() {
+	selectedSlot-=1;
+	inventory.setSelectedItem(selectedSlot);
 	}
 	
 	// GETTERS SETTERS
