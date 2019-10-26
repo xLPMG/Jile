@@ -63,6 +63,8 @@ public class ItemBar {
 			selectedSlot = 8;
 		else if(selectedSlot > 8)
 			selectedSlot = 0;
+		
+		inventoryItems = inventory.getInventoryItems();
 	}
 	public void render(Graphics g) {	
 		g.drawImage(Assets.itemBar, barX,barY, barWidth, barHeight, null);
