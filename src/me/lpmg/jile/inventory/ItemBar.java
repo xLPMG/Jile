@@ -67,53 +67,9 @@ public class ItemBar {
 		inventoryItems = inventory.getInventoryItems();
 	}
 	public void render(Graphics g) {	
-		g.drawImage(Assets.itemBar, barX,barY, barWidth, barHeight, null);
-		if(selectedSlot==0) {
-		g.drawImage(Assets.itemBar_highlighted, itemX1-marginWidth, itemY-marginHeight, itemHighlightWidth, itemHighlightHeight, null);
-	}else if(selectedSlot==1) {
-		g.drawImage(Assets.itemBar_highlighted, itemX2-marginWidth, itemY-marginHeight, itemHighlightWidth, itemHighlightHeight, null);	
-	}else if(selectedSlot==2) {
-		g.drawImage(Assets.itemBar_highlighted, itemX3-marginWidth, itemY-marginHeight, itemHighlightWidth, itemHighlightHeight, null);	
-	}else if(selectedSlot==3) {
-		g.drawImage(Assets.itemBar_highlighted, itemX4-marginWidth, itemY-marginHeight, itemHighlightWidth, itemHighlightHeight, null);	
-	}else if(selectedSlot==4) {
-		g.drawImage(Assets.itemBar_highlighted, itemX5-marginWidth, itemY-marginHeight, itemHighlightWidth, itemHighlightHeight, null);	
-	}else if(selectedSlot==5) {
-		g.drawImage(Assets.itemBar_highlighted, itemX6-marginWidth, itemY-marginHeight, itemHighlightWidth, itemHighlightHeight, null);	
-	}else if(selectedSlot==6) {
-		g.drawImage(Assets.itemBar_highlighted, itemX7-marginWidth, itemY-marginHeight, itemHighlightWidth, itemHighlightHeight, null);	
-	}else if(selectedSlot==7) {
-		g.drawImage(Assets.itemBar_highlighted, itemX8-marginWidth, itemY-marginHeight, itemHighlightWidth, itemHighlightHeight, null);	
-	}else if(selectedSlot==8) {
-		g.drawImage(Assets.itemBar_highlighted, itemX9-marginWidth, itemY-marginHeight, itemHighlightWidth, itemHighlightHeight, null);	
-	}
-		
-		
+		g.drawImage(Assets.itemBar, barX,barY, barWidth, barHeight, null);		
 		if(inventoryItems.size()!=0) {		
 		for(Item item : inventoryItems) {
-		//mark selected item
-		if(item == inventoryItems.get(selectedItem)) {
-//			int itemNumberSelected = inventoryItems.indexOf(item);
-//			if(itemNumberSelected==0) {
-//				g.drawImage(Assets.itemBar_highlighted, itemX1-marginWidth, itemY-marginHeight, itemHighlightWidth, itemHighlightHeight, null);
-//			}else if(itemNumberSelected==1) {
-//				g.drawImage(Assets.itemBar_highlighted, itemX2-marginWidth, itemY-marginHeight, itemHighlightWidth, itemHighlightHeight, null);	
-//			}else if(itemNumberSelected==2) {
-//				g.drawImage(Assets.itemBar_highlighted, itemX3-marginWidth, itemY-marginHeight, itemHighlightWidth, itemHighlightHeight, null);	
-//			}else if(itemNumberSelected==3) {
-//				g.drawImage(Assets.itemBar_highlighted, itemX4-marginWidth, itemY-marginHeight, itemHighlightWidth, itemHighlightHeight, null);	
-//			}else if(itemNumberSelected==4) {
-//				g.drawImage(Assets.itemBar_highlighted, itemX5-marginWidth, itemY-marginHeight, itemHighlightWidth, itemHighlightHeight, null);	
-//			}else if(itemNumberSelected==5) {
-//				g.drawImage(Assets.itemBar_highlighted, itemX6-marginWidth, itemY-marginHeight, itemHighlightWidth, itemHighlightHeight, null);	
-//			}else if(itemNumberSelected==6) {
-//				g.drawImage(Assets.itemBar_highlighted, itemX7-marginWidth, itemY-marginHeight, itemHighlightWidth, itemHighlightHeight, null);	
-//			}else if(itemNumberSelected==7) {
-//				g.drawImage(Assets.itemBar_highlighted, itemX8-marginWidth, itemY-marginHeight, itemHighlightWidth, itemHighlightHeight, null);	
-//			}else if(itemNumberSelected==8) {
-//				g.drawImage(Assets.itemBar_highlighted, itemX9-marginWidth, itemY-marginHeight, itemHighlightWidth, itemHighlightHeight, null);	
-//			}
-		}
 		//display items
 		int itemNumber = inventoryItems.indexOf(item);
 		if(itemNumber==0) {
@@ -144,6 +100,25 @@ public class ItemBar {
 			g.drawImage(item.getTexture(), itemX9, itemY, itemWidth, itemheight, null);	
 		}
 		}
+		}
+		if(selectedSlot==0) {
+			g.drawImage(Assets.itemBar_highlighted, itemX1-marginWidth, itemY-marginHeight, itemHighlightWidth, itemHighlightHeight, null);
+		}else if(selectedSlot==1) {
+			g.drawImage(Assets.itemBar_highlighted, itemX2-marginWidth, itemY-marginHeight, itemHighlightWidth, itemHighlightHeight, null);	
+		}else if(selectedSlot==2) {
+			g.drawImage(Assets.itemBar_highlighted, itemX3-marginWidth, itemY-marginHeight, itemHighlightWidth, itemHighlightHeight, null);	
+		}else if(selectedSlot==3) {
+			g.drawImage(Assets.itemBar_highlighted, itemX4-marginWidth, itemY-marginHeight, itemHighlightWidth, itemHighlightHeight, null);	
+		}else if(selectedSlot==4) {
+			g.drawImage(Assets.itemBar_highlighted, itemX5-marginWidth, itemY-marginHeight, itemHighlightWidth, itemHighlightHeight, null);	
+		}else if(selectedSlot==5) {
+			g.drawImage(Assets.itemBar_highlighted, itemX6-marginWidth, itemY-marginHeight, itemHighlightWidth, itemHighlightHeight, null);	
+		}else if(selectedSlot==6) {
+			g.drawImage(Assets.itemBar_highlighted, itemX7-marginWidth, itemY-marginHeight, itemHighlightWidth, itemHighlightHeight, null);	
+		}else if(selectedSlot==7) {
+			g.drawImage(Assets.itemBar_highlighted, itemX8-marginWidth, itemY-marginHeight, itemHighlightWidth, itemHighlightHeight, null);	
+		}else if(selectedSlot==8) {
+			g.drawImage(Assets.itemBar_highlighted, itemX9-marginWidth, itemY-marginHeight, itemHighlightWidth, itemHighlightHeight, null);	
 		}
 	}
 	

@@ -6,6 +6,7 @@ import me.lpmg.jile.Handler;
 import me.lpmg.jile.entities.EntityManager;
 import me.lpmg.jile.entities.creatures.Log;
 import me.lpmg.jile.entities.creatures.Player;
+import me.lpmg.jile.entities.creatures.Wizard;
 import me.lpmg.jile.entities.statics.Rock;
 import me.lpmg.jile.entities.statics.Bush;
 import me.lpmg.jile.items.ItemManager;
@@ -195,7 +196,7 @@ public class World {
 			}
 		}
 	}
-		
+	entityManager.addEntity(new Wizard(handler, 200, 300));	
 	}
 	
 	public int getWidth(){

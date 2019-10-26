@@ -1,6 +1,10 @@
 package me.lpmg.jile.entities.creatures;
 
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
@@ -8,6 +12,7 @@ import me.lpmg.jile.Handler;
 import me.lpmg.jile.entities.Entity;
 import me.lpmg.jile.gfx.Animation;
 import me.lpmg.jile.gfx.Assets;
+import me.lpmg.jile.gfx.Text;
 import me.lpmg.jile.healthbar.Healthbar;
 import me.lpmg.jile.inventory.Inventory;
 import me.lpmg.jile.inventory.ItemBar;
@@ -31,6 +36,7 @@ public class Player extends Creature {
 	private float defSpeed;
 	private float sprintSpeed;
 	
+	private int money;
 	private int healthRegenSpeed = 200;
 	private int manaRegenSpeed = 260;
 	
@@ -44,7 +50,7 @@ public class Player extends Creature {
 		speed = 2.4f;
 		defSpeed = speed;
 		sprintSpeed = 3.2f;
-		
+		money=1;
 	
 		//Animatons
 		animDown = new Animation(250, Assets.player_down);
@@ -76,6 +82,7 @@ public class Player extends Creature {
 		animAttackRight.tick();
 		//Movement
 		getInput();
+		checkInteraction();
 		move();
 		handler.getGameCamera().centerOnEntity(this);
 		// Attack
@@ -183,7 +190,17 @@ public class Player extends Creature {
 	public void postRender(Graphics g){
 		healthbar.render(g);
 		itemBar.render(g);
+		renderMoney(g);
 		inventory.render(g);
+	}
+	
+	private void renderMoney(Graphics g) {
+		Graphics2D g2 = (Graphics2D)g;
+		g2.setFont(Assets.font48);
+		g2.setColor(Color.WHITE);
+		FontMetrics fontMetrics = g2.getFontMetrics();
+		String moneyString = Integer.toString(money)+"$";
+		g2.drawString(moneyString, (handler.getWidth()) - fontMetrics.stringWidth(moneyString), 35);
 	}
 	
 	private BufferedImage getCurrentAnimationFrame(){
@@ -244,6 +261,39 @@ public class Player extends Creature {
 		}
 	}
 	
+	private void checkInteraction() {
+		Rectangle cb = getCollisionBounds(0, 0);
+		Rectangle ar = new Rectangle();
+		int arSize = 20;
+		ar.width = arSize;
+		ar.height = arSize;
+		
+		if(handler.getKeyManager().up&&handler.getMouseManager().isLeftPressed()){
+			ar.x = cb.x + cb.width / 2 - arSize / 2;
+			ar.y = cb.y - arSize;
+		}else if(handler.getKeyManager().down&&handler.getMouseManager().isLeftPressed()){
+			ar.x = cb.x + cb.width / 2 - arSize / 2;
+			ar.y = cb.y + cb.height;
+		}else if(handler.getKeyManager().left&&handler.getMouseManager().isLeftPressed()){
+			ar.x = cb.x - arSize;
+			ar.y = cb.y + cb.height / 2 - arSize / 2;
+		}else if(handler.getKeyManager().right&&handler.getMouseManager().isLeftPressed()){
+			ar.x = cb.x + cb.width;
+			ar.y = cb.y + cb.height / 2 - arSize / 2;
+		}else{
+			return;
+		}
+		
+		for(Entity e : handler.getWorld().getEntityManager().getEntities()){
+			if(e.equals(this))
+				continue;
+			if(e.getCollisionBounds(0, 0).intersects(ar)&&e instanceof Wizard){
+				((Wizard) e).interact();
+				return;
+			}
+		}
+	}
+	
 	public Inventory getInventory() {
 		return inventory;
 	}
@@ -254,6 +304,13 @@ public class Player extends Creature {
 	
 	public ItemBar getItemBar(){
 		return itemBar;
+	}
+	
+	public int getMoney(int money) {
+		return money;
+	}
+	public void setMoney(int money) {
+		this.money=money;
 	}
 
 }

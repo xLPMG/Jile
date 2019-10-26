@@ -14,6 +14,7 @@ public class Inventory {
 
 	private Handler handler;
 	private boolean active = false;
+	private boolean disabled = false;
 	private ArrayList<Item> inventoryItems;
 
 	private int invX = 119, invY = 64, invWidth = 512, invHeight = 384, invListCenterX = invX + 171,
@@ -31,6 +32,9 @@ public class Inventory {
 	}
 
 	public void tick() {
+		if(disabled) {
+			active=false;
+		}
 		if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_E))
 			active = !active;
 		if (!active)
@@ -68,7 +72,6 @@ public class Inventory {
 	public void render(Graphics g) {
 		if (!active)
 			return;
-
 		g.drawImage(Assets.inventoryScreen, invX, invY, invWidth, invHeight, null);
 
 		int len = inventoryItems.size();
@@ -126,6 +129,10 @@ public class Inventory {
 		if (inventoryItems.size() > slotID) {
 			selectedItem = slotID;
 		}
+	}
+	
+	public void disableInventory(boolean disabled) {
+		this.disabled=disabled;
 	}
 
 }
