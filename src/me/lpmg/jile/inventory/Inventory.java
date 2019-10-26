@@ -16,16 +16,16 @@ public class Inventory {
 	private boolean active = false;
 	private ArrayList<Item> inventoryItems;
 	
-	private int invX = 64, invY = 48,
+	private int invX = 119, invY = 64,
 			invWidth = 512, invHeight = 384,
 			invListCenterX = invX + 171,
 			invListCenterY = invY + invHeight / 2 + 5,
 			invListSpacing = 30;
 	
-	private int invImageX = 452, invImageY = 82,
+	private int invImageX = 388+invX, invImageY = 34+invY,
 			invImageWidth = 64, invImageHeight = 64;
 	
-	private int invCountX = 484, invCountY = 172;
+	private int invCountX = 420+invX, invCountY = 124+invY;
 	
 	private int selectedItem = 0;
 	

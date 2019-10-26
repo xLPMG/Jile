@@ -17,11 +17,9 @@ public class ItemBarScroll implements MouseWheelListener{
 	}
 	
 	private void initItemBar() {
-		System.out.println("about to init");
 		if(handler!=null) {
 			if(handler.getWorld()!=null) {
 			itemBar = handler.getWorld().player.getItemBar();
-			System.out.println("itembar: "+itemBar);
 			initializedItemBar=true;
 			}
 		}
