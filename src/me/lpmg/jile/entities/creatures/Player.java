@@ -27,6 +27,8 @@ public class Player extends Creature {
 	private Healthbar healthbar;
 	private int attackDirection = 0;
 	private int tickCount;
+	private float defSpeed;
+	private float sprintSpeed;
 	
 	public Player(Handler handler, float x, float y) {
 		super(handler, x, y, Creature.PLAYER_WIDTH, Creature.PLAYER_HEIGHT);
@@ -35,7 +37,9 @@ public class Player extends Creature {
 		bounds.y = 18*3; //19*3
 		bounds.width = 9*3; //9*3
 		bounds.height = 4*3; //4*3
-		speed = 2.5f;
+		speed = 2.4f;
+		defSpeed = speed;
+		sprintSpeed = 3.2f;
 		
 		//Animatons
 		animDown = new Animation(250, Assets.player_down);
@@ -142,6 +146,12 @@ public class Player extends Creature {
 
 		if(inventory.isActive())
 			return;
+		
+		if(handler.getKeyManager().shift) {
+			speed = sprintSpeed;
+		}else if(!handler.getKeyManager().shift){
+			speed = defSpeed;
+		}
 		
 		if(handler.getKeyManager().up)
 			yMove = -speed;
