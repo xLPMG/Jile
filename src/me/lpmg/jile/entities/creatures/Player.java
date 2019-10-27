@@ -35,6 +35,7 @@ public class Player extends Creature {
 	private int manaTickCount;
 	private float defSpeed;
 	private float sprintSpeed;
+	private boolean frozen=false;
 	
 	private int money;
 	private int healthRegenSpeed = 200;
@@ -80,10 +81,12 @@ public class Player extends Creature {
 		animAttackUp.tick();
 		animAttackLeft.tick();
 		animAttackRight.tick();
+		if(!frozen) {
 		//Movement
 		getInput();
 		checkInteraction();
 		move();
+		}
 		handler.getGameCamera().centerOnEntity(this);
 		// Attack
 		checkAttacks();
@@ -204,6 +207,11 @@ public class Player extends Creature {
 	}
 	
 	private BufferedImage getCurrentAnimationFrame(){
+		if(frozen) {
+			return animIdle.getCurrentFrame();
+		}
+		
+		
 		if(xMove < 0){
 			return animLeft.getCurrentFrame();
 		}else if(xMove > 0){
@@ -306,11 +314,20 @@ public class Player extends Creature {
 		return itemBar;
 	}
 	
-	public int getMoney(int money) {
+	public int getMoney() {
 		return money;
 	}
 	public void setMoney(int money) {
 		this.money=money;
+	}
+	public void addMoney(int money) {
+		this.money+=money;
+	}
+	public void subtractMoney(int money) {
+		this.money-=money;
+	}
+	public void freeze(boolean freeze) {
+    frozen=freeze;
 	}
 
 }

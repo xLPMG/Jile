@@ -124,6 +124,9 @@ public class Inventory {
 	public ArrayList getInventoryItems() {
 		return inventoryItems;
 	}
+	public void setInventoryItems(ArrayList inventoryItems) {
+		this.inventoryItems=inventoryItems;
+	}
 
 	public void setSelectedItem(int slotID) {
 		if (inventoryItems.size() > slotID) {

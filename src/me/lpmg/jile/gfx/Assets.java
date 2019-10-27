@@ -11,7 +11,7 @@ public class Assets {
 	private static final int wall_sheet_width = 16, wall_sheet_height = 16;
 	private static final int healthbar_width = 64, healthbar_height = 10;
 	
-	public static Font font28, font48, font96;
+	public static Font font9, font28, font48, font96;
 	
 	public static BufferedImage placeholder, debug;
 	
@@ -29,12 +29,13 @@ public class Assets {
 	public static BufferedImage[] wizard_down, wizard_up, wizard_left, wizard_right, wizard_idle;
 	public static BufferedImage[] log_down, log_up, log_left, log_right, log_idle;
 	
-	public static BufferedImage[] btn_start;
+	public static BufferedImage[] btn_start, btn_buy, btn_sell;
 	public static BufferedImage inventoryScreen, itemBar, itemBar_highlighted;
-	public static BufferedImage wizardMenu;
+	public static BufferedImage wizardBuyMenu, wizardSellMenu;
 	public static BufferedImage healthbar, healthbar_empty, healthbar_health_full, healthbar_mana_full, healthbar_corner_full;
 	
 	static {
+		font9 = FontLoader.loadFont("/fonts/slkscr.ttf", 9);
 		font28 = FontLoader.loadFont("/fonts/slkscr.ttf", 28);
 		font48 = FontLoader.loadFont("/fonts/slkscr.ttf", 48);
 		font96 = FontLoader.loadFont("/fonts/slkscr.ttf", 96);
@@ -49,11 +50,13 @@ public class Assets {
 		SpriteSheet wall_sheet = new SpriteSheet(ImageLoader.loadImage("/textures/walls_sheet.png"));
 		SpriteSheet healthbar_sheet = new SpriteSheet(ImageLoader.loadImage("/textures/healthbar_sheet.png"));
 		SpriteSheet startBtn = new SpriteSheet(ImageLoader.loadImage("/textures/button_start.png"));
+		SpriteSheet wizardBtn = new SpriteSheet(ImageLoader.loadImage("/textures/button_wizard.png"));
 		
 		inventoryScreen = ImageLoader.loadImage("/textures/inventoryScreen.png");
 		itemBar = ImageLoader.loadImage("/textures/item_bar.png");
 		itemBar_highlighted = ImageLoader.loadImage("/textures/item_bar_highlighted.png");
-		wizardMenu = ImageLoader.loadImage("/textures/wizardMenu.png");
+		wizardBuyMenu = ImageLoader.loadImage("/textures/wizardBuyMenu.png");
+		wizardSellMenu = ImageLoader.loadImage("/textures/wizardSellMenu.png");
 		
 		woodItem = item_sheet.crop(0, 0, default_width, default_height);
 		rockItem = item_sheet.crop(default_width, 0, default_width, default_height);
@@ -61,6 +64,14 @@ public class Assets {
 		btn_start = new BufferedImage[2];
 		btn_start[0] = startBtn.crop(0, 0, default_width * 2, default_height);
 		btn_start[1] = startBtn.crop(0, default_height, default_width * 2, default_height);
+		
+		btn_buy = new BufferedImage[2];
+		btn_buy[0] = wizardBtn.crop(0, 0, default_width * 2, default_height);
+		btn_buy[1] = wizardBtn.crop(0, default_height, default_width * 2, default_height);
+		
+		btn_sell = new BufferedImage[2];
+		btn_sell[0] = wizardBtn.crop(default_width * 2, 0, default_width * 2, default_height);
+		btn_sell[1] = wizardBtn.crop(default_width * 2, default_height, default_width * 2, default_height);
 		
 		healthbar_empty = healthbar_sheet.crop(0, 0, healthbar_width, healthbar_height);
 		healthbar_health_full = healthbar_sheet.crop(0, healthbar_height, healthbar_width, healthbar_height);

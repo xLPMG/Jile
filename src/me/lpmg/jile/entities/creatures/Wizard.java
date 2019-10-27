@@ -34,7 +34,7 @@ public class Wizard extends Creature {
 		animLeft = new Animation(250, Assets.wizard_left);
 		animRight = new Animation(250, Assets.wizard_right);
 		animIdle = new Animation(500, Assets.wizard_idle);
-
+		
 		wizardMenu = new WizardMenu(handler);
 	}
 
@@ -125,7 +125,7 @@ public class Wizard extends Creature {
 			xMove = -1*speed;
 		}
 
-		if(wizardMenu.isActive()) {
+		if(wizardMenu.isActive()||wizardMenu.wBM.isActive()||wizardMenu.wSM.isActive()) {
 			speed=0;
 		}else {
 			speed=defspeed;
