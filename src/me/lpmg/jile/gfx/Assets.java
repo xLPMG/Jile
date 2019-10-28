@@ -29,6 +29,8 @@ public class Assets {
 	public static BufferedImage[] wizard_down, wizard_up, wizard_left, wizard_right, wizard_idle;
 	public static BufferedImage[] log_down, log_up, log_left, log_right, log_idle;
 	
+	public static BufferedImage fence_hz, fence_vt, fence_hL, fence_hR, fence_CBL, fence_CBR, fence_CTL, fence_CTR;
+	
 	public static BufferedImage[] btn_start, btn_buy, btn_sell;
 	public static BufferedImage inventoryScreen, itemBar, itemBar_highlighted;
 	public static BufferedImage wizardBuyMenu, wizardSellMenu;
@@ -168,6 +170,15 @@ public class Assets {
 		wall_right_top_low = wall_sheet.crop(wall_sheet_width * 2, wall_sheet_height * 2, wall_sheet_width, wall_sheet_height);
 		wall_right_top_middle = wall_sheet.crop(wall_sheet_width* 2, wall_sheet_height, wall_sheet_width, wall_sheet_height);
 		wall_right_top_high = wall_sheet.crop(wall_sheet_width * 2, 0, wall_sheet_height, wall_sheet_height);
+		
+		fence_hz = sheet.crop(0, default_height * 4, default_width, default_height);
+		fence_vt = sheet.crop(default_width, default_height * 4, default_width, default_height);
+		fence_hL = sheet.crop(default_width*2, default_height * 4, default_width, default_height);
+		fence_hR = sheet.crop(default_width*3, default_height * 4, default_width, default_height);
+		fence_CBL = sheet.crop(default_width*4, default_height * 4, default_width, default_height);
+		fence_CBR = sheet.crop(default_width*5, default_height * 4, default_width, default_height);
+		fence_CTL = sheet.crop(default_width*6, default_height * 4, default_width, default_height);
+		fence_CTR = sheet.crop(default_width*7, default_height * 4, default_width, default_height);
 		
 		stone = sheet.crop(default_width * 3, 0, default_width, default_height);
 		

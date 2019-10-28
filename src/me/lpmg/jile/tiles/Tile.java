@@ -51,6 +51,14 @@ public class Tile {
 	public static Tile wallRightTopMiddleTile = new WallTileSolid(Assets.wall_right_top_middle, 65);
 	public static Tile wallRightTopHighTile = new WallTileSolid(Assets.wall_right_top_high, 66);
 	
+	public static Tile fence_hzTile = new FenceTileSolid(Assets.fence_hz, 70);
+	public static Tile fence_vtTile = new FenceTileSolid(Assets.fence_vt, 71);
+	public static Tile fence_hLTile = new FenceTileSolid(Assets.fence_hL, 72);
+	public static Tile fence_hRTile = new FenceTileSolid(Assets.fence_hR, 73);
+	public static Tile fence_CBLTile = new FenceTileSolid(Assets.fence_CBL, 74);
+	public static Tile fence_CBRTile = new FenceTileSolid(Assets.fence_CBR, 75);
+	public static Tile fence_CTLTile = new FenceTileSolid(Assets.fence_CTL, 76);
+	public static Tile fence_CTRTile = new FenceTileSolid(Assets.fence_CTR, 77);
 	//CLASS
 	
 	public static final int TILEWIDTH = 64, TILEHEIGHT = 64;
