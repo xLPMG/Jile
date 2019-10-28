@@ -17,14 +17,15 @@ public class Wizard extends Creature {
 	private int walkingDirection;
 	private int tickCount;
 	private float defspeed;
+	private int multiplier = PLAYER_HEIGHT/23;
 	
 	public Wizard(Handler handler, float x, float y) {
 		super(handler, x, y, Creature.PLAYER_WIDTH, Creature.PLAYER_HEIGHT);
 		
-		bounds.x = 3*3;
-		bounds.y = 22*3; //19*3
-		bounds.width = 11*3; //9*3
-		bounds.height = 8*3; //4*3
+		bounds.x = 3*multiplier;
+		bounds.y = 22*multiplier; //19*3
+		bounds.width = 11*multiplier; //9*3
+		bounds.height = 8*multiplier; //4*3
 		speed = 0.5f;
 		defspeed = speed;
 		
