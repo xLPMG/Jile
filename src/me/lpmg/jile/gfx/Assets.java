@@ -8,7 +8,7 @@ public class Assets {
 	private static final int default_width = 32, default_height = 32;
 	private static final int player_sheet_width = 16, player_sheet_height = 23;
 	private static final int log_sheet_width = 32, log_sheet_height = 32;
-	private static final int wall_sheet_width = 16, wall_sheet_height = 16;
+	private static final int wall_sheet_width = 32, wall_sheet_height = 32;
 	private static final int healthbar_width = 64, healthbar_height = 10;
 	
 	public static Font font9, font28, font48, font96;
@@ -20,7 +20,7 @@ public class Assets {
 	public static BufferedImage wall_right_shadow, wall_right_bottom, wall_right_body_low, wall_right_body_high, wall_right_top_low, wall_right_top_middle, wall_right_top_high;
 	
 	public static BufferedImage dirt_full, stone;
-	public static BufferedImage grass_full, grass_dirtBottom, grass_dirtTop, grass_dirtLeft, grass_dirtRight;
+	public static BufferedImage grass_full, grass_dirtBottom, grass_dirtTop, grass_dirtLeft, grass_dirtRight, grass_ramp;
 	public static BufferedImage tree, pebble;
 	public static BufferedImage bush, bush_dmg1, bush_dmg2, bush_dmg3;
 	public static BufferedImage rock, rock_dmg1, rock_dmg2, rock_dmg3;
@@ -143,6 +143,7 @@ public class Assets {
 		grass_dirtTop = floor_sheet.crop(default_width * 2, 0, default_width, default_height);
 		grass_dirtLeft = floor_sheet.crop(default_width * 3, 0, default_width, default_height);
 		grass_dirtRight = floor_sheet.crop(default_width * 4, 0, default_width, default_height);
+		grass_ramp = floor_sheet.crop(default_width * 7, 0, default_width, default_height);
 		
 		placeholder = sheet.crop(0, 0, default_width, default_height);
 		debug = sheet.crop(0, default_width * 3, default_width, default_height);

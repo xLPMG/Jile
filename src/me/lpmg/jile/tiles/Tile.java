@@ -22,6 +22,8 @@ public class Tile {
 	public static Tile grassTileDirtTop = new GrassTile(Assets.grass_dirtTop, 12);
 	public static Tile grassTileDirtLeft = new GrassTile(Assets.grass_dirtLeft, 13);
 	public static Tile grassTileDirtRight = new GrassTile(Assets.grass_dirtRight, 14);
+	
+	public static Tile grassTileRamp = new GrassTile(Assets.grass_ramp, 15);
 
 	public static Tile dirtTile = new DirtTile(2);
 	public static Tile rockTile = new RockTile(3);
@@ -33,15 +35,15 @@ public class Tile {
 	public static Tile wallLeftBodyHighTile = new WallTileSolid(Assets.wall_left_body_high, 43);
 	public static Tile wallLeftTopLowTile = new WallTileSolid(Assets.wall_left_top_low, 44);
 	public static Tile wallLeftTopMiddleTile = new WallTileSolid(Assets.wall_left_top_middle, 45);
-	public static Tile wallLeftTopHighTile = new WallTileSolid(Assets.wall_left_top_high, 46);
+	public static Tile wallLeftTopHighTile = new WallTileCover(Assets.wall_left_top_high, 46);
 	
 	public static Tile wallMiddleShadowTile = new WallTileCover(Assets.wall_middle_shadow, 50);
 	public static Tile wallMiddleBottomTile = new WallTileSolid(Assets.wall_middle_bottom, 51);
 	public static Tile wallMiddleBodyLowTile = new WallTileSolid(Assets.wall_middle_body_low, 52);
 	public static Tile wallMiddleBodyHighTile = new WallTileSolid(Assets.wall_middle_body_high, 53);
-	public static Tile wallMiddleTopLowTile = new WallTileSolid(Assets.wall_middle_top_low, 54);
-	public static Tile wallMiddleTopMiddleTile = new WallTileSolid(Assets.wall_middle_top_middle, 55);
-	public static Tile wallMiddleTopHighTile = new WallTileSolid(Assets.wall_middle_top_high, 56);
+	public static Tile wallMiddleTopLowTile = new WallTileCover(Assets.wall_middle_top_low, 54);
+	public static Tile wallMiddleTopMiddleTile = new WallTileCover(Assets.wall_middle_top_middle, 55);
+	public static Tile wallMiddleTopHighTile = new WallTileCover(Assets.wall_middle_top_high, 56);
 	
 	public static Tile wallRightShadowTile = new WallTileCover(Assets.wall_right_shadow, 60);
 	public static Tile wallRightBottomTile = new WallTileSolid(Assets.wall_right_bottom, 61);
@@ -49,7 +51,7 @@ public class Tile {
 	public static Tile wallRightBodyHighTile = new WallTileSolid(Assets.wall_right_body_high, 63);
 	public static Tile wallRightTopLowTile = new WallTileSolid(Assets.wall_right_top_low, 64);
 	public static Tile wallRightTopMiddleTile = new WallTileSolid(Assets.wall_right_top_middle, 65);
-	public static Tile wallRightTopHighTile = new WallTileSolid(Assets.wall_right_top_high, 66);
+	public static Tile wallRightTopHighTile = new WallTileCover(Assets.wall_right_top_high, 66);
 	
 	public static Tile fence_hzTile = new FenceTileSolid(Assets.fence_hz, 70);
 	public static Tile fence_vtTile = new FenceTileSolid(Assets.fence_vt, 71);
