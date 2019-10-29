@@ -12,8 +12,8 @@ public class Item {
 	// Handler
 	
 	public static Item[] items = new Item[256];
-	public static Item woodItem = new Item(Assets.woodItem, "Wood", 0);
-	public static Item rockItem = new Item(Assets.rockItem, "Rock", 1);
+	public static Item woodItem = new Item(Assets.woodItem, "Wood", 0, 2, 1);
+	public static Item rockItem = new Item(Assets.rockItem, "Rock", 1, 3, 2);
 	
 	// Class
 	
@@ -23,16 +23,20 @@ public class Item {
 	protected BufferedImage texture;
 	protected String name;
 	protected final int id;
+	protected int sellingPrice;
+	protected int buyingPrice;
 	
 	protected Rectangle bounds;
 	
 	protected int x, y, count;
 	protected boolean pickedUp = false;
 	
-	public Item(BufferedImage texture, String name, int id){
+	public Item(BufferedImage texture, String name, int id, int buyingPrice, int sellingPrice){
 		this.texture = texture;
 		this.name = name;
 		this.id = id;
+		this.buyingPrice=buyingPrice;
+		this.sellingPrice=sellingPrice;
 		count = 1;
 		
 		bounds = new Rectangle(x, y, ITEMWIDTH, ITEMHEIGHT);
@@ -58,14 +62,14 @@ public class Item {
 	}
 	
 	public Item createNew(int count){
-		Item i = new Item(texture, name, id);
+		Item i = new Item(texture, name, id, buyingPrice, sellingPrice);
 		i.setPickedUp(true);
 		i.setCount(count);
 		return i;
 	}
 	
 	public Item createNew(int x, int y){
-		Item i = new Item(texture, name, id);
+		Item i = new Item(texture, name, id, buyingPrice, sellingPrice);
 		i.setPosition(x, y);
 		return i;
 	}
@@ -134,6 +138,23 @@ public class Item {
 	public int getId() {
 		return id;
 	}
+	
+	public int getBuyingPrice() {
+		return buyingPrice;
+	}
+
+	public void setBuyingPrice(int buyingPrice) {
+		this.buyingPrice = buyingPrice;
+	}
+	public int getSellingPrice() {
+		return sellingPrice;
+	}
+
+	public void setSellingPrice(int sellingPrice) {
+		this.sellingPrice = sellingPrice;
+	}
+
+
 
 	public boolean isPickedUp() {
 		return pickedUp;

@@ -6,6 +6,7 @@ import me.lpmg.jile.Handler;
 import me.lpmg.jile.entities.EntityManager;
 import me.lpmg.jile.entities.creatures.Log;
 import me.lpmg.jile.entities.creatures.Player;
+import me.lpmg.jile.entities.creatures.Wizard;
 import me.lpmg.jile.entities.statics.Rock;
 import me.lpmg.jile.entities.statics.Bush;
 import me.lpmg.jile.items.ItemManager;
@@ -25,8 +26,9 @@ public class World {
 	// Item
 	private ItemManager itemManager;
 	public Player player;
+	private int logSpawnTicker;
 	
-	private final int SPAWN_CHANCE_LOG_DEFAULT = 85;
+	private final int SPAWN_CHANCE_LOG_DEFAULT = 95;
 	
 //	public World(Handler handler, String firstLayer){
 //		this.handler = handler;
@@ -53,8 +55,15 @@ public class World {
 	}
 	
 	public void tick(){
+		logSpawnTicker++;
 		itemManager.tick();
 		entityManager.tick();
+		
+		if(logSpawnTicker>1200){
+			System.out.println("Spawning new logs...");
+			spawnRandomLogs();
+			logSpawnTicker=0;
+		}
 	}
 	
 	public void render(Graphics g){
@@ -178,24 +187,27 @@ public class World {
 		entityManager.getPlayer().setY(spawnY);
 		entityManager.addEntity(new Rock(handler, 350, 300));
 		entityManager.addEntity(new Bush(handler, 200, 500));
-		
-	int xStart = (int) Math.max(0, handler.getGameCamera().getxOffset() / Tile.TILEWIDTH);
-	int xEnd = (int) Math.min(width, (handler.getGameCamera().getxOffset() + handler.getWidth()) / Tile.TILEWIDTH + 1);
-	int yStart = (int) Math.max(0, handler.getGameCamera().getyOffset() / Tile.TILEHEIGHT);
-	int yEnd = (int) Math.min(height, (handler.getGameCamera().getyOffset() + handler.getHeight()) / Tile.TILEHEIGHT + 1);
+		entityManager.addEntity(new Wizard(handler, 200, 300));	
+		spawnRandomLogs();
+	}
 	
-	for(int y = yStart;y < yEnd;y++){
-		for(int x = xStart;x < xEnd;x++){
-			if(getTile(x, y) == Tile.grassTile&&getSecondLayerTile(x, y)==Tile.placeHolderTile&&getThirdLayerTile(x, y)==Tile.placeHolderTile) {
-				int spawnChance = (int)(Math.random() * 100) + 1; 
-				if(spawnChance>SPAWN_CHANCE_LOG_DEFAULT) {
-					System.out.println("spawnChance: "+spawnChance);
-				    entityManager.addEntity(new Log(handler, x*100, y*100));
+	private void spawnRandomLogs() {
+		int xStart = (int) Math.max(0, handler.getGameCamera().getxOffset() / Tile.TILEWIDTH);
+		int xEnd = (int) Math.min(width, (handler.getGameCamera().getxOffset() + handler.getWidth()) / Tile.TILEWIDTH + 1);
+		int yStart = (int) Math.max(0, handler.getGameCamera().getyOffset() / Tile.TILEHEIGHT);
+		int yEnd = (int) Math.min(height, (handler.getGameCamera().getyOffset() + handler.getHeight()) / Tile.TILEHEIGHT + 1);
+		
+		for(int y = yStart;y < yEnd;y++){
+			for(int x = xStart;x < xEnd;x++){
+				if(getTile(x, y) == Tile.grassTile&&getSecondLayerTile(x, y)==Tile.placeHolderTile&&getThirdLayerTile(x, y)==Tile.placeHolderTile) {
+					int spawnChance = (int)(Math.random() * 100) + 1; 
+					if(spawnChance>SPAWN_CHANCE_LOG_DEFAULT) {
+						System.out.println("spawnChance: "+spawnChance);
+					    entityManager.addEntity(new Log(handler, x*100, y*100));
+					}
 				}
 			}
 		}
-	}
-		
 	}
 	
 	public int getWidth(){

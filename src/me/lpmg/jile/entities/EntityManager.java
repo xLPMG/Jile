@@ -7,6 +7,7 @@ import java.util.Iterator;
 
 import me.lpmg.jile.Handler;
 import me.lpmg.jile.entities.creatures.Player;
+import me.lpmg.jile.entities.creatures.Wizard;
 
 public class EntityManager {
 	
@@ -44,7 +45,7 @@ public class EntityManager {
 		for(Entity e : entities){
 			e.render(g);
 		}
-		player.postRender(g);
+//player and menu are rendered in GameState
 	}
 	
 	public void addEntity(Entity e){
