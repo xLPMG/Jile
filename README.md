@@ -21,6 +21,9 @@ A 2D pixel game written in Java. Source code will not be published yet.
 #### Collect items by faraming bushes and rocks, sell them and buy new items!
 ### Explore the map!
 ![jile map](https://raw.githubusercontent.com/xLPMG/Jile/master/ramp.png)
+### Fight the logs!
+![jile map](https://raw.githubusercontent.com/xLPMG/Jile/master/log.PNG)
+#### Defend yourself against the evil logs who will try to hurt you if you get close enough to them.
 ### Try Not To Die!
 ![jile die](https://raw.githubusercontent.com/xLPMG/Jile/master/youdied.PNG)
 
