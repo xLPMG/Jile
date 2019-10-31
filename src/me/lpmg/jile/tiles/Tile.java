@@ -42,7 +42,7 @@ public class Tile {
 	public static Tile dirtWallMiddleBottomTile = new WallTileSolid(Assets.dirt_wall_middle_bottom, 51);
 	public static Tile dirtWallMiddleBodyLowTile = new WallTileSolid(Assets.dirt_wall_middle_body_low, 52);
 	public static Tile dirtWallMiddleBodyHighTile = new WallTileSolid(Assets.dirt_wall_middle_body_high, 53);
-	public static Tile dirtWallMiddleTopLowTile = new WallTileCover(Assets.dirt_wall_middle_top_low, 54);
+	public static Tile dirtWallMiddleTopLowTile = new WallTileSolid(Assets.dirt_wall_middle_top_low, 54);
 	public static Tile dirtWallMiddleTopMiddleTile = new WallTileCover(Assets.dirt_wall_middle_top_middle, 55);
 	public static Tile dirtWallMiddleTopHighTile = new WallTileCover(Assets.dirt_wall_middle_top_high, 56);
 	
