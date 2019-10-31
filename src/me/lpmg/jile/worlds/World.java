@@ -3,6 +3,7 @@ package me.lpmg.jile.worlds;
 import java.awt.Graphics;
 
 import me.lpmg.jile.Handler;
+import me.lpmg.jile.buildings.Building;
 import me.lpmg.jile.buildings.BuildingManager;
 import me.lpmg.jile.buildings.HermitHut;
 import me.lpmg.jile.entities.Entity;
@@ -34,7 +35,7 @@ public class World {
 	public Player player;
 	private int spawnTicker;
 	
-	private final int SPAWN_CHANCE_LOG_DEFAULT = 90;
+	private final int SPAWN_CHANCE_LOG_DEFAULT = 95;
 	private final int SPAWN_CHANCE_HERMIT_DEFAULT = 90;
 	
 	public World(Handler handler, String firstLayer, String secondLayer, String thirdLayer){
@@ -57,7 +58,7 @@ public class World {
 		if(spawnTicker>3000){
 			System.out.println("Spawning new entities...");
 			spawnRandomLogs();
-			spawnRandomHermits();
+			spawnHermits();
 			spawnTicker=0;
 		}
 	}
@@ -196,7 +197,7 @@ public class World {
 		entityManager.addEntity(new Bush(handler, 200, 1500));
 		entityManager.addEntity(new Wizard(handler, 200, 300));	
 		spawnRandomLogs();
-		spawnRandomHermits();
+		spawnHermits();
 	}
 	
 	private void spawnRandomLogs() {
@@ -234,6 +235,12 @@ public class World {
 					}
 				}
 			}
+		}
+	}
+	private void spawnHermits() {
+		for(Building b : buildingManager.getBuildings()) {
+			System.out.println("Spawning hermit");
+			entityManager.addEntity(new Hermit(handler, b.getX()+b.getDoorX()+15, b.getY()+b.getDoorY()+10));
 		}
 	}
 	

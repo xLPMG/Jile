@@ -99,4 +99,12 @@ public abstract class Building {
 	public BuildingMap getMap() {
 		return map;
 	}
+	
+	public int getDoorX() {
+		return doorX;
+	}
+	public int getDoorY() {
+		return doorY;
+	}
+
 }
