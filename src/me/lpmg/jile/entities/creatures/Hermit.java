@@ -10,35 +10,35 @@ import me.lpmg.jile.gfx.Animation;
 import me.lpmg.jile.gfx.Assets;
 import me.lpmg.jile.items.Item;
 
-public class Log extends Creature {
+public class Hermit extends Creature {
 
 	// Animations
 	private Animation animDown, animUp, animLeft, animRight, animIdle;
 
+	private int multiplier = PLAYER_HEIGHT / 23;
 	private int walkingDirection;
 	private int tickCount;
 	private boolean attackMode = false;
 	private long lastAttackTimer, attackCooldown = 300, attackTimer = attackCooldown;
-	private Entity player;
-	private Entity focusedHermit;
-	private String focusedEntityName = "";
+	private Entity focusedLog;
 	private boolean frozen = false;
 
-	public Log(Handler handler, float x, float y) {
-		super(handler, x, y, Creature.DEFAULT_CREATURE_WIDTH, Creature.DEFAULT_CREATURE_HEIGHT);
+	public Hermit(Handler handler, float x, float y) {
+		super(handler, x, y, Creature.PLAYER_WIDTH, Creature.PLAYER_HEIGHT);
 
-		bounds.x = 22;
-		bounds.y = 44;
-		bounds.width = 19;
-		bounds.height = 19;
-		speed = 0.5f;
+		bounds.x = 4 * multiplier; // 4*3
+		bounds.y = 18 * multiplier; // 19*3
+		bounds.width = 11 * multiplier; // 9*3
+		bounds.height = 4 * multiplier; // 4*3
+		speed = 1.0f;
+		health = 150;
 
 		// Animatons
-		animDown = new Animation(250, Assets.log_down);
-		animUp = new Animation(250, Assets.log_up);
-		animLeft = new Animation(250, Assets.log_left);
-		animRight = new Animation(250, Assets.log_right);
-		animIdle = new Animation(500, Assets.log_idle);
+		animDown = new Animation(250, Assets.hermit_down);
+		animUp = new Animation(250, Assets.hermit_up);
+		animLeft = new Animation(250, Assets.hermit_left);
+		animRight = new Animation(250, Assets.hermit_right);
+		animIdle = new Animation(500, Assets.hermit_idle);
 
 	}
 
@@ -82,8 +82,10 @@ public class Log extends Creature {
 
 	@Override
 	public void die() {
-		handler.getWorld().getItemManager().addItem(Item.woodItem.createNew((int) x, (int) y));
-		System.out.println("Entity Debug: Log died.");
+		handler.getWorld().getItemManager().addItem(Item.rockItem.createNew((int) x, (int) y));
+		handler.getWorld().getItemManager().addItem(Item.rockItem.createNew((int) x, (int) y));
+		handler.getWorld().getItemManager().addItem(Item.rockItem.createNew((int) x, (int) y));
+		System.out.println("Entity Debug: Hermit died.");
 
 	}
 
@@ -99,20 +101,10 @@ public class Log extends Creature {
 			}
 
 		} else {
-			int xDiff = 0;
-			int yDiff = 0;
-
-			if (focusedEntityName.equalsIgnoreCase("player")) {
-				float playerX = player.getX();
-				float playerY = player.getY();
-				xDiff = (int) (playerX - x);
-				yDiff = (int) (playerY - y);
-			} else if (focusedEntityName.equalsIgnoreCase("hermit")) {
-				float hermitX = focusedHermit.getX();
-				float hermitY = focusedHermit.getY();
-				xDiff = (int) (hermitX - x);
-				yDiff = (int) (hermitY - y);
-			}
+			float logX = focusedLog.getX();
+			float logY = focusedLog.getY();
+			int xDiff = (int) (logX - x);
+			int yDiff = (int) (logY - y);
 
 			if (xDiff == 0 && yDiff > 0) {
 				walkingDirection = 1;
@@ -195,15 +187,9 @@ public class Log extends Creature {
 			if (e.equals(this))
 				continue;
 			// search
-			if (e.getCollisionBounds(0, 0).intersects(searchArea)
-					&& e.equals(handler.getWorld().getEntityManager().getPlayer())) {
-				player = handler.getWorld().getEntityManager().getPlayer();
-				focusedEntityName = "player";
+			if (e.getCollisionBounds(0, 0).intersects(searchArea) && e instanceof Log) {
 				attackMode = true;
-			} else if (e.getCollisionBounds(0, 0).intersects(searchArea) && e instanceof Hermit) {
-				focusedHermit = e;
-				focusedEntityName = "hermit";
-				attackMode = true;
+				focusedLog = e;
 			} else {
 				tickCount++;
 				if (tickCount == 120) {
@@ -213,15 +199,7 @@ public class Log extends Creature {
 				}
 			}
 			// attack
-			if (e.getCollisionBounds(0, 0).intersects(attackArea)
-					&& e.equals(handler.getWorld().getEntityManager().getPlayer())) {
-				player = handler.getWorld().getEntityManager().getPlayer();
-				focusedEntityName = "player";
-				e.hurt(1);
-				frozen = false;
-			} else if (e.getCollisionBounds(0, 0).intersects(attackArea) && e instanceof Hermit) {
-				focusedHermit = e;
-				focusedEntityName = "hermit";
+			if (e.getCollisionBounds(0, 0).intersects(attackArea) && e instanceof Log) {
 				e.hurt(1);
 				frozen = true;
 			}

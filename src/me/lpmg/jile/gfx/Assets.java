@@ -9,15 +9,16 @@ public class Assets {
 	private static final int player_sheet_width = 16, player_sheet_height = 23;
 	private static final int log_sheet_width = 32, log_sheet_height = 32;
 	private static final int wall_sheet_width = 32, wall_sheet_height = 32;
+	private static final int hut_width = 80, hut_height = 80;
 	private static final int healthbar_width = 64, healthbar_height = 10;
 	
 	public static Font font9, font28, font48, font96;
 	
 	public static BufferedImage placeholder, debug;
 	
-	public static BufferedImage wall_left_shadow, wall_left_bottom, wall_left_body_low, wall_left_body_high, wall_left_top_low, wall_left_top_middle, wall_left_top_high;
-	public static BufferedImage wall_middle_shadow, wall_middle_bottom, wall_middle_body_low, wall_middle_body_high, wall_middle_top_low, wall_middle_top_middle, wall_middle_top_high;
-	public static BufferedImage wall_right_shadow, wall_right_bottom, wall_right_body_low, wall_right_body_high, wall_right_top_low, wall_right_top_middle, wall_right_top_high;
+	public static BufferedImage dirt_wall_left_shadow, dirt_wall_left_bottom, dirt_wall_left_body_low, dirt_wall_left_body_high, dirt_wall_left_top_low, dirt_wall_left_top_middle, dirt_wall_left_top_high;
+	public static BufferedImage dirt_wall_middle_shadow, dirt_wall_middle_bottom, dirt_wall_middle_body_low, dirt_wall_middle_body_high, dirt_wall_middle_top_low, dirt_wall_middle_top_middle, dirt_wall_middle_top_high;
+	public static BufferedImage dirt_wall_right_shadow, dirt_wall_right_bottom, dirt_wall_right_body_low, dirt_wall_right_body_high, dirt_wall_right_top_low, dirt_wall_right_top_middle, dirt_wall_right_top_high;
 	
 	public static BufferedImage dirt_full, stone;
 	public static BufferedImage grass_full, grass_dirtBottom, grass_dirtTop, grass_dirtLeft, grass_dirtRight, grass_ramp;
@@ -28,6 +29,7 @@ public class Assets {
 	public static BufferedImage[] player_down, player_up, player_left, player_right, player_idle, player_attack_down, player_attack_up, player_attack_left, player_attack_right;
 	public static BufferedImage[] wizard_down, wizard_up, wizard_left, wizard_right, wizard_idle;
 	public static BufferedImage[] log_down, log_up, log_left, log_right, log_idle;
+	public static BufferedImage[] hermit_down, hermit_up, hermit_left, hermit_right, hermit_idle;
 	
 	public static BufferedImage fence_hz, fence_vt, fence_hL, fence_hR, fence_CBL, fence_CBR, fence_CTL, fence_CTR;
 	
@@ -36,6 +38,12 @@ public class Assets {
 	public static BufferedImage wizardBuyMenu, wizardSellMenu;
 	public static BufferedImage healthbar, healthbar_empty, healthbar_health_full, healthbar_mana_full, healthbar_corner_full;
 	
+	//buildings
+	public static BufferedImage hermit_hut;
+	public static BufferedImage floor_1;
+	public static BufferedImage wooden_wall_1;
+	
+	
 	static {
 		font9 = FontLoader.loadFont("/fonts/slkscr.ttf", 9);
 		font28 = FontLoader.loadFont("/fonts/slkscr.ttf", 28);
@@ -43,13 +51,21 @@ public class Assets {
 		font96 = FontLoader.loadFont("/fonts/slkscr.ttf", 96);
 
 		SpriteSheet sheet = new SpriteSheet(ImageLoader.loadImage("/textures/sheet.png"));
+		
 		SpriteSheet player_sheet = new SpriteSheet(ImageLoader.loadImage("/textures/player_sheet.png"));
 		SpriteSheet wizard_sheet = new SpriteSheet(ImageLoader.loadImage("/textures/wizard_sheet.png"));
 		SpriteSheet log_sheet = new SpriteSheet(ImageLoader.loadImage("/textures/log_sheet.png"));
+		SpriteSheet hermit_sheet = new SpriteSheet(ImageLoader.loadImage("/textures/hermit_sheet.png"));
+		
 		SpriteSheet floor_sheet = new SpriteSheet(ImageLoader.loadImage("/textures/floor_sheet.png"));
+		SpriteSheet wall_sheet = new SpriteSheet(ImageLoader.loadImage("/textures/walls_sheet.png"));
+		
 		SpriteSheet item_sheet = new SpriteSheet(ImageLoader.loadImage("/textures/item_sheet.png"));
 		SpriteSheet static_entities_sheet = new SpriteSheet(ImageLoader.loadImage("/textures/static_entities_sheet.png"));
-		SpriteSheet wall_sheet = new SpriteSheet(ImageLoader.loadImage("/textures/walls_sheet.png"));
+		
+		SpriteSheet buildings_exterior_sheet = new SpriteSheet(ImageLoader.loadImage("/textures/buildings_exterior_sheet.png"));
+		SpriteSheet buildings_interior_sheet = new SpriteSheet(ImageLoader.loadImage("/textures/buildings_interior_sheet.png"));
+		
 		SpriteSheet healthbar_sheet = new SpriteSheet(ImageLoader.loadImage("/textures/healthbar_sheet.png"));
 		SpriteSheet startBtn = new SpriteSheet(ImageLoader.loadImage("/textures/button_start.png"));
 		SpriteSheet wizardBtn = new SpriteSheet(ImageLoader.loadImage("/textures/button_wizard.png"));
@@ -101,6 +117,12 @@ public class Assets {
 		log_right = new BufferedImage[2];
 		log_left = new BufferedImage[2];
 		log_idle = new BufferedImage[1];
+		
+		hermit_down = new BufferedImage[2];
+		hermit_up = new BufferedImage[2];
+		hermit_right = new BufferedImage[2];
+		hermit_left = new BufferedImage[2];
+		hermit_idle = new BufferedImage[1];
 
 		player_down[0] = player_sheet.crop(player_sheet_width * 0, 0, player_sheet_width, player_sheet_height);
 		player_down[1] = player_sheet.crop(player_sheet_width * 1, 0, player_sheet_width, player_sheet_height);
@@ -136,6 +158,16 @@ public class Assets {
 		log_left[1] = log_sheet.crop(log_sheet_width * 3, log_sheet_height, log_sheet_width, log_sheet_height);
 		log_idle[0] = log_sheet.crop(log_sheet_width * 0, log_sheet_height * 2, log_sheet_width, log_sheet_height);
 		
+		hermit_down[0] = hermit_sheet.crop(player_sheet_width * 0, 0, player_sheet_width, player_sheet_height);
+		hermit_down[1] = hermit_sheet.crop(player_sheet_width * 1, 0, player_sheet_width, player_sheet_height);
+		hermit_up[0] = hermit_sheet.crop(player_sheet_width * 2, 0, player_sheet_width, player_sheet_height);
+		hermit_up[1] = hermit_sheet.crop(player_sheet_width * 3, 0, player_sheet_width, player_sheet_height);
+		hermit_right[0] = hermit_sheet.crop(player_sheet_width * 0, player_sheet_height, player_sheet_width, player_sheet_height);
+		hermit_right[1] = hermit_sheet.crop(player_sheet_width * 1, player_sheet_height, player_sheet_width, player_sheet_height);
+		hermit_left[0] = hermit_sheet.crop(player_sheet_width * 2, player_sheet_height, player_sheet_width, player_sheet_height);
+		hermit_left[1] = hermit_sheet.crop(player_sheet_width * 3, player_sheet_height, player_sheet_width, player_sheet_height);
+		hermit_idle[0] = hermit_sheet.crop(player_sheet_width * 0, player_sheet_height * 2, player_sheet_width, player_sheet_height);
+		
 		dirt_full = floor_sheet.crop(default_width * 0, default_height, default_width, default_height);
 		
 		grass_full = floor_sheet.crop(default_width * 0, 0, default_width, default_height);
@@ -148,29 +180,29 @@ public class Assets {
 		placeholder = sheet.crop(0, 0, default_width, default_height);
 		debug = sheet.crop(0, default_width * 3, default_width, default_height);
 		
-		wall_left_shadow = wall_sheet.crop(0, wall_sheet_height * 6, wall_sheet_width, wall_sheet_height);
-		wall_left_bottom = wall_sheet.crop(0, wall_sheet_height * 5, wall_sheet_width, wall_sheet_height);
-		wall_left_body_low = wall_sheet.crop(0, wall_sheet_height * 4, wall_sheet_width, wall_sheet_height);
-		wall_left_body_high = wall_sheet.crop(0, wall_sheet_height * 3, wall_sheet_width, wall_sheet_height);
-		wall_left_top_low = wall_sheet.crop(0, wall_sheet_height * 2, wall_sheet_width, wall_sheet_height);
-		wall_left_top_middle = wall_sheet.crop(0, wall_sheet_height, wall_sheet_width, wall_sheet_height);
-		wall_left_top_high = wall_sheet.crop(0, 0, wall_sheet_height, wall_sheet_height);		
+		dirt_wall_left_shadow = wall_sheet.crop(0, wall_sheet_height * 6, wall_sheet_width, wall_sheet_height);
+		dirt_wall_left_bottom = wall_sheet.crop(0, wall_sheet_height * 5, wall_sheet_width, wall_sheet_height);
+		dirt_wall_left_body_low = wall_sheet.crop(0, wall_sheet_height * 4, wall_sheet_width, wall_sheet_height);
+		dirt_wall_left_body_high = wall_sheet.crop(0, wall_sheet_height * 3, wall_sheet_width, wall_sheet_height);
+		dirt_wall_left_top_low = wall_sheet.crop(0, wall_sheet_height * 2, wall_sheet_width, wall_sheet_height);
+		dirt_wall_left_top_middle = wall_sheet.crop(0, wall_sheet_height, wall_sheet_width, wall_sheet_height);
+		dirt_wall_left_top_high = wall_sheet.crop(0, 0, wall_sheet_height, wall_sheet_height);		
 		
-		wall_middle_shadow = wall_sheet.crop(wall_sheet_width, wall_sheet_height * 6, wall_sheet_width, wall_sheet_height);
-		wall_middle_bottom = wall_sheet.crop(wall_sheet_width, wall_sheet_height * 5, wall_sheet_width, wall_sheet_height);
-		wall_middle_body_low = wall_sheet.crop(wall_sheet_width, wall_sheet_height * 4, wall_sheet_width, wall_sheet_height);
-		wall_middle_body_high = wall_sheet.crop(wall_sheet_width, wall_sheet_height * 3, wall_sheet_width, wall_sheet_height);
-		wall_middle_top_low = wall_sheet.crop(wall_sheet_width, wall_sheet_height * 2, wall_sheet_width, wall_sheet_height);
-		wall_middle_top_middle = wall_sheet.crop(wall_sheet_width, wall_sheet_height, wall_sheet_width, wall_sheet_height);
-		wall_middle_top_high = wall_sheet.crop(wall_sheet_width, 0, wall_sheet_height, wall_sheet_height);
+		dirt_wall_middle_shadow = wall_sheet.crop(wall_sheet_width, wall_sheet_height * 6, wall_sheet_width, wall_sheet_height);
+		dirt_wall_middle_bottom = wall_sheet.crop(wall_sheet_width, wall_sheet_height * 5, wall_sheet_width, wall_sheet_height);
+		dirt_wall_middle_body_low = wall_sheet.crop(wall_sheet_width, wall_sheet_height * 4, wall_sheet_width, wall_sheet_height);
+		dirt_wall_middle_body_high = wall_sheet.crop(wall_sheet_width, wall_sheet_height * 3, wall_sheet_width, wall_sheet_height);
+		dirt_wall_middle_top_low = wall_sheet.crop(wall_sheet_width, wall_sheet_height * 2, wall_sheet_width, wall_sheet_height);
+		dirt_wall_middle_top_middle = wall_sheet.crop(wall_sheet_width, wall_sheet_height, wall_sheet_width, wall_sheet_height);
+		dirt_wall_middle_top_high = wall_sheet.crop(wall_sheet_width, 0, wall_sheet_height, wall_sheet_height);
 		
-		wall_right_shadow = wall_sheet.crop(wall_sheet_width * 2, wall_sheet_height * 6, wall_sheet_width, wall_sheet_height);
-		wall_right_bottom = wall_sheet.crop(wall_sheet_width * 2, wall_sheet_height * 5, wall_sheet_width, wall_sheet_height);
-		wall_right_body_low = wall_sheet.crop(wall_sheet_width *2, wall_sheet_width * 4, wall_sheet_width, wall_sheet_height);
-		wall_right_body_high = wall_sheet.crop(wall_sheet_width * 2, wall_sheet_height * 3, wall_sheet_width, wall_sheet_height);
-		wall_right_top_low = wall_sheet.crop(wall_sheet_width * 2, wall_sheet_height * 2, wall_sheet_width, wall_sheet_height);
-		wall_right_top_middle = wall_sheet.crop(wall_sheet_width* 2, wall_sheet_height, wall_sheet_width, wall_sheet_height);
-		wall_right_top_high = wall_sheet.crop(wall_sheet_width * 2, 0, wall_sheet_height, wall_sheet_height);
+		dirt_wall_right_shadow = wall_sheet.crop(wall_sheet_width * 2, wall_sheet_height * 6, wall_sheet_width, wall_sheet_height);
+		dirt_wall_right_bottom = wall_sheet.crop(wall_sheet_width * 2, wall_sheet_height * 5, wall_sheet_width, wall_sheet_height);
+		dirt_wall_right_body_low = wall_sheet.crop(wall_sheet_width *2, wall_sheet_width * 4, wall_sheet_width, wall_sheet_height);
+		dirt_wall_right_body_high = wall_sheet.crop(wall_sheet_width * 2, wall_sheet_height * 3, wall_sheet_width, wall_sheet_height);
+		dirt_wall_right_top_low = wall_sheet.crop(wall_sheet_width * 2, wall_sheet_height * 2, wall_sheet_width, wall_sheet_height);
+		dirt_wall_right_top_middle = wall_sheet.crop(wall_sheet_width* 2, wall_sheet_height, wall_sheet_width, wall_sheet_height);
+		dirt_wall_right_top_high = wall_sheet.crop(wall_sheet_width * 2, 0, wall_sheet_height, wall_sheet_height);
 		
 		fence_hz = sheet.crop(0, default_height * 4, default_width, default_height);
 		fence_vt = sheet.crop(default_width, default_height * 4, default_width, default_height);
@@ -194,6 +226,12 @@ public class Assets {
 		rock_dmg3 = sheet.crop(default_width*3, default_height * 2, default_width, default_height);
 		
 		pebble = static_entities_sheet.crop(0, default_height * 3, default_width, default_height);
+		
+		//BUILDINGS
+		hermit_hut = buildings_exterior_sheet.crop(0,0,hut_height, hut_width);
+		
+		floor_1 = buildings_interior_sheet.crop(0, 0, default_width, default_height);
+		wooden_wall_1 = buildings_interior_sheet.crop(0, default_height, default_width, default_height);
 	}
 	
 }

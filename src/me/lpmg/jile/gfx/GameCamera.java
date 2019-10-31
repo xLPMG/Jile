@@ -18,7 +18,11 @@ public class GameCamera {
 	public void checkBlankSpace(){
 		if(xOffset < 0){
 			xOffset = 0;
-		}else if(xOffset > handler.getWorld().getWidth() * Tile.TILEWIDTH - handler.getWidth()){
+		}else if(xOffset > 999 * Tile.TILEWIDTH - handler.getWidth()) {
+			//no offset for rooms 
+		}
+		else if(xOffset > handler.getWorld().getWidth() * Tile.TILEWIDTH - handler.getWidth()){
+			//standard map offset
 			xOffset = handler.getWorld().getWidth() * Tile.TILEWIDTH - handler.getWidth();
 		}
 		

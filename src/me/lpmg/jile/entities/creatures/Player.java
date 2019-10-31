@@ -145,6 +145,9 @@ public class Player extends Creature {
 				healthbar.showCorner();
 				e.hurt(2);
 				System.out.println("Hitting "+e);
+				if(e instanceof Wizard) {
+					mana-=1;
+				}
 				return;
 			}
 		}

@@ -6,6 +6,8 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 import me.lpmg.jile.Handler;
+import me.lpmg.jile.buildings.BuildingManager;
+import me.lpmg.jile.buildings.HermitHut;
 import me.lpmg.jile.gfx.Assets;
 import me.lpmg.jile.gfx.Text;
 import me.lpmg.jile.items.Item;
@@ -16,6 +18,7 @@ public class Inventory {
 	private boolean active = false;
 	private boolean disabled = false;
 	private ArrayList<Item> inventoryItems;
+	private BuildingManager buildingManager;
 
 	private int invX = 119, invY = 64, invWidth = 512, invHeight = 384, invListCenterX = invX + 171,
 			invListCenterY = invY + invHeight / 2 + 5, invListSpacing = 30;
@@ -32,6 +35,8 @@ public class Inventory {
 	}
 
 	public void tick() {
+		itemActions();
+		
 		if(disabled) {
 			active=false;
 		}
@@ -105,6 +110,25 @@ public class Inventory {
 			}
 		}
 		inventoryItems.add(item);
+	}
+	
+	private void itemActions() {
+		if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_B)) {
+System.out.println("b");
+			if (inventoryItems.size()!=0) {
+				int itemCount = inventoryItems.get(selectedItem).getCount();
+				System.out.println("items: "+itemCount);
+				if (itemCount >= 1&&inventoryItems.get(selectedItem).getId()==Item.woodItem.getId()) {
+					buildingManager=handler.getWorld().getBuildingManager();
+					if(itemCount>1) {
+					inventoryItems.get(selectedItem).setCount(itemCount - 1);
+					}else {
+					inventoryItems.remove(selectedItem);
+					}
+					buildingManager.addBuilding(new HermitHut(handler, handler.getWorld().player.getX()-105, handler.getWorld().player.getY()-210));
+				}
+			}
+		}
 	}
 
 	// GETTERS SETTERS

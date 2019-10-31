@@ -1,6 +1,7 @@
 package me.lpmg.jile.display;
 
 import java.awt.Canvas;
+import java.awt.Color;
 import java.awt.Dimension;
 
 import javax.swing.ImageIcon;
@@ -36,6 +37,7 @@ public class Display {
 		canvas.setMaximumSize(new Dimension(width, height));
 		canvas.setMinimumSize(new Dimension(width, height));
 		canvas.setFocusable(false);
+		canvas.setBackground(Color.BLACK);
 		
 		frame.setIconImage(ImageLoader.loadImage("/logo/jile-logo.png"));
 		

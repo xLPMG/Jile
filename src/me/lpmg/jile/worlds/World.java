@@ -3,7 +3,11 @@ package me.lpmg.jile.worlds;
 import java.awt.Graphics;
 
 import me.lpmg.jile.Handler;
+import me.lpmg.jile.buildings.BuildingManager;
+import me.lpmg.jile.buildings.HermitHut;
+import me.lpmg.jile.entities.Entity;
 import me.lpmg.jile.entities.EntityManager;
+import me.lpmg.jile.entities.creatures.Hermit;
 import me.lpmg.jile.entities.creatures.Log;
 import me.lpmg.jile.entities.creatures.Player;
 import me.lpmg.jile.entities.creatures.Wizard;
@@ -23,27 +27,16 @@ public class World {
 	private int[][] tilesThirdLayer;
 	//Entities
 	private EntityManager entityManager;
+	//Buildings
+	private BuildingManager buildingManager;
 	// Item
 	private ItemManager itemManager;
 	public Player player;
-	private int logSpawnTicker;
+	private int spawnTicker;
 	
-	private final int SPAWN_CHANCE_LOG_DEFAULT = 95;
+	private final int SPAWN_CHANCE_LOG_DEFAULT = 90;
+	private final int SPAWN_CHANCE_HERMIT_DEFAULT = 90;
 	
-//	public World(Handler handler, String firstLayer){
-//		this.handler = handler;
-//		itemManager = new ItemManager(handler);
-//		
-//		loadWorld(firstLayer);
-//		spawnEntities();
-//	}
-//	public World(Handler handler, String firstLayer, String secondLayer){
-//		this.handler = handler;
-//		itemManager = new ItemManager(handler);
-//		loadWorld(firstLayer);
-//		loadSecondLayer(secondLayer);
-//		spawnEntities();
-//	}
 	public World(Handler handler, String firstLayer, String secondLayer, String thirdLayer){
 		this.handler = handler;
 		itemManager = new ItemManager(handler);
@@ -51,18 +44,21 @@ public class World {
 		loadWorld(firstLayer);
 		loadSecondLayer(secondLayer);
 		loadThirdLayer(thirdLayer);
+		spawnBuildings();
 		spawnEntities();
 	}
 	
 	public void tick(){
-		logSpawnTicker++;
+		spawnTicker++;
 		itemManager.tick();
+		buildingManager.tick();
 		entityManager.tick();
 		
-		if(logSpawnTicker>1200){
-			System.out.println("Spawning new logs...");
+		if(spawnTicker>3000){
+			System.out.println("Spawning new entities...");
 			spawnRandomLogs();
-			logSpawnTicker=0;
+			spawnRandomHermits();
+			spawnTicker=0;
 		}
 	}
 	
@@ -91,10 +87,14 @@ public class World {
 						(int) (y * Tile.TILEHEIGHT - handler.getGameCamera().getyOffset()));
 			}
 		}
+		//Buildings
+		buildingManager.render(g);
 		// Items
 		itemManager.render(g);
 		//Entities
 		entityManager.render(g);
+		//Buildings 2
+		buildingManager.renderOverlay(g);
 	}
 	public void renderThirdLayer(Graphics g) {
 		int xStart = (int) Math.max(0, handler.getGameCamera().getxOffset() / Tile.TILEWIDTH);
@@ -181,14 +181,22 @@ public class World {
 		}
 	}
 	
+	private void spawnBuildings() {
+		buildingManager = new BuildingManager(handler, player);
+	}
+	
 	private void spawnEntities(){
 		entityManager = new EntityManager(handler, player);
 		entityManager.getPlayer().setX(spawnX);
 		entityManager.getPlayer().setY(spawnY);
 		entityManager.addEntity(new Rock(handler, 350, 300));
 		entityManager.addEntity(new Bush(handler, 200, 500));
+		entityManager.addEntity(new Bush(handler, 300, 400));
+		entityManager.addEntity(new Bush(handler, 200, 750));
+		entityManager.addEntity(new Bush(handler, 200, 1500));
 		entityManager.addEntity(new Wizard(handler, 200, 300));	
 		spawnRandomLogs();
+		spawnRandomHermits();
 	}
 	
 	private void spawnRandomLogs() {
@@ -202,8 +210,27 @@ public class World {
 				if(getTile(x, y) == Tile.grassTile&&getSecondLayerTile(x, y)==Tile.placeHolderTile&&getThirdLayerTile(x, y)==Tile.placeHolderTile) {
 					int spawnChance = (int)(Math.random() * 100) + 1; 
 					if(spawnChance>SPAWN_CHANCE_LOG_DEFAULT) {
-						System.out.println("spawnChance: "+spawnChance);
-					    entityManager.addEntity(new Log(handler, x*100, y*100));
+						System.out.println("spawnChance log: "+spawnChance);
+					    entityManager.addEntity(new Log(handler, x*Tile.TILEWIDTH, y*Tile.TILEHEIGHT));
+					}
+				}
+			}
+		}
+	}
+	
+	private void spawnRandomHermits() {
+		int xStart = (int) Math.max(0, handler.getGameCamera().getxOffset() / Tile.TILEWIDTH);
+		int xEnd = (int) Math.min(width, (handler.getGameCamera().getxOffset() + handler.getWidth()) / Tile.TILEWIDTH + 1);
+		int yStart = (int) Math.max(0, handler.getGameCamera().getyOffset() / Tile.TILEHEIGHT);
+		int yEnd = (int) Math.min(height, (handler.getGameCamera().getyOffset() + handler.getHeight()) / Tile.TILEHEIGHT + 1);
+		
+		for(int y = yStart;y < yEnd;y++){
+			for(int x = xStart;x < xEnd;x++){
+				if(getTile(x, y) == Tile.dirtTile&&getSecondLayerTile(x, y)==Tile.placeHolderTile&&getThirdLayerTile(x, y)==Tile.placeHolderTile) {
+					int spawnChance = (int)(Math.random() * 100) + 1; 
+					if(spawnChance>SPAWN_CHANCE_HERMIT_DEFAULT) {
+						System.out.println("spawnChance hermit: "+spawnChance);
+					    entityManager.addEntity(new Hermit(handler, x*Tile.TILEWIDTH, y*Tile.TILEHEIGHT));
 					}
 				}
 			}
@@ -220,6 +247,10 @@ public class World {
 
 	public EntityManager getEntityManager() {
 		return entityManager;
+	}
+	
+	public BuildingManager getBuildingManager() {
+		return buildingManager;
 	}
 
 	public Handler getHandler() {
