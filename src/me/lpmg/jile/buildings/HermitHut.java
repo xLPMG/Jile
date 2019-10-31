@@ -22,7 +22,7 @@ public class HermitHut extends Building {
 	@Override
 	public void onEnter() {
 		if(!initialized) {
-		hHM = new HermitHutMap(handler, "/worlds/hermit-hut.txt", this, getIndex());
+		hHM = new HermitHutMap(handler, "/worlds/buildings/hermit-hut.txt", this, getIndex());
 		map = hHM;
 		initialized=true;
 		}

@@ -23,7 +23,6 @@ public class HermitHutMap extends BuildingMap {
 		this.herH = herH;
 		this.index=index;
 		dimensionM = 1000+(100*index);
-		System.out.println("INDEX "+this.index);
 		loadWorld(firstLayer);
 	}
 

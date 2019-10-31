@@ -32,6 +32,7 @@ public class Assets {
 	public static BufferedImage[] hermit_down, hermit_up, hermit_left, hermit_right, hermit_idle;
 	
 	public static BufferedImage fence_hz, fence_vt, fence_hL, fence_hR, fence_CBL, fence_CBR, fence_CTL, fence_CTR;
+	public static BufferedImage hedge_hzB, hedge_hzT, hedge_vtL, hedge_vtR, hedge_CBL, hedge_CBR, hedge_CTL, hedge_CTR, hedge_plain, hedge_plainCBL, hedge_plainCBR;
 	
 	public static BufferedImage[] btn_start, btn_buy, btn_sell;
 	public static BufferedImage inventoryScreen, itemBar, itemBar_highlighted;
@@ -213,6 +214,18 @@ public class Assets {
 		fence_CTL = sheet.crop(default_width*6, default_height * 4, default_width, default_height);
 		fence_CTR = sheet.crop(default_width*7, default_height * 4, default_width, default_height);
 		
+		hedge_hzB = sheet.crop(0, default_height * 5, default_width, default_height);
+		hedge_hzT = sheet.crop(default_width, default_height * 5, default_width, default_height);
+		hedge_vtL = sheet.crop(default_width*2, default_height * 5, default_width, default_height);
+		hedge_vtR = sheet.crop(default_width*3, default_height * 5, default_width, default_height);
+		hedge_CBL = sheet.crop(default_width*4, default_height * 5, default_width, default_height);
+		hedge_CBR = sheet.crop(default_width*5, default_height * 5, default_width, default_height);
+		hedge_CTL = sheet.crop(default_width*6, default_height * 5, default_width, default_height);
+		hedge_CTR = sheet.crop(default_width*7, default_height * 5, default_width, default_height);	
+		hedge_plain = sheet.crop(0, default_height * 6, default_width, default_height);
+		hedge_plainCBL = sheet.crop(default_width, default_height * 6, default_width, default_height);
+		hedge_plainCBR = sheet.crop(default_width*2, default_height * 6, default_width, default_height);
+
 		stone = sheet.crop(default_width * 3, 0, default_width, default_height);
 		
 		bush = sheet.crop(0, default_height, default_width, default_height);

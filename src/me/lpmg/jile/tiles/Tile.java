@@ -63,9 +63,21 @@ public class Tile {
 	public static Tile fence_CTLTile = new FenceTileSolid(Assets.fence_CTL, 76);
 	public static Tile fence_CTRTile = new FenceTileSolid(Assets.fence_CTR, 77);
 	
-	public static Tile woodenWall_1_Tile = new WallTileSolid(Assets.wooden_wall_1, 80);
+	public static Tile hedge_hzBTile = new HedgeTileSolid(Assets.hedge_hzB, 80);
+	public static Tile hedge_hzTTile = new HedgeTileSolid(Assets.hedge_hzT, 81);
+	public static Tile hedge_vtLTile = new HedgeTileSolid(Assets.hedge_vtL, 82);
+	public static Tile hedge_vtRile = new HedgeTileSolid(Assets.hedge_vtR, 83);
+	public static Tile hedge_CBLTile = new HedgeTileSolid(Assets.hedge_CBL, 84);
+	public static Tile hedge_CBRTile = new HedgeTileSolid(Assets.hedge_CBR, 85);
+	public static Tile hedge_CTLTile = new HedgeTileSolid(Assets.hedge_CTL, 86);
+	public static Tile hedge_CTRTile = new HedgeTileSolid(Assets.hedge_CTR, 87);
+	public static Tile hedge_plainTile = new HedgeTileSolid(Assets.hedge_plain, 88);
+	public static Tile hedge_plainCBLTile = new HedgeTileSolid(Assets.hedge_plainCBL, 89);
+	public static Tile hedge_plainCBRTile = new HedgeTileSolid(Assets.hedge_plainCBR, 90);
 	
-	public static Tile floor_1_Tile = new FloorTile(Assets.floor_1, 90);
+	public static Tile woodenWall_1_Tile = new WallTileSolid(Assets.wooden_wall_1, 100);
+	
+	public static Tile floor_1_Tile = new FloorTile(Assets.floor_1, 110);
 	//CLASS
 	
 	public static final int TILEWIDTH = 64, TILEHEIGHT = 64;
