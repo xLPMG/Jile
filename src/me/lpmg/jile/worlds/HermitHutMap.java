@@ -26,6 +26,7 @@ public class HermitHutMap extends BuildingMap {
 		loadWorld(firstLayer);
 	}
 
+	@Override
 	public void render(Graphics g) {
 		int xStart = (int) Math.max(dimensionM, handler.getGameCamera().getxOffset() / Tile.TILEWIDTH);
 		int xEnd = (int) Math.min(dimensionM + width,
@@ -42,7 +43,6 @@ public class HermitHutMap extends BuildingMap {
 		}
 	}
 
-	@Override
 	public Tile getTile(int x, int y) {
 		x-=dimensionM;
 		if (x < 0 || y < 0 || x >= width || y >= height)
@@ -54,7 +54,7 @@ public class HermitHutMap extends BuildingMap {
 		return t;
 	}
 
-	private void loadWorld(String path) {
+	protected void loadWorld(String path) {
 		String file = Utils.loadFileAsString(path);
 		String[] tokens = file.split("\\s+");
 		width = Utils.parseInt(tokens[0]);
@@ -74,7 +74,6 @@ public class HermitHutMap extends BuildingMap {
 	}
 
 	public void spawnPlayer() {
-		System.out.println(herH.getIndex()+" : "+spawnX);
 		handler.getWorld().player.setY(spawnY);
 		handler.getWorld().player.setX(spawnX);
 	}

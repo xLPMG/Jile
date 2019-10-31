@@ -114,10 +114,8 @@ public class Inventory {
 	
 	private void itemActions() {
 		if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_B)) {
-System.out.println("b");
 			if (inventoryItems.size()!=0) {
 				int itemCount = inventoryItems.get(selectedItem).getCount();
-				System.out.println("items: "+itemCount);
 				if (itemCount >= 1&&inventoryItems.get(selectedItem).getId()==Item.woodItem.getId()) {
 					buildingManager=handler.getWorld().getBuildingManager();
 					if(itemCount>1) {

@@ -35,7 +35,7 @@ public class World {
 	public Player player;
 	private int spawnTicker;
 	
-	private final int SPAWN_CHANCE_LOG_DEFAULT = 95;
+	private final int SPAWN_CHANCE_LOG_DEFAULT = 90;
 	private final int SPAWN_CHANCE_HERMIT_DEFAULT = 90;
 	
 	public World(Handler handler, String firstLayer, String secondLayer, String thirdLayer){
@@ -194,6 +194,7 @@ public class World {
 		entityManager.addEntity(new Bush(handler, 200, 500));
 		entityManager.addEntity(new Bush(handler, 300, 400));
 		entityManager.addEntity(new Bush(handler, 200, 750));
+		entityManager.addEntity(new Bush(handler, 600, 1300));
 		entityManager.addEntity(new Bush(handler, 200, 1500));
 		entityManager.addEntity(new Wizard(handler, 200, 300));	
 		spawnRandomLogs();
