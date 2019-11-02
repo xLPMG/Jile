@@ -1,4 +1,4 @@
-# Jile
+# Jile ![jile latest](https://img.shields.io/github/v/release/xlpmg/jile?include_prereleases)
 ## Warning
 #### This game is still in a experimental phase. It does not have many functionalities yet. It also may contain a lot of bugs which are yet to be fixed. 
 ## Assets Copyright
