@@ -47,6 +47,11 @@ public class BuildingManager {
 			b.renderOverlay(g);
 		}
 	}
+	public void renderSecondLayer(Graphics g){
+		for(Building b : buildings){
+			b.renderSecondLayer(g);
+		}
+	}
 	
 	public void addBuilding(Building b){
 		buildings.add(b);

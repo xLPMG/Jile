@@ -12,7 +12,7 @@ public class HermitHut extends Building {
 	private boolean initialized = false;
 	
 	public HermitHut(Handler handler, float x, float y) {
-		super(handler, x, y, 256, 256, 90, 200, 30, 40);
+		super(handler, x, y, 256, 256, 90, 172, 30, 40);
 		bounds.x = 25;
 		bounds.y = 64;
 		bounds.width = 205;
@@ -22,8 +22,11 @@ public class HermitHut extends Building {
 	@Override
 	public void onEnter() {
 		if(!initialized) {
-		hHM = new HermitHutMap(handler, "/worlds/buildings/hermit-hut.txt", this, getIndex());
+		hHM = new HermitHutMap(handler, "/worlds/buildings/hermit-hut.txt","/worlds/buildings/hermit-hut-secondLayer.txt", this, getIndex());
+		hHM.setFlooring(getRandomFlooring());
+		hHM.setWall(getRandomWall());
 		map = hHM;
+		System.out.println("map creation");
 		initialized=true;
 		}
 		entered=true;
@@ -39,6 +42,13 @@ public class HermitHut extends Building {
 			hHM.render(g);
 		}
 		
+	}
+	
+	@Override
+	public void renderSecondLayer(Graphics g) {
+		if(entered) {
+		hHM.renderSecondLayer(g);
+		}
 	}
 
 	@Override

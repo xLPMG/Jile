@@ -6,7 +6,10 @@ import java.awt.image.BufferedImage;
 
 import me.lpmg.jile.Handler;
 import me.lpmg.jile.entities.Entity;
+import me.lpmg.jile.gfx.Assets;
+import me.lpmg.jile.tiles.FloorTile;
 import me.lpmg.jile.tiles.Tile;
+import me.lpmg.jile.tiles.WallTileSolid;
 import me.lpmg.jile.worlds.BuildingMap;
 
 public abstract class Building {
@@ -42,6 +45,7 @@ public abstract class Building {
 	}	
 	public abstract void checker();
 	public abstract void render(Graphics g);
+	public abstract void renderSecondLayer(Graphics g);
 	public abstract void renderOverlay(Graphics g);
 	public abstract void onEnter();
 	
@@ -50,13 +54,62 @@ public abstract class Building {
 	}
 	
 	private void checkForEntrance() {
-		if(handler.getMouseManager().isRightPressed()&&handler.getWorld().player.getX()>(x+doorX)&&handler.getWorld().player.getX()<(x+doorX+doorWidth)&&handler.getWorld().player.getY()>(y+doorY)&&handler.getWorld().player.getY()<(y+doorY+doorHeight)) {
+		if(handler.getKeyManager().up&&handler.getWorld().player.getX()>(x+doorX)&&handler.getWorld().player.getX()<(x+doorX+doorWidth)&&handler.getWorld().player.getY()>(y+doorY)&&handler.getWorld().player.getY()<(y+doorY+doorHeight)) {
 			onEnter();
 		}
 	}
 	
 	public void setEntered(boolean entered) {
 		this.entered=entered;
+	}
+	
+	public FloorTile getRandomFlooring() {
+		int floorID = (int)(Math.random() * 20) + 1; 
+		if(floorID==1) {
+			return new FloorTile(Assets.floor_1, 110);
+		}else if(floorID==2) {
+			return new FloorTile(Assets.floor_2, 110);
+		}else if(floorID==3) {
+			return new FloorTile(Assets.floor_3, 110);
+		}else if(floorID==4) {
+			return new FloorTile(Assets.floor_4, 110);
+		}else if(floorID==5) {
+			return new FloorTile(Assets.floor_5, 110);
+		}else if(floorID==6) {
+			return new FloorTile(Assets.floor_6, 110);
+		}else if(floorID==7) {
+			return new FloorTile(Assets.floor_7, 110);
+		}else if(floorID==8) {
+			return new FloorTile(Assets.floor_8, 110);
+		}else if(floorID==9) {
+			return new FloorTile(Assets.floor_9, 110);
+		}else if(floorID==10) {
+			return new FloorTile(Assets.floor_10, 110);
+		}else if(floorID==11) {
+			return new FloorTile(Assets.floor_11, 110);
+		}else if(floorID==12) {
+			return new FloorTile(Assets.floor_12, 110);
+		}else if(floorID==13) {
+			return new FloorTile(Assets.floor_13, 110);
+		}else if(floorID==14) {
+			return new FloorTile(Assets.floor_14, 110);
+		}else if(floorID==15) {
+			return new FloorTile(Assets.floor_15, 110);
+		}else if(floorID==16) {
+			return new FloorTile(Assets.floor_16, 110);
+		}else if(floorID==17) {
+			return new FloorTile(Assets.floor_17, 110);
+		}else if(floorID==18) {
+			return new FloorTile(Assets.floor_18, 110);
+		}else if(floorID==19) {
+			
+		}else if(floorID==20) {
+			return new FloorTile(Assets.floor_19, 110);
+		}
+		return null;
+	}
+	public WallTileSolid getRandomWall() {
+		return new WallTileSolid(Assets.wooden_wall_1, 100);
 	}
 	
 	public float getX() {

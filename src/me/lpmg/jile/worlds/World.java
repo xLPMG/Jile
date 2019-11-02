@@ -96,6 +96,8 @@ public class World {
 		entityManager.render(g);
 		//Buildings 2
 		buildingManager.renderOverlay(g);
+		//Buildings 3
+		buildingManager.renderSecondLayer(g);
 	}
 	public void renderThirdLayer(Graphics g) {
 		int xStart = (int) Math.max(0, handler.getGameCamera().getxOffset() / Tile.TILEWIDTH);
@@ -241,7 +243,7 @@ public class World {
 	private void spawnHermits() {
 		for(Building b : buildingManager.getBuildings()) {
 			System.out.println("Spawning hermit");
-			entityManager.addEntity(new Hermit(handler, b.getX()+b.getDoorX()+15, b.getY()+b.getDoorY()+10));
+			entityManager.addEntity(new Hermit(handler, b.getX()+b.getDoorX()+15, b.getY()+b.getDoorY()+15));
 		}
 	}
 	

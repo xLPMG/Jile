@@ -41,8 +41,9 @@ public class Assets {
 	
 	//buildings
 	public static BufferedImage hermit_hut;
-	public static BufferedImage floor_1;
+	public static BufferedImage floor_1,floor_2,floor_3,floor_4,floor_5,floor_6,floor_7,floor_8,floor_9,floor_10,floor_11,floor_12,floor_13,floor_14,floor_15,floor_16,floor_17,floor_18,floor_19,floor_20;
 	public static BufferedImage wooden_wall_1;
+	public static BufferedImage room_margin_left, room_margin_right, room_margin_bottom, room_margin_top, room_margin_ctl, room_margin_ctr, room_margin_cbl, room_margin_cbr, room_margin_bottom_end_left, room_margin_bottom_end_right;
 	
 	
 	static {
@@ -244,7 +245,40 @@ public class Assets {
 		hermit_hut = buildings_exterior_sheet.crop(0,0,hut_height, hut_width);
 		
 		floor_1 = buildings_interior_sheet.crop(0, 0, default_width, default_height);
-		wooden_wall_1 = buildings_interior_sheet.crop(0, default_height, default_width, default_height);
+		floor_2 = buildings_interior_sheet.crop(default_width, 0, default_width, default_height);
+		floor_3 = buildings_interior_sheet.crop(default_width*2, 0, default_width, default_height);
+		floor_4 = buildings_interior_sheet.crop(default_width*3, 0, default_width, default_height);
+		floor_5 = buildings_interior_sheet.crop(default_width*4, 0, default_width, default_height);
+		floor_6 = buildings_interior_sheet.crop(default_width*5, 0, default_width, default_height);
+		floor_7 = buildings_interior_sheet.crop(default_width*6, 0, default_width, default_height);
+		floor_8 = buildings_interior_sheet.crop(default_width*7, 0, default_width, default_height);
+		
+		floor_9 = buildings_interior_sheet.crop(0, default_height, default_width, default_height);
+		floor_10 = buildings_interior_sheet.crop(default_width, default_height, default_width, default_height);
+		floor_11 = buildings_interior_sheet.crop(default_width*2, default_height, default_width, default_height);
+		floor_12 = buildings_interior_sheet.crop(default_width*3, default_height, default_width, default_height);
+		floor_13 = buildings_interior_sheet.crop(default_width*4, default_height, default_width, default_height);
+		floor_14 = buildings_interior_sheet.crop(default_width*5, default_height, default_width, default_height);
+		floor_15 = buildings_interior_sheet.crop(default_width*6, default_height, default_width, default_height);
+		floor_16 = buildings_interior_sheet.crop(default_width*7, default_height, default_width, default_height);
+		
+		floor_17 = buildings_interior_sheet.crop(0, default_height*2, default_width, default_height);
+		floor_18 = buildings_interior_sheet.crop(default_width, default_height*2, default_width, default_height);
+		floor_19 = buildings_interior_sheet.crop(default_width*2, default_height*2, default_width, default_height);
+		floor_20 = buildings_interior_sheet.crop(default_width*3, default_height*2, default_width, default_height);
+		
+		wooden_wall_1 = buildings_interior_sheet.crop(0, default_height*5, default_width, default_height);
+		
+		room_margin_left = buildings_interior_sheet.crop(0, default_height*3, default_width, default_height);
+		room_margin_right = buildings_interior_sheet.crop(default_width, default_height*3, default_width, default_height);
+		room_margin_bottom = buildings_interior_sheet.crop(default_width*2, default_height*3, default_width, default_height);
+		room_margin_top = buildings_interior_sheet.crop(default_width*3, default_height*3, default_width, default_height);
+		room_margin_ctl = buildings_interior_sheet.crop(default_width*4, default_height*3, default_width, default_height);
+		room_margin_ctr = buildings_interior_sheet.crop(default_width*5, default_height*3, default_width, default_height);
+		room_margin_cbl = buildings_interior_sheet.crop(default_width*6, default_height*3, default_width, default_height);
+		room_margin_cbr = buildings_interior_sheet.crop(default_width*7, default_height*3, default_width, default_height);
+		room_margin_bottom_end_left = buildings_interior_sheet.crop(0, default_height*4, default_width, default_height);
+		room_margin_bottom_end_right = buildings_interior_sheet.crop(default_width, default_height*4, default_width, default_height);
 	}
 	
 }

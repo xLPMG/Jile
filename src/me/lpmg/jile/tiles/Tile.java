@@ -75,9 +75,21 @@ public class Tile {
 	public static Tile hedge_plainCBLTile = new HedgeTileSolid(Assets.hedge_plainCBL, 89);
 	public static Tile hedge_plainCBRTile = new HedgeTileSolid(Assets.hedge_plainCBR, 90);
 	
-	public static Tile woodenWall_1_Tile = new WallTileSolid(Assets.wooden_wall_1, 100);
+	public static Tile wall_Tile = new WallTileSolid(Assets.wooden_wall_1, 100);
 	
-	public static Tile floor_1_Tile = new FloorTile(Assets.floor_1, 110);
+	public static Tile floor_Tile = new FloorTile(Assets.floor_1, 110);
+	
+	public static Tile roomMarginLeftTile = new RoomMarginTile(Assets.room_margin_left, 120);
+	public static Tile roomMarginRightTile = new RoomMarginTile(Assets.room_margin_right, 121);
+	public static Tile roomMarginBottomTile = new RoomMarginTile(Assets.room_margin_bottom, 122);
+	public static Tile roomMarginTopTile = new RoomMarginTile(Assets.room_margin_top, 123);
+	public static Tile roomMarginCTLTile = new RoomMarginTile(Assets.room_margin_ctl, 124);
+	public static Tile roomMarginCTRTile = new RoomMarginTile(Assets.room_margin_ctr, 125);
+	public static Tile roomMarginCBLTile = new RoomMarginTile(Assets.room_margin_cbl, 126);
+	public static Tile roomMarginCBRTile = new RoomMarginTile(Assets.room_margin_cbr, 127);
+	public static Tile roomMarginBottomEndLeftTile = new RoomMarginTile(Assets.room_margin_bottom_end_left, 128);
+	public static Tile roomMarginBottomEndRightTile = new RoomMarginTile(Assets.room_margin_bottom_end_right, 129);
+	
 	//CLASS
 	
 	public static final int TILEWIDTH = 64, TILEHEIGHT = 64;
