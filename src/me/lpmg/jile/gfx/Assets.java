@@ -42,7 +42,7 @@ public class Assets {
 	//buildings
 	public static BufferedImage hermit_hut;
 	public static BufferedImage floor_1,floor_2,floor_3,floor_4,floor_5,floor_6,floor_7,floor_8,floor_9,floor_10,floor_11,floor_12,floor_13,floor_14,floor_15,floor_16,floor_17,floor_18,floor_19,floor_20;
-	public static BufferedImage wooden_wall_1;
+	public static BufferedImage wooden_wall_1, colored_wall_wine, colored_wall_navy;
 	public static BufferedImage room_margin_left, room_margin_right, room_margin_bottom, room_margin_top, room_margin_ctl, room_margin_ctr, room_margin_cbl, room_margin_cbr, room_margin_bottom_end_left, room_margin_bottom_end_right;
 	
 	
@@ -268,6 +268,8 @@ public class Assets {
 		floor_20 = buildings_interior_sheet.crop(default_width*3, default_height*2, default_width, default_height);
 		
 		wooden_wall_1 = buildings_interior_sheet.crop(0, default_height*5, default_width, default_height);
+		colored_wall_wine = buildings_interior_sheet.crop(0, default_height*6, default_width, default_height);
+		colored_wall_navy = buildings_interior_sheet.crop(default_width, default_height*6, default_width, default_height);
 		
 		room_margin_left = buildings_interior_sheet.crop(0, default_height*3, default_width, default_height);
 		room_margin_right = buildings_interior_sheet.crop(default_width, default_height*3, default_width, default_height);
