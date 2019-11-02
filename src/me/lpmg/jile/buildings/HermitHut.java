@@ -12,7 +12,7 @@ public class HermitHut extends Building {
 	private boolean initialized = false;
 	
 	public HermitHut(Handler handler, float x, float y) {
-		super(handler, x, y, 256, 256, 90, 172, 30, 40);
+		super(handler, x, y, 256, 256, 90, 172, 30, 40, 5, 3);
 		bounds.x = 25;
 		bounds.y = 64;
 		bounds.width = 205;

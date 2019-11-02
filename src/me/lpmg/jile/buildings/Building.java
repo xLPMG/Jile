@@ -15,6 +15,7 @@ import me.lpmg.jile.worlds.BuildingMap;
 public abstract class Building {
 
 	protected float x, y;
+	protected int tileWidth, tileHeight;
 	protected int width, height;
 	protected int doorX, doorY, doorWidth, doorHeight;
 	protected Handler handler;
@@ -25,7 +26,7 @@ public abstract class Building {
 	protected BuildingMap map;
 
 	public Building(Handler handler, float x, float y, int width, int height, int doorX, int doorY, int doorWidth,
-			int doorHeight) {
+			int doorHeight, int tileWidth, int tileHeight) {
 		this.handler = handler;
 		this.x = x;
 		this.y = y;
@@ -35,6 +36,8 @@ public abstract class Building {
 		this.doorY = doorY;
 		this.doorWidth = doorWidth;
 		this.doorHeight = doorHeight;
+		this.tileWidth = tileWidth;
+		this.tileHeight = tileHeight;
 
 		bounds = new Rectangle(0, 0, width, height);
 	}
@@ -184,6 +187,26 @@ public abstract class Building {
 
 	public int getHeight() {
 		return height;
+	}
+	
+	public void setHeight(int height) {
+		this.height = height;
+	}
+	
+	public int getTileWidth() {
+		return tileWidth;
+	}
+
+	public void setTileWidth(int tileWidth) {
+		this.tileWidth = tileWidth;
+	}
+
+	public int getTileHeight() {
+		return tileHeight;
+	}
+	
+	public void setTileHeight(int tileHeight) {
+		this.tileHeight = tileHeight;
 	}
 
 	public BuildingMap getMap() {
