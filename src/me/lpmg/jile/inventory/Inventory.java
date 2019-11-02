@@ -133,9 +133,9 @@ public class Inventory {
 						inventoryItems.remove(selectedItem);
 					}
 					buildingManager.addBuilding(b);
-				}
 				}else {
 					System.out.println("Cannot build: Buildings cannot be placed inside buildings.");
+				}
 				}
 			}
 		}
