@@ -193,9 +193,9 @@ public class World {
 		entityManager.getPlayer().setX(spawnX);
 		entityManager.getPlayer().setY(spawnY);
 		entityManager.addEntity(new Rock(handler, 350, 300));
-		entityManager.addEntity(new Bush(handler, 200, 500));
-		entityManager.addEntity(new Bush(handler, 300, 400));
-		entityManager.addEntity(new Bush(handler, 200, 750));
+		entityManager.addEntity(new Bush(handler, 250, 450));
+		entityManager.addEntity(new Bush(handler, 192, 750));
+		entityManager.addEntity(new Bush(handler, 448, 750));
 		entityManager.addEntity(new Bush(handler, 600, 1300));
 		entityManager.addEntity(new Bush(handler, 200, 1500));
 		entityManager.addEntity(new Wizard(handler, 200, 300));	
@@ -243,7 +243,7 @@ public class World {
 	private void spawnHermits() {
 		for(Building b : buildingManager.getBuildings()) {
 			System.out.println("Spawning hermit");
-			entityManager.addEntity(new Hermit(handler, b.getX()+b.getDoorX()+15, b.getY()+b.getDoorY()+15));
+			entityManager.addEntity(new Hermit(handler, b.getX()+b.getDoorX()+15, b.getY()+b.getDoorY()+64));
 		}
 	}
 	

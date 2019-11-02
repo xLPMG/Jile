@@ -125,6 +125,7 @@ public class Inventory {
 
 				if (itemCount >= 1 && inventoryItems.get(selectedItem).getId() == Item.woodItem.getId()
 						&& !isColliding(b)) {
+					if(handler.getWorld().player.getX()/Tile.TILEWIDTH<999) {
 					buildingManager = handler.getWorld().getBuildingManager();
 					if (itemCount > 1) {
 						inventoryItems.get(selectedItem).setCount(itemCount - 1);
@@ -132,6 +133,9 @@ public class Inventory {
 						inventoryItems.remove(selectedItem);
 					}
 					buildingManager.addBuilding(b);
+				}
+				}else {
+					System.out.println("Cannot build: Buildings cannot be placed inside buildings.");
 				}
 			}
 		}

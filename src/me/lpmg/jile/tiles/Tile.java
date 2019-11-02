@@ -25,8 +25,11 @@ public class Tile {
 	public static Tile grassTileDirtTop = new GrassTile(Assets.grass_dirtTop, 12);
 	public static Tile grassTileDirtLeft = new GrassTile(Assets.grass_dirtLeft, 13);
 	public static Tile grassTileDirtRight = new GrassTile(Assets.grass_dirtRight, 14);
-	
-	public static Tile grassTileRamp = new GrassTile(Assets.grass_ramp, 15);
+	public static Tile grassTileDirtCBL = new GrassTile(Assets.grass_dirtCBL, 15);
+	public static Tile grassTileDirtCBR = new GrassTile(Assets.grass_dirtCBR, 16);
+	public static Tile grassTileDirtCTL = new GrassTile(Assets.grass_dirtCTL, 17);
+	public static Tile grassTileDirtCTR = new GrassTile(Assets.grass_dirtCTR, 18);
+	public static Tile grassTileRamp = new GrassTile(Assets.grass_ramp, 19);
 
 	public static Tile pebbleTile = new RockTile(Assets.pebble, 31);
 	
