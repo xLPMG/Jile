@@ -6,8 +6,8 @@ import java.awt.image.BufferedImage;
 import me.lpmg.jile.Handler;
 import me.lpmg.jile.gfx.Animation;
 import me.lpmg.jile.gfx.Assets;
+import me.lpmg.jile.ingamemenu.WizardMenu;
 import me.lpmg.jile.items.Item;
-import me.lpmg.jile.wizardmenu.WizardMenu;
 
 public class Wizard extends Creature {
 	

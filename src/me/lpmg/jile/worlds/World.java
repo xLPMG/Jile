@@ -35,7 +35,7 @@ public class World {
 	public Player player;
 	private int spawnTicker;
 	
-	private final int SPAWN_CHANCE_LOG_DEFAULT = 90;
+	private final int SPAWN_CHANCE_LOG_DEFAULT = 94;
 	private final int SPAWN_CHANCE_HERMIT_DEFAULT = 90;
 	
 	public World(Handler handler, String firstLayer, String secondLayer, String thirdLayer){
@@ -204,10 +204,15 @@ public class World {
 	}
 	
 	private void spawnRandomLogs() {
-		int xStart = (int) Math.max(0, handler.getGameCamera().getxOffset() / Tile.TILEWIDTH);
-		int xEnd = (int) Math.min(width, (handler.getGameCamera().getxOffset() + handler.getWidth()) / Tile.TILEWIDTH + 1);
-		int yStart = (int) Math.max(0, handler.getGameCamera().getyOffset() / Tile.TILEHEIGHT);
-		int yEnd = (int) Math.min(height, (handler.getGameCamera().getyOffset() + handler.getHeight()) / Tile.TILEHEIGHT + 1);
+		System.out.println("Spawning random logs...");
+//		int xStart = (int) Math.max(0, handler.getGameCamera().getxOffset() / Tile.TILEWIDTH);
+//		int xEnd = (int) Math.min(width, (handler.getGameCamera().getxOffset() + handler.getWidth()) / Tile.TILEWIDTH + 1);
+//		int yStart = (int) Math.max(0, handler.getGameCamera().getyOffset() / Tile.TILEHEIGHT);
+//		int yEnd = (int) Math.min(height, (handler.getGameCamera().getyOffset() + handler.getHeight()) / Tile.TILEHEIGHT + 1);
+		int xStart = 0;
+		int xEnd= width;
+		int yStart = 0;
+		int yEnd = height;
 		
 		for(int y = yStart;y < yEnd;y++){
 			for(int x = xStart;x < xEnd;x++){
@@ -223,10 +228,15 @@ public class World {
 	}
 	
 	private void spawnRandomHermits() {
-		int xStart = (int) Math.max(0, handler.getGameCamera().getxOffset() / Tile.TILEWIDTH);
-		int xEnd = (int) Math.min(width, (handler.getGameCamera().getxOffset() + handler.getWidth()) / Tile.TILEWIDTH + 1);
-		int yStart = (int) Math.max(0, handler.getGameCamera().getyOffset() / Tile.TILEHEIGHT);
-		int yEnd = (int) Math.min(height, (handler.getGameCamera().getyOffset() + handler.getHeight()) / Tile.TILEHEIGHT + 1);
+		System.out.println("Spawning random hermits...");
+//		int xStart = (int) Math.max(0, handler.getGameCamera().getxOffset() / Tile.TILEWIDTH);
+//		int xEnd = (int) Math.min(width, (handler.getGameCamera().getxOffset() + handler.getWidth()) / Tile.TILEWIDTH + 1);
+//		int yStart = (int) Math.max(0, handler.getGameCamera().getyOffset() / Tile.TILEHEIGHT);
+//		int yEnd = (int) Math.min(height, (handler.getGameCamera().getyOffset() + handler.getHeight()) / Tile.TILEHEIGHT + 1);
+		int xStart = 0;
+		int xEnd= width;
+		int yStart = 0;
+		int yEnd = height;
 		
 		for(int y = yStart;y < yEnd;y++){
 			for(int x = xStart;x < xEnd;x++){
@@ -241,8 +251,8 @@ public class World {
 		}
 	}
 	private void spawnHermits() {
+		System.out.println("Spawning hermits...");
 		for(Building b : buildingManager.getBuildings()) {
-			System.out.println("Spawning hermit");
 			entityManager.addEntity(new Hermit(handler, b.getX()+b.getDoorX()+15, b.getY()+b.getDoorY()+64));
 		}
 	}

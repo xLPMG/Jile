@@ -1,4 +1,4 @@
-package me.lpmg.jile.wizardmenu;
+package me.lpmg.jile.ingamemenu;
 
 import java.awt.Color;
 import java.awt.FontMetrics;

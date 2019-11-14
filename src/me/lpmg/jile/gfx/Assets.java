@@ -34,7 +34,7 @@ public class Assets {
 	public static BufferedImage fence_hz, fence_vt, fence_hL, fence_hR, fence_CBL, fence_CBR, fence_CTL, fence_CTR;
 	public static BufferedImage hedge_hzB, hedge_hzT, hedge_vtL, hedge_vtR, hedge_CBL, hedge_CBR, hedge_CTL, hedge_CTR, hedge_plain, hedge_plainCBL, hedge_plainCBR;
 	
-	public static BufferedImage[] btn_start, btn_buy, btn_sell;
+	public static BufferedImage[] btn_start, btn_buy, btn_sell, btn_remove, btn_build;
 	public static BufferedImage inventoryScreen, itemBar, itemBar_highlighted;
 	public static BufferedImage wizardBuyMenu, wizardSellMenu;
 	public static BufferedImage healthbar, healthbar_empty, healthbar_health_full, healthbar_mana_full, healthbar_corner_full;
@@ -71,6 +71,7 @@ public class Assets {
 		SpriteSheet healthbar_sheet = new SpriteSheet(ImageLoader.loadImage("/textures/healthbar_sheet.png"));
 		SpriteSheet startBtn = new SpriteSheet(ImageLoader.loadImage("/textures/button_start.png"));
 		SpriteSheet wizardBtn = new SpriteSheet(ImageLoader.loadImage("/textures/button_wizard.png"));
+		SpriteSheet itemMenuBtn = new SpriteSheet(ImageLoader.loadImage("/textures/button_itemMenu.png"));
 		
 		inventoryScreen = ImageLoader.loadImage("/textures/inventoryScreen.png");
 		itemBar = ImageLoader.loadImage("/textures/item_bar.png");
@@ -92,6 +93,14 @@ public class Assets {
 		btn_sell = new BufferedImage[2];
 		btn_sell[0] = wizardBtn.crop(default_width * 2, 0, default_width * 2, default_height);
 		btn_sell[1] = wizardBtn.crop(default_width * 2, default_height, default_width * 2, default_height);
+		
+		btn_remove = new BufferedImage[2];
+		btn_remove[0] = itemMenuBtn.crop(0, 0, default_width * 3, default_height);
+		btn_remove[1] = itemMenuBtn.crop(0, default_height, default_width * 3, default_height);
+		
+		btn_build = new BufferedImage[2];
+		btn_build[0] = itemMenuBtn.crop(default_width * 3, 0, default_width * 3, default_height);
+		btn_build[1] = itemMenuBtn.crop(default_width * 3, default_height, default_width * 3, default_height);
 		
 		healthbar_empty = healthbar_sheet.crop(0, 0, healthbar_width, healthbar_height);
 		healthbar_health_full = healthbar_sheet.crop(0, healthbar_height, healthbar_width, healthbar_height);

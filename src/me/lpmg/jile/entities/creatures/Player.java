@@ -72,6 +72,7 @@ public class Player extends Creature {
 
 	@Override
 	public void tick() {
+		//System.out.println(frozen);
 		//Animations
 		animDown.tick();
 		animUp.tick();

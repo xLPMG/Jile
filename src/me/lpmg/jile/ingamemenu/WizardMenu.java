@@ -1,6 +1,8 @@
-package me.lpmg.jile.wizardmenu;
+package me.lpmg.jile.ingamemenu;
 
+import java.awt.FontMetrics;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 
 import me.lpmg.jile.Handler;
@@ -12,7 +14,7 @@ public class WizardMenu {
 	private boolean active = false;
 	public WizardBuyMenu wBM;
 	public WizardSellMenu wSM;
-	
+
 	private int selectedBtn = 2;
 	private int buyBtnX, buyBtnY;
 	private int sellBtnX, sellBtnY;
@@ -32,6 +34,7 @@ public class WizardMenu {
 		if (handler.getMouseManager().isRightPressed() && active) {
 			selectedBtn = 2;
 			active = false;
+			handler.getWorld().player.freeze(false);
 		}
 		if(active) {
 			handler.getWorld().player.getInventory().disableInventory(true);
@@ -39,7 +42,7 @@ public class WizardMenu {
 		}else {
 			selectedBtn = 2;
 			handler.getWorld().player.getInventory().disableInventory(false);
-			handler.getWorld().player.freeze(false);
+			//handler.getWorld().player.freeze(false);
 		}
 		
 		if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_A)&&active)
@@ -61,6 +64,7 @@ public class WizardMenu {
 				wSM.setActive(true);
 				this.active=false;
 			}
+			handler.getWorld().player.freeze(false);
 		}
 		
 		wBM.tick();
