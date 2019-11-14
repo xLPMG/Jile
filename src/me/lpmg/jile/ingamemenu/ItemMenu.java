@@ -20,15 +20,18 @@ public class ItemMenu {
 
 	private Handler handler;
 	private boolean active = false;
-	
+
 	private int selectedBtn = 2;
 	private int removeBtnX, removeBtnY;
 	private int buildBtnX, buildBtnY;
 	BuildingManager buildingManager;
 	private ArrayList<Item> inventoryItems;
 	private int selectedItem = 0;
-	private boolean couldNotConstruct=false;
-	private int couldNotConstructTimer=0;
+	private boolean couldNotConstruct = false;
+	private int couldNotConstructTimer = 0;
+
+	private boolean canRemoveItem = false;
+	private int canRemoveItemTimer = 0;
 
 	public ItemMenu(Handler handler, BuildingManager buildingManager) {
 		this.handler = handler;
@@ -51,7 +54,7 @@ public class ItemMenu {
 		} else {
 			selectedBtn = 2;
 			handler.getWorld().player.getInventory().disableInventory(false);
-			//handler.getWorld().player.freeze(false);
+			// handler.getWorld().player.freeze(false);
 		}
 
 		if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_A) && active)
@@ -74,12 +77,19 @@ public class ItemMenu {
 			}
 			handler.getWorld().player.freeze(false);
 		}
-		
-		if(couldNotConstruct) {
+
+		if (couldNotConstruct) {
 			couldNotConstructTimer++;
-			if(couldNotConstructTimer>=90) {
-				couldNotConstructTimer=0;
+			if (couldNotConstructTimer >= 90) {
+				couldNotConstructTimer = 0;
 				couldNotConstruct = false;
+			}
+		}
+		if (!canRemoveItem) {
+			canRemoveItemTimer++;
+			if (canRemoveItemTimer >= 12) {
+				canRemoveItemTimer = 0;
+				canRemoveItem = true;
 			}
 		}
 	}
@@ -97,31 +107,32 @@ public class ItemMenu {
 			g.drawImage(Assets.btn_remove[0], (int) removeBtnX, (int) removeBtnY, 192, 64, null);
 			g.drawImage(Assets.btn_build[0], (int) buildBtnX, (int) buildBtnY, 192, 64, null);
 		}
-		
-		if(couldNotConstruct) {
-		String text = "Could not construct building";
-		
-		Rectangle rect = new Rectangle(handler.getWidth(), handler.getHeight());
-		FontMetrics metrics = g.getFontMetrics(Assets.font28);
-	    int x = rect.x + (rect.width - metrics.stringWidth(text)) / 2;
-	    //int y = rect.y + ((rect.height - metrics.getHeight()) / 2) + metrics.getAscent();
-	    g.setFont(Assets.font28);
-	    g.drawString(text, x, (int) 500);
+
+		if (couldNotConstruct) {
+			String text = "Could not construct building";
+
+			Rectangle rect = new Rectangle(handler.getWidth(), handler.getHeight());
+			FontMetrics metrics = g.getFontMetrics(Assets.font28);
+			int x = rect.x + (rect.width - metrics.stringWidth(text)) / 2;
+			// int y = rect.y + ((rect.height - metrics.getHeight()) / 2) +
+			// metrics.getAscent();
+			g.setFont(Assets.font28);
+			g.drawString(text, x, (int) 500);
 		}
 	}
-	
+
 	private void build(Building b) {
 		if (inventoryItems.size() != 0) {
 
 			int itemCount = inventoryItems.get(selectedItem).getCount();
 
-			if (itemCount >= 1 && inventoryItems.get(selectedItem).getId() == Item.woodItem.getId()
+			if (itemCount >= 5 && inventoryItems.get(selectedItem).getId() == Item.woodItem.getId()
 					&& !isColliding(b)) {
 				if (handler.getWorld().player.getX() / Tile.TILEWIDTH < 999) {
 					buildingManager = handler.getWorld().getBuildingManager();
-					if (itemCount > 1) {
-						inventoryItems.get(selectedItem).setCount(itemCount - 1);
-					} else {
+					if (itemCount > 5) {
+						inventoryItems.get(selectedItem).setCount(itemCount - 5);
+					} else if (itemCount == 5) {
 						inventoryItems.remove(selectedItem);
 					}
 					buildingManager.addBuilding(b);
@@ -132,18 +143,20 @@ public class ItemMenu {
 			}
 		}
 	}
-	
+
 	private void removeItem() {
 		if (inventoryItems.size() != 0) {
 
 			int itemCount = inventoryItems.get(selectedItem).getCount();
-
-			if (itemCount >= 1) {
+			if (canRemoveItem) {
+				if (itemCount >= 1) {
 					if (itemCount > 1) {
 						inventoryItems.get(selectedItem).setCount(itemCount - 1);
 					} else {
 						inventoryItems.remove(selectedItem);
 					}
+				}
+				canRemoveItem=false;
 			}
 		}
 	}
@@ -165,7 +178,7 @@ public class ItemMenu {
 					System.out.println(
 							"player position: " + "X: " + (int) handler.getWorld().player.getX() / Tile.TILEWIDTH
 									+ " Y: " + (int) handler.getWorld().player.getY() / Tile.TILEHEIGHT);
-					couldNotConstruct=true;
+					couldNotConstruct = true;
 					return true;
 				}
 
@@ -177,7 +190,7 @@ public class ItemMenu {
 							System.out.println("player position: " + "X: "
 									+ (int) handler.getWorld().player.getX() / Tile.TILEWIDTH + " Y: "
 									+ (int) handler.getWorld().player.getY() / Tile.TILEHEIGHT);
-							couldNotConstruct=true;
+							couldNotConstruct = true;
 							return true;
 						}
 					}
@@ -201,7 +214,7 @@ public class ItemMenu {
 								System.out.println("player position: " + "X: "
 										+ (int) handler.getWorld().player.getX() / Tile.TILEWIDTH + " Y: "
 										+ (int) handler.getWorld().player.getY() / Tile.TILEHEIGHT);
-								couldNotConstruct=true;
+								couldNotConstruct = true;
 								return true;
 							}
 						}
