@@ -6,9 +6,15 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 import me.lpmg.jile.Handler;
+import me.lpmg.jile.buildings.Building;
+import me.lpmg.jile.buildings.BuildingManager;
+import me.lpmg.jile.buildings.HermitHut;
+import me.lpmg.jile.entities.Entity;
 import me.lpmg.jile.gfx.Assets;
 import me.lpmg.jile.gfx.Text;
+import me.lpmg.jile.ingamemenu.ItemMenu;
 import me.lpmg.jile.items.Item;
+import me.lpmg.jile.tiles.Tile;
 
 public class Inventory {
 
@@ -16,6 +22,8 @@ public class Inventory {
 	private boolean active = false;
 	private boolean disabled = false;
 	private ArrayList<Item> inventoryItems;
+	private BuildingManager buildingManager;
+	private ItemMenu itM;
 
 	private int invX = 119, invY = 64, invWidth = 512, invHeight = 384, invListCenterX = invX + 171,
 			invListCenterY = invY + invHeight / 2 + 5, invListSpacing = 30;
@@ -29,11 +37,18 @@ public class Inventory {
 	public Inventory(Handler handler) {
 		this.handler = handler;
 		inventoryItems = new ArrayList<Item>();
+		itM = new ItemMenu(handler, buildingManager);
 	}
 
 	public void tick() {
-		if(disabled) {
-			active=false;
+		itM.tick();
+		itM.setInventoryItems(inventoryItems);
+		itM.setSelectedItem(selectedItem);
+		
+		itemActions();
+
+		if (disabled) {
+			active = false;
 		}
 		if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_E))
 			active = !active;
@@ -52,7 +67,7 @@ public class Inventory {
 
 		if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_Q)) {
 
-			if (inventoryItems.size()!=0) {
+			if (inventoryItems.size() != 0) {
 				handler.getWorld().getItemManager().addItem(inventoryItems.get(selectedItem).createNew(
 						(int) handler.getWorld().player.getX(), (int) handler.getWorld().player.getY() + 75));
 
@@ -70,6 +85,7 @@ public class Inventory {
 	}
 
 	public void render(Graphics g) {
+		itM.render(g);
 		if (!active)
 			return;
 		g.drawImage(Assets.inventoryScreen, invX, invY, invWidth, invHeight, null);
@@ -107,6 +123,11 @@ public class Inventory {
 		inventoryItems.add(item);
 	}
 
+	private void itemActions() {
+		if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_B)) {
+			itM.setActive(true);
+		}
+	}
 	// GETTERS SETTERS
 
 	public Handler getHandler() {
@@ -124,8 +145,9 @@ public class Inventory {
 	public ArrayList getInventoryItems() {
 		return inventoryItems;
 	}
+
 	public void setInventoryItems(ArrayList inventoryItems) {
-		this.inventoryItems=inventoryItems;
+		this.inventoryItems = inventoryItems;
 	}
 
 	public void setSelectedItem(int slotID) {
@@ -133,9 +155,9 @@ public class Inventory {
 			selectedItem = slotID;
 		}
 	}
-	
+
 	public void disableInventory(boolean disabled) {
-		this.disabled=disabled;
+		this.disabled = disabled;
 	}
 
 }

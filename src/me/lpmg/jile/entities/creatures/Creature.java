@@ -1,6 +1,7 @@
 package me.lpmg.jile.entities.creatures;
 
 import me.lpmg.jile.Handler;
+import me.lpmg.jile.buildings.Building;
 import me.lpmg.jile.entities.Entity;
 import me.lpmg.jile.tiles.Tile;
 
@@ -91,6 +92,13 @@ public abstract class Creature extends Entity {
 	protected boolean collisionWithTile(int x, int y, int txEAGLoc, int tyEAGLoc){
 		if(handler.getWorld().getTile(x, y).isSolid()||handler.getWorld().getSecondLayerTile(x, y).isSolid()||handler.getWorld().getThirdLayerTile(x, y).isSolid()) {
 			return true;
+		}
+		for(Building b : handler.getWorld().getBuildingManager().getBuildings()) {
+			if(b.getMap()!=null) {
+			if(b.getMap().getTile(x, y).isSolid()) {
+				return true;
+			}
+			}
 		}
 		return false;
 	}

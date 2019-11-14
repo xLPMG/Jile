@@ -14,10 +14,10 @@ public class Rock extends StaticEntity {
 		maxHealth = 50;
 		health = 50;
 		
-		bounds.x = 3;
-		bounds.y = (int) (height / 2f);
-		bounds.width = width - 6;
-		bounds.height = (int) (height - height / 2f);
+		bounds.x = 0;
+		bounds.y = 12;
+		bounds.width = width-10;
+		bounds.height = 50;
 	}
 
 	@Override

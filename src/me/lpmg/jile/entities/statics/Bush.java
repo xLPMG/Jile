@@ -13,10 +13,10 @@ public class Bush extends StaticEntity {
 		super(handler, x, y, Tile.TILEWIDTH, Tile.TILEHEIGHT);
 		maxHealth = 50;
 		health = 50;
-		bounds.x = 10;
-		bounds.y = (int) (height / 1.5f);
-		bounds.width = width - 20;
-		bounds.height = (int) (height - height / 1.5f);
+		bounds.x = 0;
+		bounds.y = 12;
+		bounds.width = width-10;
+		bounds.height = 50;
 	}
 
 	@Override

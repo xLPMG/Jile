@@ -19,6 +19,10 @@ public class Log extends Creature {
 	private int tickCount;
 	private boolean attackMode = false;
 	private long lastAttackTimer, attackCooldown = 300, attackTimer = attackCooldown;
+	private Entity player;
+	private Entity focusedHermit;
+	private String focusedEntityName = "";
+	private boolean frozen = false;
 
 	public Log(Handler handler, float x, float y) {
 		super(handler, x, y, Creature.DEFAULT_CREATURE_WIDTH, Creature.DEFAULT_CREATURE_HEIGHT);
@@ -48,9 +52,12 @@ public class Log extends Creature {
 		animIdle.tick();
 
 		checkAttacks();
-		calculateMovement();
-		move();
+		if (!frozen) {
+			calculateMovement();
+			move();
+		} else {
 
+		}
 	}
 
 	@Override
@@ -92,11 +99,20 @@ public class Log extends Creature {
 			}
 
 		} else {
-			Entity player = handler.getWorld().getEntityManager().getPlayer();
-			float playerX = player.getX();
-			float playerY = player.getY();
-			int xDiff = (int) (playerX - x);
-			int yDiff = (int) (playerY - y);
+			int xDiff = 0;
+			int yDiff = 0;
+
+			if (focusedEntityName.equalsIgnoreCase("player")) {
+				float playerX = player.getX();
+				float playerY = player.getY();
+				xDiff = (int) (playerX - x);
+				yDiff = (int) (playerY - y);
+			} else if (focusedEntityName.equalsIgnoreCase("hermit")) {
+				float hermitX = focusedHermit.getX();
+				float hermitY = focusedHermit.getY();
+				xDiff = (int) (hermitX - x);
+				yDiff = (int) (hermitY - y);
+			}
 
 			if (xDiff == 0 && yDiff > 0) {
 				walkingDirection = 1;
@@ -181,18 +197,33 @@ public class Log extends Creature {
 			// search
 			if (e.getCollisionBounds(0, 0).intersects(searchArea)
 					&& e.equals(handler.getWorld().getEntityManager().getPlayer())) {
+				player = handler.getWorld().getEntityManager().getPlayer();
+				focusedEntityName = "player";
+				attackMode = true;
+			} else if (e.getCollisionBounds(0, 0).intersects(searchArea) && e instanceof Hermit) {
+				focusedHermit = e;
+				focusedEntityName = "hermit";
 				attackMode = true;
 			} else {
 				tickCount++;
 				if (tickCount == 120) {
 					attackMode = false;
+					frozen = false;
 					tickCount = 0;
 				}
 			}
 			// attack
 			if (e.getCollisionBounds(0, 0).intersects(attackArea)
 					&& e.equals(handler.getWorld().getEntityManager().getPlayer())) {
+				player = handler.getWorld().getEntityManager().getPlayer();
+				focusedEntityName = "player";
 				e.hurt(1);
+				frozen = false;
+			} else if (e.getCollisionBounds(0, 0).intersects(attackArea) && e instanceof Hermit) {
+				focusedHermit = e;
+				focusedEntityName = "hermit";
+				e.hurt(1);
+				frozen = true;
 			}
 		}
 	}

@@ -72,6 +72,7 @@ public class Player extends Creature {
 
 	@Override
 	public void tick() {
+		//System.out.println(frozen);
 		//Animations
 		animDown.tick();
 		animUp.tick();
@@ -145,6 +146,9 @@ public class Player extends Creature {
 				healthbar.showCorner();
 				e.hurt(2);
 				System.out.println("Hitting "+e);
+				if(e instanceof Wizard) {
+					mana-=1;
+				}
 				return;
 			}
 		}
