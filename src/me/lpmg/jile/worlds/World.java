@@ -35,7 +35,7 @@ public class World {
 	public Player player;
 	private int spawnTicker;
 	
-	private final int SPAWN_CHANCE_LOG_DEFAULT = 94;
+	private final int SPAWN_CHANCE_LOG_DEFAULT = 96;
 	private final int SPAWN_CHANCE_HERMIT_DEFAULT = 90;
 	
 	public World(Handler handler, String firstLayer, String secondLayer, String thirdLayer){
