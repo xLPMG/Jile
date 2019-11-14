@@ -1,9 +1,10 @@
-# Jile
+# Jile ![jile latest](https://img.shields.io/github/v/release/xlpmg/jile?include_prereleases)
 ## Warning
 #### This game is still in a experimental phase. It does not have many functionalities yet. It also may contain a lot of bugs which are yet to be fixed. 
 ## Assets Copyright
 >https://opengameart.org/content/zelda-like-tilesets-and-sprites
 >https://opengameart.org/content/roguelikerpg-items
+>https://www.deviantart.com/ayene-chan/art/RPG-Maker-Wooden-Floor-316114650
 
 ## Description
 A 2D pixel game written in Java. Source code will not be published yet.
@@ -21,6 +22,9 @@ A 2D pixel game written in Java. Source code will not be published yet.
 #### Collect items by faraming bushes and rocks, sell them and buy new items!
 ### Explore the map!
 ![jile map](https://raw.githubusercontent.com/xLPMG/Jile/master/ramp.png)
+### Fight the logs!
+![jile map](https://raw.githubusercontent.com/xLPMG/Jile/master/log.PNG)
+#### Defend yourself against the evil logs who will try to hurt you if you get close enough to them.
 ### Try Not To Die!
 ![jile die](https://raw.githubusercontent.com/xLPMG/Jile/master/youdied.PNG)
 
