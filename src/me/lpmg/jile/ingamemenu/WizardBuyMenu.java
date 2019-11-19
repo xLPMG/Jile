@@ -40,6 +40,7 @@ public class WizardBuyMenu {
 
 		if (handler.getMouseManager().isRightPressed() && active) {
 			active = false;
+			handler.getWorld().player.freeze(false);
 		}
 		if (!active) {
 			return;
