@@ -9,8 +9,8 @@ import me.lpmg.jile.ui.ClickListener;
 import me.lpmg.jile.ui.UIBackground;
 import me.lpmg.jile.ui.UIImageButton;
 import me.lpmg.jile.ui.UIManager;
-import me.lpmg.jile.ui.UISubtitle;
-import me.lpmg.jile.ui.UITitle;
+import me.lpmg.jile.ui.UISubtitleWhite;
+import me.lpmg.jile.ui.UITitleWhite;
 
 public class DeadState extends State {
 
@@ -21,11 +21,12 @@ public class DeadState extends State {
 		uiManager = new UIManager(handler);
 		handler.getMouseManager().setUIManager(uiManager);
 		
-		uiManager.addObject(new UIBackground(0, 0, handler.getWidth(), handler.getHeight(), Assets.dirt_full));
-		uiManager.addObject(new UITitle(0, 180, handler.getWidth(), handler.getHeight(), "You passed out."));
-		uiManager.addObject(new UITitle(5,  handler.getHeight()-50, handler.getWidth(), handler.getHeight(), "Jile", handler.getVersion()));
-		uiManager.addObject(new UISubtitle(5,  handler.getHeight()-10, handler.getWidth(), handler.getHeight(), "by LPMG Game Studios"));
-		uiManager.addObject(new UIImageButton((handler.getWidth()-128)/2, 200, 128, 64, Assets.btn_start, new ClickListener() {
+		uiManager.addObject(new UIBackground(0, 0, handler.getWidth(), handler.getHeight(), Assets.black));
+		uiManager.addObject(new UISubtitleWhite(0, 180, handler.getWidth(), handler.getHeight(), "Your vision started fading"));
+		uiManager.addObject(new UISubtitleWhite(0, 208, handler.getWidth(), handler.getHeight(), "and you blacked out...."));
+		uiManager.addObject(new UITitleWhite(5,  handler.getHeight()-50, handler.getWidth(), handler.getHeight(), "Jile", handler.getVersion()));
+		uiManager.addObject(new UISubtitleWhite(5,  handler.getHeight()-10, handler.getWidth(), handler.getHeight(), "by LPMG Game Studios"));
+		uiManager.addObject(new UIImageButton((handler.getWidth()-128)/2, 400, 128, 64, Assets.btn_start, new ClickListener() {
 			@Override
 			public void onClick() {
 				handler.getMouseManager().setUIManager(null);
@@ -37,7 +38,7 @@ public class DeadState extends State {
 				player.setX(spawnX);
 				player.setY(spawnY);
 				State.setState(handler.getGame().gameState);
-				handler.getWorld().getSpeechToastManager().showToast("I must´ve passed out...:All my money and items are gone too.:I´ll be more careful now.");
+				handler.getWorld().getSpeechToastManager().showToast("I must have passed out...:My money and items seem to be:gone. I should be more careful:from now on.");
 			}
 		}));
 	}

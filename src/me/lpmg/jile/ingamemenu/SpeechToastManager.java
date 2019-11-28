@@ -17,14 +17,12 @@ public class SpeechToastManager {
 	private int width = 700;
 	private int height = 150;
 	private int charIndex;
-	private int active;
 	private String textToShow;
 	private Handler handler;
 
 	private boolean writing;
 	private boolean stop = false;
 	private boolean requested = false;
-	private int showToastCounter;
 	private int showToastRequestCounter = 0;
 
 	public SpeechToastManager(Handler handler) {
@@ -45,17 +43,6 @@ public class SpeechToastManager {
 	}
 
 	public void tick() {
-		System.out.println(writing);
-		if (writing) {
-			showToastCounter++;
-			if (showToastCounter >= 210) {
-				writing = false;
-				showToastCounter = 0;
-			}
-		} else {
-			showToastCounter = 0;
-		}
-
 		if (requested) {
 			showToastRequestCounter++;
 		}
@@ -63,22 +50,44 @@ public class SpeechToastManager {
 			showToastRequestCounter = 0;
 			requested = false;
 		}
+
+		if (handler.getMouseManager().isRightPressed()) {
+			if (writing) {
+				stop = true;
+			}
+			writing = false;
+			textToShow = "";
+		}
 	}
 
 	public void render(Graphics g) {
-		g.setFont(Assets.font48);
+		g.setFont(Assets.font32);
 		String line1 = "";
 		String line2 = "";
 		String line3 = "";
+		String line4 = "";
+		String line5 = "";
 
 		if (writing) {
 			if (textToShow.contains(":") && !textToShow.endsWith(":")) {
 				String[] lines = textToShow.split(":");
-				line1 = lines[0];
-				line2 = lines[1];
 				int count = textToShow.length() - textToShow.replaceAll(":", "").length();
-				if (count == 2) {
+				line1 = lines[0];
+
+				if (count == 1) {
+					line2 = lines[1];
+				} else if (count == 2) {
+					line2 = lines[1];
 					line3 = lines[2];
+				} else if (count == 3) {
+					line2 = lines[1];
+					line3 = lines[2];
+					line4 = lines[3];
+				} else if (count == 4) {
+					line2 = lines[1];
+					line3 = lines[2];
+					line4 = lines[3];
+					line5 = lines[4];
 				}
 			} else {
 				line1 = textToShow;
@@ -87,9 +96,11 @@ public class SpeechToastManager {
 			g.drawImage(Assets.speechToast, (handler.getWidth() - width) / 2, (handler.getHeight() - height) - 25,
 					width, height, null);
 			g.setColor(Color.black);
-			g.drawString(line1, ((handler.getWidth() - width) / 2) + 10, (handler.getHeight() - height) + 15);
-			g.drawString(line2, ((handler.getWidth() - width) / 2) + 10, (handler.getHeight() - height) + 65);
-			g.drawString(line3, ((handler.getWidth() - width) / 2) + 10, (handler.getHeight() - height) + 115);
+			g.drawString(line1, ((handler.getWidth() - width) / 2) + 10, (handler.getHeight() - height) + 5);
+			g.drawString(line2, ((handler.getWidth() - width) / 2) + 10, (handler.getHeight() - height) + 33);
+			g.drawString(line3, ((handler.getWidth() - width) / 2) + 10, (handler.getHeight() - height) + 61);
+			g.drawString(line4, ((handler.getWidth() - width) / 2) + 10, (handler.getHeight() - height) + 89);
+			g.drawString(line5, ((handler.getWidth() - width) / 2) + 10, (handler.getHeight() - height) + 117);
 		}
 	}
 
@@ -104,7 +115,7 @@ public class SpeechToastManager {
 					stop = false;
 					writing = false;
 				}
-				
+
 				String writtenText = textToShow;
 				writtenText += textInput.charAt(charIndex);
 				textToShow = writtenText;

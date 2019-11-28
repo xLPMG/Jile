@@ -12,9 +12,9 @@ public class Assets {
 	private static final int hut_width = 80, hut_height = 80;
 	private static final int healthbar_width = 64, healthbar_height = 10;
 	
-	public static Font font9, font28, font48, font96;
+	public static Font font9, font28, font32, font48, font96;
 	
-	public static BufferedImage placeholder, debug;
+	public static BufferedImage placeholder, debug, black;
 	
 	public static BufferedImage dirt_wall_left_shadow, dirt_wall_left_bottom, dirt_wall_left_body_low, dirt_wall_left_body_high, dirt_wall_left_top_low, dirt_wall_left_top_middle, dirt_wall_left_top_high;
 	public static BufferedImage dirt_wall_middle_shadow, dirt_wall_middle_bottom, dirt_wall_middle_body_low, dirt_wall_middle_body_high, dirt_wall_middle_top_low, dirt_wall_middle_top_middle, dirt_wall_middle_top_high;
@@ -50,6 +50,7 @@ public class Assets {
 	static {
 		font9 = FontLoader.loadFont("/fonts/slkscr.ttf", 9);
 		font28 = FontLoader.loadFont("/fonts/slkscr.ttf", 28);
+		font32 = FontLoader.loadFont("/fonts/slkscr.ttf", 32);
 		font48 = FontLoader.loadFont("/fonts/slkscr.ttf", 48);
 		font96 = FontLoader.loadFont("/fonts/slkscr.ttf", 96);
 
@@ -196,7 +197,8 @@ public class Assets {
 		grass_ramp = floor_sheet.crop(default_width * 9, 0, default_width, default_height);
 		
 		placeholder = sheet.crop(0, 0, default_width, default_height);
-		debug = sheet.crop(0, default_width * 3, default_width, default_height);
+		black = sheet.crop(default_width, 0, default_width, default_height);
+		debug = sheet.crop(0, default_height * 3, default_width, default_height);
 		
 		dirt_wall_left_shadow = wall_sheet.crop(0, wall_sheet_height * 6, wall_sheet_width, wall_sheet_height);
 		dirt_wall_left_bottom = wall_sheet.crop(0, wall_sheet_height * 5, wall_sheet_width, wall_sheet_height);
