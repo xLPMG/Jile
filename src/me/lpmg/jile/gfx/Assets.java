@@ -38,6 +38,7 @@ public class Assets {
 	public static BufferedImage inventoryScreen, itemBar, itemBar_highlighted;
 	public static BufferedImage wizardBuyMenu, wizardSellMenu;
 	public static BufferedImage healthbar, healthbar_empty, healthbar_health_full, healthbar_mana_full, healthbar_corner_full;
+	public static BufferedImage speechToast;
 	
 	//buildings
 	public static BufferedImage hermit_hut;
@@ -78,6 +79,8 @@ public class Assets {
 		itemBar_highlighted = ImageLoader.loadImage("/textures/item_bar_highlighted.png");
 		wizardBuyMenu = ImageLoader.loadImage("/textures/wizardBuyMenu.png");
 		wizardSellMenu = ImageLoader.loadImage("/textures/wizardSellMenu.png");
+		
+		speechToast = ImageLoader.loadImage("/textures/speechToast.png");
 		
 		woodItem = item_sheet.crop(0, 0, default_width, default_height);
 		rockItem = item_sheet.crop(default_width, 0, default_width, default_height);

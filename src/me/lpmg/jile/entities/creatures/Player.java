@@ -334,5 +334,4 @@ public class Player extends Creature {
 	public void freeze(boolean freeze) {
     frozen=freeze;
 	}
-
 }

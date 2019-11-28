@@ -33,6 +33,7 @@ public class GameState extends State {
 			((Wizard) e).renderMenu(g);
 			}
 		}
+		world.getSpeechToastManager().render(g);
 	}
 
 }

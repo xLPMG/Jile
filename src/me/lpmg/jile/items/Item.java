@@ -12,8 +12,9 @@ public class Item {
 	// Handler
 	
 	public static Item[] items = new Item[256];
-	public static Item woodItem = new Item(Assets.woodItem, "Wood", 0, 2, 1);
-	public static Item rockItem = new Item(Assets.rockItem, "Rock", 1, 3, 2);
+	//Assets, Item Name, ID, buyingPrice,sellingPrice
+	public static Item woodItem = new Item(Assets.woodItem, "Wood", 0, 2, 2);
+	public static Item rockItem = new Item(Assets.rockItem, "Rock", 1, 3, 3);
 	
 	// Class
 	

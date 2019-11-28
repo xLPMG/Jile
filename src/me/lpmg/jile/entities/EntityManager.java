@@ -23,10 +23,17 @@ public class EntityManager {
 		}
 	};
 	
-	public EntityManager(Handler handler, Player player){
+	public EntityManager(Handler handler){
 		this.handler = handler;
-		this.player = player;
 		entities = new ArrayList<Entity>();
+
+	}
+	
+	public void setPlayer(Player player) {
+		if(entities.contains(this.player)) {
+		removeEntity(this.player);
+		}
+		this.player = player;
 		addEntity(player);
 	}
 	
@@ -51,6 +58,9 @@ public class EntityManager {
 	public void addEntity(Entity e){
 		entities.add(e);
 	}
+	public void removeEntity(Entity e){
+		entities.remove(e);
+	}
 	
 	//GETTERS SETTERS
 
@@ -64,10 +74,6 @@ public class EntityManager {
 
 	public Player getPlayer() {
 		return player;
-	}
-
-	public void setPlayer(Player player) {
-		this.player = player;
 	}
 
 	public ArrayList<Entity> getEntities() {

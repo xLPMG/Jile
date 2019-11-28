@@ -140,6 +140,7 @@ public class Wizard extends Creature {
 	}
 	
 	public void interact() {
+		handler.getWorld().getSpeechToastManager().showToast("How may I help you?");
 		wizardMenu.setActive(true);
 	}
 

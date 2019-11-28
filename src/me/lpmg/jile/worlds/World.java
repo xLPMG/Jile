@@ -1,6 +1,7 @@
 package me.lpmg.jile.worlds;
 
 import java.awt.Graphics;
+import java.util.Vector;
 
 import me.lpmg.jile.Handler;
 import me.lpmg.jile.buildings.Building;
@@ -13,6 +14,7 @@ import me.lpmg.jile.entities.creatures.Log;
 import me.lpmg.jile.entities.creatures.Player;
 import me.lpmg.jile.entities.creatures.Wizard;
 import me.lpmg.jile.entities.statics.Rock;
+import me.lpmg.jile.ingamemenu.SpeechToastManager;
 import me.lpmg.jile.entities.statics.Bush;
 import me.lpmg.jile.items.ItemManager;
 import me.lpmg.jile.tiles.Tile;
@@ -33,6 +35,7 @@ public class World {
 	// Item
 	private ItemManager itemManager;
 	public Player player;
+	private SpeechToastManager sTM;
 	private int spawnTicker;
 	
 	private final int SPAWN_CHANCE_LOG_DEFAULT = 96;
@@ -42,6 +45,7 @@ public class World {
 		this.handler = handler;
 		itemManager = new ItemManager(handler);
 		player = new Player(handler, 100, 100);
+		sTM = new SpeechToastManager(handler);
 		loadWorld(firstLayer);
 		loadSecondLayer(secondLayer);
 		loadThirdLayer(thirdLayer);
@@ -54,6 +58,7 @@ public class World {
 		itemManager.tick();
 		buildingManager.tick();
 		entityManager.tick();
+		sTM.tick();
 		
 		if(spawnTicker>3000){
 			System.out.println("Spawning new entities...");
@@ -189,7 +194,8 @@ public class World {
 	}
 	
 	private void spawnEntities(){
-		entityManager = new EntityManager(handler, player);
+		entityManager = new EntityManager(handler);
+		entityManager.setPlayer(player);
 		entityManager.getPlayer().setX(spawnX);
 		entityManager.getPlayer().setY(spawnY);
 		entityManager.addEntity(new Rock(handler, 350, 300));
@@ -289,6 +295,19 @@ public class World {
 		this.itemManager = itemManager;
 	}
 	
+	public int getSpawnX() {
+		return spawnX;	
+	}
+	public int getSpawnY() {
+		return spawnY;	
+	}
+	public void setPlayer(Player player) {
+		this.player=player;
+		entityManager.setPlayer(player);
+	}
+	public SpeechToastManager getSpeechToastManager () {
+		return sTM;
+	}
 }
 
 
