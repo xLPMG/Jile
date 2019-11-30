@@ -80,8 +80,14 @@ public class Tile {
 	public static Tile hedge_plainCTLTile = new HedgeTileSolid(Assets.hedge_plainCTL, 91);
 	public static Tile hedge_plainCTRTile = new HedgeTileSolid(Assets.hedge_plainCTR, 92);
 	
+	//random wall
 	public static Tile wall_Tile_Bottom = new WallTileSolid(Assets.wooden_wall_1, 100);
 	public static Tile wall_Tile_Middle = new WallTileSolid(Assets.wooden_wall_1, 101);
+	//defined walls
+	public static Tile wall_Tile_White_Bottom = new WallTileSolid(Assets.white_wall_bottom, 102);
+	public static Tile wall_Tile_White_Middle = new WallTileSolid(Assets.white_wall_middle, 103);
+	public static Tile wall_Tile_YellowStripes_Bottom = new WallTileSolid(Assets.yellowStripes_wall_bottom, 104);
+	public static Tile wall_Tile_YellowStripes_Middle = new WallTileSolid(Assets.yellowStripes_wall_middle, 105);
 	
 	public static Tile floor_Tile = new FloorTile(Assets.floor_1, 110);
 	

@@ -49,7 +49,7 @@ public class Player extends Creature {
 		bounds.y = 16*multiplier; //19*3
 		bounds.width = 22*multiplier; //9*3
 		bounds.height = 16*multiplier; //4*3
-		speed = 2.4f;
+		speed = 2.0f;
 		defSpeed = speed;
 		sprintSpeed = 3.2f;
 		money=0;

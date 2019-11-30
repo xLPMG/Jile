@@ -23,10 +23,11 @@ public class HermitHut extends Building {
 	public void onEnter() {
 		if(!initialized) {
 		hHM = new HermitHutMap(handler, "/worlds/buildings/hermit-hut.txt","/worlds/buildings/hermit-hut-secondLayer.txt", this, getIndex());
-		hHM.setFlooring(getRandomFlooring());
-		int wallID = (int) (Math.random() * 1) + 1;
-		hHM.setWallMiddle(getWallMiddle(2));
-		hHM.setWallBottom(getWallBottom(2));
+		int floorID = (int) (Math.random() * 18) + 1;
+		hHM.setFlooring(getRandomFlooring(floorID));
+		int wallID = (int) (Math.random() * 3) + 1;
+		hHM.setWallMiddle(getWallMiddle(wallID));
+		hHM.setWallBottom(getWallBottom(wallID));
 		map = hHM;
 		System.out.println("map creation");
 		initialized=true;

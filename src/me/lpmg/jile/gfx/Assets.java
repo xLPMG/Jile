@@ -297,11 +297,11 @@ public class Assets {
 		floor_19 = buildings_interior_sheet.crop(default_width*2, default_height*2, default_width, default_height);
 		floor_20 = buildings_interior_sheet.crop(default_width*3, default_height*2, default_width, default_height);
 		
-		wooden_wall_1 = buildings_interior_sheet.crop(0, default_height*4, default_width, default_height);
-		white_wall_middle = buildings_interior_sheet.crop(default_width, default_height*4, default_width, default_height);
-		white_wall_bottom= buildings_interior_sheet.crop(default_width*2, default_height*4, default_width, default_height);
-		yellowStripes_wall_middle = buildings_interior_sheet.crop(default_width*3, default_height*4, default_width, default_height);
-		yellowStripes_wall_bottom = buildings_interior_sheet.crop(default_width*4, default_height*4, default_width, default_height);
+		wooden_wall_1 = buildings_interior_sheet.crop(0, default_height*5, default_width, default_height);
+		white_wall_middle = buildings_interior_sheet.crop(default_width, default_height*5, default_width, default_height);
+		white_wall_bottom= buildings_interior_sheet.crop(default_width*2, default_height*5, default_width, default_height);
+		yellowStripes_wall_middle = buildings_interior_sheet.crop(default_width*3, default_height*5, default_width, default_height);
+		yellowStripes_wall_bottom = buildings_interior_sheet.crop(default_width*4, default_height*5, default_width, default_height);
 		
 		room_margin_left = buildings_interior_sheet.crop(0, default_height*3, default_width, default_height);
 		room_margin_right = buildings_interior_sheet.crop(default_width, default_height*3, default_width, default_height);

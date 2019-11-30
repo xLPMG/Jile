@@ -75,9 +75,8 @@ public abstract class Building {
 		this.entered = entered;
 	}
 
-	public FloorTile getRandomFlooring() {
+	public FloorTile getRandomFlooring(int floorID) {
 		// TODO
-		int floorID = (int) (Math.random() * 18) + 1;
 		if (floorID == 1) {
 			return new FloorTile(Assets.floor_1, 110);
 		} else if (floorID == 2) {

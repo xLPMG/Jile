@@ -76,7 +76,7 @@ public class HermitHutMap extends BuildingMap {
 			return wallMiddle;
 		}
 		if(t==Tile.wall_Tile_Bottom) {
-			return wallMiddle;
+			return wallBottom;
 		}
 		return t;
 	}
