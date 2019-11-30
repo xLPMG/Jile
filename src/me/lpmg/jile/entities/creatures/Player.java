@@ -40,15 +40,15 @@ public class Player extends Creature {
 	private int money;
 	private int healthRegenSpeed = 200;
 	private int manaRegenSpeed = 260;
-	private int multiplier = PLAYER_HEIGHT/23;
+	private int multiplier = PLAYER_HEIGHT/32;
 	
 	public Player(Handler handler, float x, float y) {
 		super(handler, x, y, Creature.PLAYER_WIDTH, Creature.PLAYER_HEIGHT);
 		
-		bounds.x = 4*multiplier; //4*3
-		bounds.y = 18*multiplier; //19*3
-		bounds.width = 11*multiplier; //9*3
-		bounds.height = 4*multiplier; //4*3
+		bounds.x = 6*multiplier;
+		bounds.y = 16*multiplier; //19*3
+		bounds.width = 22*multiplier; //9*3
+		bounds.height = 16*multiplier; //4*3
 		speed = 2.4f;
 		defSpeed = speed;
 		sprintSpeed = 3.2f;

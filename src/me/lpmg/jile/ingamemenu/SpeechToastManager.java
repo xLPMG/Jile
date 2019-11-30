@@ -95,8 +95,9 @@ public class SpeechToastManager {
 
 			g.drawImage(Assets.speechToast, (handler.getWidth() - width) / 2, (handler.getHeight() - height) - 25,
 					width, height, null);
-			g.setColor(Color.black);
-			g.drawString(line1, ((handler.getWidth() - width) / 2) + 10, (handler.getHeight() - height) + 5);
+			g.setColor(Color.CYAN);
+			g.drawString(line1+":", ((handler.getWidth() - width) / 2) + 10, (handler.getHeight() - height) + 5);
+			g.setColor(Color.WHITE);
 			g.drawString(line2, ((handler.getWidth() - width) / 2) + 10, (handler.getHeight() - height) + 33);
 			g.drawString(line3, ((handler.getWidth() - width) / 2) + 10, (handler.getHeight() - height) + 61);
 			g.drawString(line4, ((handler.getWidth() - width) / 2) + 10, (handler.getHeight() - height) + 89);

@@ -72,8 +72,11 @@ public class HermitHutMap extends BuildingMap {
 		if(t==Tile.floor_Tile) {
 			return flooring;
 		}
-		if(t==Tile.wall_Tile) {
-			return wall;
+		if(t==Tile.wall_Tile_Middle) {
+			return wallMiddle;
+		}
+		if(t==Tile.wall_Tile_Bottom) {
+			return wallMiddle;
 		}
 		return t;
 	}
@@ -124,8 +127,8 @@ public class HermitHutMap extends BuildingMap {
 	}
 	
 	public void checkExit() {
-		if(handler.getWorld().player.getX()>=(spawnX-10)&&handler.getWorld().player.getX()<spawnX+64&&handler.getWorld().player.getY()>=spawnY+5) {
-			handler.getWorld().player.setY(herH.getY()+210);
+		if(handler.getWorld().player.getX()>=(spawnX-15)&&handler.getWorld().player.getX()<spawnX+64&&handler.getWorld().player.getY()>=spawnY+5) {
+			handler.getWorld().player.setY(herH.getY()+230);
 			handler.getWorld().player.setX(herH.getX()+105);
 			herH.setEntered(false);
 		}

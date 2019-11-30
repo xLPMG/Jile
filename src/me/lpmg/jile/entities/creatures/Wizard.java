@@ -17,15 +17,15 @@ public class Wizard extends Creature {
 	private int walkingDirection;
 	private int tickCount;
 	private float defspeed;
-	private int multiplier = PLAYER_HEIGHT/23;
+	private int multiplier = 64/32;
 	
 	public Wizard(Handler handler, float x, float y) {
-		super(handler, x, y, Creature.PLAYER_WIDTH, Creature.PLAYER_HEIGHT);
+		super(handler, x, y, 64, 64);
 		
-		bounds.x = 3*multiplier;
-		bounds.y = 22*multiplier; //19*3
-		bounds.width = 11*multiplier; //9*3
-		bounds.height = 8*multiplier; //4*3
+		bounds.x = 6*multiplier;
+		bounds.y = 16*multiplier; //19*3
+		bounds.width = 22*multiplier; //9*3
+		bounds.height = 16*multiplier; //4*3
 		speed = 0.5f;
 		defspeed = speed;
 		
@@ -140,7 +140,7 @@ public class Wizard extends Creature {
 	}
 	
 	public void interact() {
-		handler.getWorld().getSpeechToastManager().showToast("How may I help you?");
+		handler.getWorld().getSpeechToastManager().showToast("Harold:How may I help you?");
 		wizardMenu.setActive(true);
 	}
 

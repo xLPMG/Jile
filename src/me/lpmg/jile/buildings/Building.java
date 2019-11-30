@@ -122,15 +122,42 @@ public abstract class Building {
 		return null;
 	}
 
-	public WallTileSolid getRandomWall() {
+	public WallTileSolid getWallMiddle(int wallID) {
 		// TODO
-		int wallID = (int) (Math.random() * 1) + 1;
+		if (wallID == 1) {
+			return new WallTileSolid(Assets.wooden_wall_1, 101);
+		} else if (wallID == 2) {
+			return new WallTileSolid(Assets.white_wall_middle, 101);
+		} else if (wallID == 3) {
+			return new WallTileSolid(Assets.yellowStripes_wall_middle, 101);
+		} else if (wallID == 4) {
+		} else if (wallID == 5) {
+		} else if (wallID == 6) {
+		} else if (wallID == 7) {
+		} else if (wallID == 8) {
+		} else if (wallID == 9) {
+		} else if (wallID == 10) {
+		} else if (wallID == 11) {
+		} else if (wallID == 12) {
+		} else if (wallID == 13) {
+		} else if (wallID == 14) {
+		} else if (wallID == 15) {
+		} else if (wallID == 16) {
+		} else if (wallID == 17) {
+		} else if (wallID == 18) {
+		} else if (wallID == 19) {
+		} else if (wallID == 20) {
+		}
+		return null;
+	}
+	public WallTileSolid getWallBottom(int wallID) {
+		// TODO
 		if (wallID == 1) {
 			return new WallTileSolid(Assets.wooden_wall_1, 100);
 		} else if (wallID == 2) {
-			return new WallTileSolid(Assets.colored_wall_navy, 100);
+			return new WallTileSolid(Assets.white_wall_bottom, 100);
 		} else if (wallID == 3) {
-			return new WallTileSolid(Assets.colored_wall_wine, 100);
+			return new WallTileSolid(Assets.yellowStripes_wall_bottom, 100);
 		} else if (wallID == 4) {
 		} else if (wallID == 5) {
 		} else if (wallID == 6) {

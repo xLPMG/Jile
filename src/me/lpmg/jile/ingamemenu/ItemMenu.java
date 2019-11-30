@@ -125,14 +125,16 @@ public class ItemMenu {
 		if (inventoryItems.size() != 0) {
 
 			int itemCount = inventoryItems.get(selectedItem).getCount();
-
-			if (itemCount >= 5 && inventoryItems.get(selectedItem).getId() == Item.woodItem.getId()
+			//TODO
+			int requiredItems = 1;
+			
+			if (itemCount >= requiredItems && inventoryItems.get(selectedItem).getId() == Item.woodItem.getId()
 					&& !isColliding(b)) {
 				if (handler.getWorld().player.getX() / Tile.TILEWIDTH < 999) {
 					buildingManager = handler.getWorld().getBuildingManager();
-					if (itemCount > 5) {
-						inventoryItems.get(selectedItem).setCount(itemCount - 5);
-					} else if (itemCount == 5) {
+					if (itemCount > requiredItems) {
+						inventoryItems.get(selectedItem).setCount(itemCount - requiredItems);
+					} else if (itemCount == requiredItems) {
 						inventoryItems.remove(selectedItem);
 					}
 					buildingManager.addBuilding(b);

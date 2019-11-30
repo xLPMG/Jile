@@ -77,8 +77,11 @@ public class Tile {
 	public static Tile hedge_plainTile = new HedgeTileSolid(Assets.hedge_plain, 88);
 	public static Tile hedge_plainCBLTile = new HedgeTileSolid(Assets.hedge_plainCBL, 89);
 	public static Tile hedge_plainCBRTile = new HedgeTileSolid(Assets.hedge_plainCBR, 90);
+	public static Tile hedge_plainCTLTile = new HedgeTileSolid(Assets.hedge_plainCTL, 91);
+	public static Tile hedge_plainCTRTile = new HedgeTileSolid(Assets.hedge_plainCTR, 92);
 	
-	public static Tile wall_Tile = new WallTileSolid(Assets.wooden_wall_1, 100);
+	public static Tile wall_Tile_Bottom = new WallTileSolid(Assets.wooden_wall_1, 100);
+	public static Tile wall_Tile_Middle = new WallTileSolid(Assets.wooden_wall_1, 101);
 	
 	public static Tile floor_Tile = new FloorTile(Assets.floor_1, 110);
 	

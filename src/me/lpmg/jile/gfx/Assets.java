@@ -32,7 +32,7 @@ public class Assets {
 	public static BufferedImage[] hermit_down, hermit_up, hermit_left, hermit_right, hermit_idle;
 	
 	public static BufferedImage fence_hz, fence_vt, fence_hL, fence_hR, fence_CBL, fence_CBR, fence_CTL, fence_CTR;
-	public static BufferedImage hedge_hzB, hedge_hzT, hedge_vtL, hedge_vtR, hedge_CBL, hedge_CBR, hedge_CTL, hedge_CTR, hedge_plain, hedge_plainCBL, hedge_plainCBR;
+	public static BufferedImage hedge_hzB, hedge_hzT, hedge_vtL, hedge_vtR, hedge_CBL, hedge_CBR, hedge_CTL, hedge_CTR, hedge_plain, hedge_plainCBL, hedge_plainCBR, hedge_plainCTL, hedge_plainCTR;
 	
 	public static BufferedImage[] btn_start, btn_buy, btn_sell, btn_remove, btn_build;
 	public static BufferedImage inventoryScreen, itemBar, itemBar_highlighted;
@@ -43,7 +43,7 @@ public class Assets {
 	//buildings
 	public static BufferedImage hermit_hut;
 	public static BufferedImage floor_1,floor_2,floor_3,floor_4,floor_5,floor_6,floor_7,floor_8,floor_9,floor_10,floor_11,floor_12,floor_13,floor_14,floor_15,floor_16,floor_17,floor_18,floor_19,floor_20;
-	public static BufferedImage wooden_wall_1, colored_wall_wine, colored_wall_navy;
+	public static BufferedImage wooden_wall_1, white_wall_middle, white_wall_bottom, yellowStripes_wall_middle, yellowStripes_wall_bottom;
 	public static BufferedImage room_margin_left, room_margin_right, room_margin_bottom, room_margin_top, room_margin_ctl, room_margin_ctr, room_margin_cbl, room_margin_cbr, room_margin_bottom_end_left, room_margin_bottom_end_right;
 	
 	
@@ -111,20 +111,21 @@ public class Assets {
 		healthbar_mana_full = healthbar_sheet.crop(0, healthbar_height*2, healthbar_width, healthbar_height);
 		healthbar_corner_full = healthbar_sheet.crop(0, healthbar_height*3, healthbar_width, healthbar_height);
 		
-		player_down = new BufferedImage[2];
-		player_up = new BufferedImage[2];
-		player_right = new BufferedImage[2];
-		player_left = new BufferedImage[2];
+		player_down = new BufferedImage[3];
+		player_up = new BufferedImage[3];
+		player_right = new BufferedImage[3];
+		player_left = new BufferedImage[3];
 		player_idle = new BufferedImage[1];
+		
 		player_attack_down = new BufferedImage[1];
 		player_attack_up = new BufferedImage[1];
 		player_attack_left = new BufferedImage[1];
 		player_attack_right = new BufferedImage[1];
 		
-		wizard_down = new BufferedImage[2];
-		wizard_up = new BufferedImage[2];
-		wizard_right = new BufferedImage[2];
-		wizard_left = new BufferedImage[2];
+		wizard_down = new BufferedImage[3];
+		wizard_up = new BufferedImage[3];
+		wizard_right = new BufferedImage[3];
+		wizard_left = new BufferedImage[3];
 		wizard_idle = new BufferedImage[1];
 		
 		log_down = new BufferedImage[2];
@@ -139,29 +140,38 @@ public class Assets {
 		hermit_left = new BufferedImage[2];
 		hermit_idle = new BufferedImage[1];
 
-		player_down[0] = player_sheet.crop(player_sheet_width * 0, 0, player_sheet_width, player_sheet_height);
-		player_down[1] = player_sheet.crop(player_sheet_width * 1, 0, player_sheet_width, player_sheet_height);
-		player_up[0] = player_sheet.crop(player_sheet_width * 2, 0, player_sheet_width, player_sheet_height);
-		player_up[1] = player_sheet.crop(player_sheet_width * 3, 0, player_sheet_width, player_sheet_height);
-		player_right[0] = player_sheet.crop(player_sheet_width * 0, player_sheet_height, player_sheet_width, player_sheet_height);
-		player_right[1] = player_sheet.crop(player_sheet_width * 1, player_sheet_height, player_sheet_width, player_sheet_height);
-		player_left[0] = player_sheet.crop(player_sheet_width * 2, player_sheet_height, player_sheet_width, player_sheet_height);
-		player_left[1] = player_sheet.crop(player_sheet_width * 3, player_sheet_height, player_sheet_width, player_sheet_height);
-		player_idle[0] = player_sheet.crop(player_sheet_width * 0, player_sheet_height * 2, player_sheet_width, player_sheet_height);
+		player_down[0] = player_sheet.crop(default_width * 0, 0, default_width, default_height);
+		player_down[1] = player_sheet.crop(default_width * 1, 0, default_width, default_height);
+		player_down[2] = player_sheet.crop(default_width * 2, 0, default_width, default_height);
+		player_up[0] = player_sheet.crop(default_width * 0, default_height*3, default_width, default_height);
+		player_up[1] = player_sheet.crop(default_width * 1, default_height*3, default_width, default_height);
+		player_up[2] = player_sheet.crop(default_width * 2, default_height*3, default_width, default_height);
+		player_right[0] = player_sheet.crop(default_width * 0, default_height*2, default_width, default_height);
+		player_right[1] = player_sheet.crop(default_width * 1, default_height*2, default_width, default_height);
+		player_right[2] = player_sheet.crop(default_width * 2, default_height*2, default_width, default_height);
+		player_left[0] = player_sheet.crop(default_width * 0, default_height*1, default_width, default_height);
+		player_left[1] = player_sheet.crop(default_width * 1, default_height*1, default_width, default_height);
+		player_left[2] = player_sheet.crop(default_width * 2, default_height*1, default_width, default_height);
+		player_idle[0] = player_sheet.crop(default_width * 1, 0, default_width, default_height);
+		
 		player_attack_down[0] = player_sheet.crop(player_sheet_width * 0, player_sheet_height * 3, player_sheet_width, player_sheet_height);
 		player_attack_up[0] = player_sheet.crop(player_sheet_width * 1, player_sheet_height * 3, player_sheet_width, player_sheet_height);
 		player_attack_right[0] = player_sheet.crop(player_sheet_width * 2, player_sheet_height * 3, player_sheet_width, player_sheet_height);
 		player_attack_left[0] = player_sheet.crop(player_sheet_width * 3, player_sheet_height * 3, player_sheet_width, player_sheet_height);
 		
-		wizard_down[0] = wizard_sheet.crop(player_sheet_width * 0, 0, player_sheet_width, player_sheet_height);
-		wizard_down[1] = wizard_sheet.crop(player_sheet_width * 1, 0, player_sheet_width, player_sheet_height);
-		wizard_up[0] = wizard_sheet.crop(player_sheet_width * 2, 0, player_sheet_width, player_sheet_height);
-		wizard_up[1] = wizard_sheet.crop(player_sheet_width * 3, 0, player_sheet_width, player_sheet_height);
-		wizard_right[0] = wizard_sheet.crop(player_sheet_width * 0, player_sheet_height, player_sheet_width, player_sheet_height);
-		wizard_right[1] = wizard_sheet.crop(player_sheet_width * 1, player_sheet_height, player_sheet_width, player_sheet_height);
-		wizard_left[0] = wizard_sheet.crop(player_sheet_width * 2, player_sheet_height, player_sheet_width, player_sheet_height);
-		wizard_left[1] = wizard_sheet.crop(player_sheet_width * 3, player_sheet_height, player_sheet_width, player_sheet_height);
-		wizard_idle[0] = wizard_sheet.crop(player_sheet_width * 0, player_sheet_height * 2, player_sheet_width, player_sheet_height);
+		wizard_down[0] = wizard_sheet.crop(default_width * 0, 0, default_width, default_height);
+		wizard_down[1] = wizard_sheet.crop(default_width * 1, 0, default_width, default_height);
+		wizard_down[2] = wizard_sheet.crop(default_width * 2, 0, default_width, default_height);
+		wizard_up[0] = wizard_sheet.crop(default_width * 0, default_height*3, default_width, default_height);
+		wizard_up[1] = wizard_sheet.crop(default_width * 1, default_height*3, default_width, default_height);
+		wizard_up[2] = wizard_sheet.crop(default_width * 2, default_height*3, default_width, default_height);
+		wizard_right[0] = wizard_sheet.crop(default_width * 0, default_height*2, default_width, default_height);
+		wizard_right[1] = wizard_sheet.crop(default_width * 1, default_height*2, default_width, default_height);
+		wizard_right[2] = wizard_sheet.crop(default_width * 2, default_height*2, default_width, default_height);
+		wizard_left[0] = wizard_sheet.crop(default_width * 0, default_height*1, default_width, default_height);
+		wizard_left[1] = wizard_sheet.crop(default_width * 1, default_height*1, default_width, default_height);
+		wizard_left[2] = wizard_sheet.crop(default_width * 2, default_height*1, default_width, default_height);
+		wizard_idle[0] = wizard_sheet.crop(default_width * 1, 0, default_width, default_height);
 		
 		log_down[0] = log_sheet.crop(log_sheet_width * 0, 0, log_sheet_width, log_sheet_height);
 		log_down[1] = log_sheet.crop(log_sheet_width * 1, 0, log_sheet_width, log_sheet_height);
@@ -244,6 +254,8 @@ public class Assets {
 		hedge_plain = sheet.crop(0, default_height * 6, default_width, default_height);
 		hedge_plainCBL = sheet.crop(default_width, default_height * 6, default_width, default_height);
 		hedge_plainCBR = sheet.crop(default_width*2, default_height * 6, default_width, default_height);
+		hedge_plainCTL = sheet.crop(default_width*3, default_height * 6, default_width, default_height);
+		hedge_plainCTR = sheet.crop(default_width*4, default_height * 6, default_width, default_height);
 
 		stone = sheet.crop(default_width * 3, 0, default_width, default_height);
 		
@@ -285,9 +297,11 @@ public class Assets {
 		floor_19 = buildings_interior_sheet.crop(default_width*2, default_height*2, default_width, default_height);
 		floor_20 = buildings_interior_sheet.crop(default_width*3, default_height*2, default_width, default_height);
 		
-		wooden_wall_1 = buildings_interior_sheet.crop(0, default_height*5, default_width, default_height);
-		colored_wall_wine = buildings_interior_sheet.crop(0, default_height*6, default_width, default_height);
-		colored_wall_navy = buildings_interior_sheet.crop(default_width, default_height*6, default_width, default_height);
+		wooden_wall_1 = buildings_interior_sheet.crop(0, default_height*4, default_width, default_height);
+		white_wall_middle = buildings_interior_sheet.crop(default_width, default_height*4, default_width, default_height);
+		white_wall_bottom= buildings_interior_sheet.crop(default_width*2, default_height*4, default_width, default_height);
+		yellowStripes_wall_middle = buildings_interior_sheet.crop(default_width*3, default_height*4, default_width, default_height);
+		yellowStripes_wall_bottom = buildings_interior_sheet.crop(default_width*4, default_height*4, default_width, default_height);
 		
 		room_margin_left = buildings_interior_sheet.crop(0, default_height*3, default_width, default_height);
 		room_margin_right = buildings_interior_sheet.crop(default_width, default_height*3, default_width, default_height);

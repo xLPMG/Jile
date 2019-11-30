@@ -12,7 +12,7 @@ public class HermitHut extends Building {
 	private boolean initialized = false;
 	
 	public HermitHut(Handler handler, float x, float y) {
-		super(handler, x, y, 256, 256, 90, 172, 30, 40, 5, 3);
+		super(handler, x, y, 256, 256, 90, 180, 30, 40, 5, 3);
 		bounds.x = 25;
 		bounds.y = 64;
 		bounds.width = 205;
@@ -24,7 +24,9 @@ public class HermitHut extends Building {
 		if(!initialized) {
 		hHM = new HermitHutMap(handler, "/worlds/buildings/hermit-hut.txt","/worlds/buildings/hermit-hut-secondLayer.txt", this, getIndex());
 		hHM.setFlooring(getRandomFlooring());
-		hHM.setWall(getRandomWall());
+		int wallID = (int) (Math.random() * 1) + 1;
+		hHM.setWallMiddle(getWallMiddle(2));
+		hHM.setWallBottom(getWallBottom(2));
 		map = hHM;
 		System.out.println("map creation");
 		initialized=true;

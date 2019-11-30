@@ -9,7 +9,8 @@ import me.lpmg.jile.tiles.WallTileSolid;
 public abstract class BuildingMap {
 
 	protected FloorTile flooring;	
-	protected WallTileSolid wall;
+	protected WallTileSolid wallMiddle;
+	protected WallTileSolid wallBottom;
 	
 	public abstract void render(Graphics g);
 	public abstract void renderSecondLayer(Graphics g);
@@ -25,10 +26,16 @@ public abstract class BuildingMap {
 	public FloorTile getFlooring() {
 		return flooring;
 	}
-	public void setWall(WallTileSolid wall) {
-		this.wall=wall;
+	public void setWallMiddle(WallTileSolid wall) {
+		this.wallMiddle=wall;
 	}
-	public WallTileSolid getWall() {
-		return wall;
+	public WallTileSolid getWallMiddle() {
+		return wallMiddle;
+	}
+	public void setWallBottom(WallTileSolid wall) {
+		this.wallBottom=wall;
+	}
+	public WallTileSolid getWallBottom() {
+		return wallBottom;
 	}
 }
