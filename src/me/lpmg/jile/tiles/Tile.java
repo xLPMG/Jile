@@ -32,6 +32,10 @@ public class Tile {
 	public static Tile grassTileRamp = new GrassTile(Assets.grass_ramp, 19);
 
 	public static Tile pebbleTile = new RockTile(Assets.pebble, 31);
+	public static Tile plant1Tile = new DecorPlantTile(Assets.plant1, 32);
+	public static Tile plant2Tile = new DecorPlantTileSolid(Assets.plant2, 33);
+	public static Tile plant3Tile = new DecorPlantTile(Assets.plant3, 34);
+	public static Tile plant4Tile = new DecorPlantTile(Assets.plant4, 35);
 	
 	public static Tile dirtWallLeftShadowTile = new WallTileCover(Assets.dirt_wall_left_shadow, 40);
 	public static Tile dirtWallLeftBottomTile = new WallTileSolid(Assets.dirt_wall_left_bottom, 41);
@@ -80,14 +84,8 @@ public class Tile {
 	public static Tile hedge_plainCTLTile = new HedgeTileSolid(Assets.hedge_plainCTL, 91);
 	public static Tile hedge_plainCTRTile = new HedgeTileSolid(Assets.hedge_plainCTR, 92);
 	
-	//random wall
 	public static Tile wall_Tile_Bottom = new WallTileSolid(Assets.wooden_wall_1, 100);
 	public static Tile wall_Tile_Middle = new WallTileSolid(Assets.wooden_wall_1, 101);
-	//defined walls
-	public static Tile wall_Tile_White_Bottom = new WallTileSolid(Assets.white_wall_bottom, 102);
-	public static Tile wall_Tile_White_Middle = new WallTileSolid(Assets.white_wall_middle, 103);
-	public static Tile wall_Tile_YellowStripes_Bottom = new WallTileSolid(Assets.yellowStripes_wall_bottom, 104);
-	public static Tile wall_Tile_YellowStripes_Middle = new WallTileSolid(Assets.yellowStripes_wall_middle, 105);
 	
 	public static Tile floor_Tile = new FloorTile(Assets.floor_1, 110);
 	

@@ -1,21 +1,20 @@
 package me.lpmg.jile.worlds;
 
 import java.awt.Graphics;
-import java.util.Vector;
 
 import me.lpmg.jile.Handler;
 import me.lpmg.jile.buildings.Building;
 import me.lpmg.jile.buildings.BuildingManager;
 import me.lpmg.jile.buildings.HermitHut;
-import me.lpmg.jile.entities.Entity;
+import me.lpmg.jile.buildings.HouseJina;
 import me.lpmg.jile.entities.EntityManager;
 import me.lpmg.jile.entities.creatures.Hermit;
 import me.lpmg.jile.entities.creatures.Log;
 import me.lpmg.jile.entities.creatures.Player;
 import me.lpmg.jile.entities.creatures.Wizard;
+import me.lpmg.jile.entities.statics.Bush;
 import me.lpmg.jile.entities.statics.Rock;
 import me.lpmg.jile.ingamemenu.SpeechToastManager;
-import me.lpmg.jile.entities.statics.Bush;
 import me.lpmg.jile.items.ItemManager;
 import me.lpmg.jile.tiles.Tile;
 import me.lpmg.jile.utils.Utils;
@@ -191,6 +190,7 @@ public class World {
 	
 	private void spawnBuildings() {
 		buildingManager = new BuildingManager(handler, player);
+		buildingManager.addBuilding(new HouseJina(handler, 1000,840));
 	}
 	
 	private void spawnEntities(){
@@ -259,7 +259,9 @@ public class World {
 	private void spawnHermits() {
 		System.out.println("Spawning hermits...");
 		for(Building b : buildingManager.getBuildings()) {
+			if(b instanceof HermitHut) {
 			entityManager.addEntity(new Hermit(handler, b.getX()+b.getDoorX()+15, b.getY()+b.getDoorY()+64));
+			}
 		}
 	}
 	

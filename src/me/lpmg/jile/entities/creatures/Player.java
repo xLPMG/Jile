@@ -36,6 +36,7 @@ public class Player extends Creature {
 	private float defSpeed;
 	private float sprintSpeed;
 	private boolean frozen=false;
+	private int damagePerHit = 2;
 	
 	private int money;
 	private int healthRegenSpeed = 200;
@@ -144,8 +145,11 @@ public class Player extends Creature {
 				continue;
 			if(e.getCollisionBounds(0, 0).intersects(ar)){
 				healthbar.showCorner();
-				e.hurt(2);
+				e.hurt(damagePerHit);
 				System.out.println("Hitting "+e);
+				if(e.getHealth()<=0&&e instanceof Creature) {
+					addMoney(((Creature) e).getMoneyOnDeath());
+				}
 				if(e instanceof Wizard) {
 					mana-=1;
 				}

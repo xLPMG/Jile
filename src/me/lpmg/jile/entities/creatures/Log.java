@@ -32,6 +32,7 @@ public class Log extends Creature {
 		bounds.width = 19;
 		bounds.height = 19;
 		speed = 0.5f;
+		moneyOnDeath=5;
 
 		// Animatons
 		animDown = new Animation(250, Assets.log_down);

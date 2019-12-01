@@ -9,7 +9,7 @@ public class Assets {
 	private static final int player_sheet_width = 16, player_sheet_height = 23;
 	private static final int log_sheet_width = 32, log_sheet_height = 32;
 	private static final int wall_sheet_width = 32, wall_sheet_height = 32;
-	private static final int hut_width = 80, hut_height = 80;
+	private static final int building_exterior_width = 20, building_exterior_height = 20;
 	private static final int healthbar_width = 64, healthbar_height = 10;
 	
 	public static Font font9, font28, font32, font48, font96;
@@ -22,7 +22,7 @@ public class Assets {
 	
 	public static BufferedImage dirt_full, stone;
 	public static BufferedImage grass_full, grass_dirtBottom, grass_dirtTop, grass_dirtLeft, grass_dirtRight, grass_dirtCBL, grass_dirtCBR, grass_dirtCTL, grass_dirtCTR, grass_ramp;
-	public static BufferedImage tree, pebble;
+	public static BufferedImage tree, pebble, plant1, plant2, plant3, plant4;
 	public static BufferedImage bush, bush_dmg1, bush_dmg2, bush_dmg3;
 	public static BufferedImage rock, rock_dmg1, rock_dmg2, rock_dmg3;
 	public static BufferedImage woodItem, rockItem;
@@ -41,7 +41,7 @@ public class Assets {
 	public static BufferedImage speechToast;
 	
 	//buildings
-	public static BufferedImage hermit_hut;
+	public static BufferedImage hermit_hut, house_jina;
 	public static BufferedImage floor_1,floor_2,floor_3,floor_4,floor_5,floor_6,floor_7,floor_8,floor_9,floor_10,floor_11,floor_12,floor_13,floor_14,floor_15,floor_16,floor_17,floor_18,floor_19,floor_20;
 	public static BufferedImage wooden_wall_1, white_wall_middle, white_wall_bottom, yellowStripes_wall_middle, yellowStripes_wall_bottom;
 	public static BufferedImage room_margin_left, room_margin_right, room_margin_bottom, room_margin_top, room_margin_ctl, room_margin_ctr, room_margin_cbl, room_margin_cbr, room_margin_bottom_end_left, room_margin_bottom_end_right;
@@ -270,9 +270,14 @@ public class Assets {
 		rock_dmg3 = sheet.crop(default_width*3, default_height * 2, default_width, default_height);
 		
 		pebble = static_entities_sheet.crop(0, default_height * 3, default_width, default_height);
+		plant1 = static_entities_sheet.crop(0, default_height * 4, default_width, default_height);
+		plant2 = static_entities_sheet.crop(default_width*1, default_height * 4, default_width, default_height);
+		plant3 = static_entities_sheet.crop(default_width*2, default_height * 4, default_width, default_height);
+		plant4 = static_entities_sheet.crop(default_width*3, default_height * 4, default_width, default_height);
 		
 		//BUILDINGS
-		hermit_hut = buildings_exterior_sheet.crop(0,0,hut_height, hut_width);
+		hermit_hut = buildings_exterior_sheet.crop(0,0,building_exterior_width*4, building_exterior_height*4);
+		house_jina = buildings_exterior_sheet.crop(building_exterior_width*5, 0, building_exterior_width*4, building_exterior_height*6);
 		
 		floor_1 = buildings_interior_sheet.crop(0, 0, default_width, default_height);
 		floor_2 = buildings_interior_sheet.crop(default_width, 0, default_width, default_height);
