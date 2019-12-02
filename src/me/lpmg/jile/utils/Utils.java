@@ -14,7 +14,6 @@ public class Utils {
 			String line;
 			while((line = br.readLine()) != null)
 				builder.append(line + "\n");
-			
 			br.close();
 		}catch(IOException e){
 			e.printStackTrace();

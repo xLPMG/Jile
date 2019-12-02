@@ -44,7 +44,7 @@ public class World {
 		this.handler = handler;
 		itemManager = new ItemManager(handler);
 		player = new Player(handler, 100, 100);
-		sTM = new SpeechToastManager(handler);
+		sTM = new SpeechToastManager(handler,"/text/speech_en.txt");
 		loadWorld(firstLayer);
 		loadSecondLayer(secondLayer);
 		loadThirdLayer(thirdLayer);

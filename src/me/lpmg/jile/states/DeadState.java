@@ -38,7 +38,7 @@ public class DeadState extends State {
 				player.setX(spawnX);
 				player.setY(spawnY);
 				State.setState(handler.getGame().gameState);
-				handler.getWorld().getSpeechToastManager().showToast("???:I must have passed out...:My money and items seem to be:gone. I should be more careful:from now on.");
+				handler.getWorld().getSpeechToastManager().showToast("!PlayerPassedOut");
 			}
 		}));
 	}
