@@ -20,7 +20,7 @@ public class Assets {
 	public static BufferedImage dirt_wall_middle_shadow, dirt_wall_middle_bottom, dirt_wall_middle_body_low, dirt_wall_middle_body_high, dirt_wall_middle_top_low, dirt_wall_middle_top_middle, dirt_wall_middle_top_high;
 	public static BufferedImage dirt_wall_right_shadow, dirt_wall_right_bottom, dirt_wall_right_body_low, dirt_wall_right_body_high, dirt_wall_right_top_low, dirt_wall_right_top_middle, dirt_wall_right_top_high;
 	
-	public static BufferedImage dirt_full, stone;
+	public static BufferedImage dirt_full, dirt_grassCTL, dirt_grassCTR, dirt_grassCBL, dirt_grassCBR, stone;
 	public static BufferedImage grass_full, grass_dirtBottom, grass_dirtTop, grass_dirtLeft, grass_dirtRight, grass_dirtCBL, grass_dirtCBR, grass_dirtCTL, grass_dirtCTR, grass_ramp;
 	public static BufferedImage tree, pebble, plant1, plant2, plant3, plant4;
 	public static BufferedImage bush, bush_dmg1, bush_dmg2, bush_dmg3;
@@ -194,6 +194,10 @@ public class Assets {
 		hermit_idle[0] = hermit_sheet.crop(player_sheet_width * 0, player_sheet_height * 2, player_sheet_width, player_sheet_height);
 		
 		dirt_full = floor_sheet.crop(default_width * 0, default_height, default_width, default_height);
+		dirt_grassCTL = floor_sheet.crop(default_width * 1, default_height, default_width, default_height);
+		dirt_grassCTR = floor_sheet.crop(default_width * 2, default_height, default_width, default_height);
+		dirt_grassCBL = floor_sheet.crop(default_width * 3, default_height, default_width, default_height);
+		dirt_grassCBR = floor_sheet.crop(default_width * 4, default_height, default_width, default_height);
 		
 		grass_full = floor_sheet.crop(default_width * 0, 0, default_width, default_height);
 		grass_dirtBottom = floor_sheet.crop(default_width * 1, 0, default_width, default_height);

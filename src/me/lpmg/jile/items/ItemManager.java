@@ -36,6 +36,15 @@ public class ItemManager {
 		items.add(i);
 	}
 	
+	public Item getItemByID(int id) {
+		if(id==0) {
+			return Item.woodItem;
+		}else if(id==1) {
+			return Item.rockItem;
+		}
+		return null;
+	}
+	
 	// Getters and Setters
 
 	public Handler getHandler() {

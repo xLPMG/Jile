@@ -92,7 +92,7 @@ public class HermitHutMap extends BuildingMap {
 	}
 	
 	protected void loadWorld(String path) {
-		String file = Utils.loadFileAsString(path);
+		String file = Utils.loadResourceFileAsString(path);
 		String[] tokens = file.split("\\s+");
 		width = Utils.parseInt(tokens[0]);
 		height = Utils.parseInt(tokens[1]);
@@ -110,7 +110,7 @@ public class HermitHutMap extends BuildingMap {
 		}
 	}
 	protected void loadSecondLayer(String path){
-		String file = Utils.loadFileAsString(path);
+		String file = Utils.loadResourceFileAsString(path);
 		String[] tokens = file.split("\\s+");
 		
 		tilesSecondLayer = new int[width][height];

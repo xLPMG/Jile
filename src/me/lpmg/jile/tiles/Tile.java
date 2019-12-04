@@ -18,8 +18,9 @@ public class Tile {
 	
 	public static Tile grassTile = new GrassTile(1);
 	public static Tile dirtTile = new DirtTile(2);
-	public static Tile rockTile = new RockTile(3);
-	public static Tile stoneTile = new StoneTile(4);
+	public static Tile stoneTile = new StoneTile(3);
+	public static Tile bushTile = new PlaceHolderTile(4);
+	public static Tile rockTile = new PlaceHolderTile(5);
 
 	public static Tile grassTileDirtBottom = new GrassTile(Assets.grass_dirtBottom, 11);
 	public static Tile grassTileDirtTop = new GrassTile(Assets.grass_dirtTop, 12);
@@ -31,7 +32,12 @@ public class Tile {
 	public static Tile grassTileDirtCTR = new GrassTile(Assets.grass_dirtCTR, 18);
 	public static Tile grassTileRamp = new GrassTile(Assets.grass_ramp, 19);
 
-	public static Tile pebbleTile = new RockTile(Assets.pebble, 31);
+	public static Tile dirtTileGrassCTL = new GrassTile(Assets.dirt_grassCTL, 21);
+	public static Tile dirtTileGrassCTR = new GrassTile(Assets.dirt_grassCTR, 22);
+	public static Tile dirtTileGrassCBL = new GrassTile(Assets.dirt_grassCBL, 23);
+	public static Tile dirtTileGrassCBR = new GrassTile(Assets.dirt_grassCBR, 24);
+	
+	public static Tile pebbleTile = new StoneTile(Assets.pebble, 31);
 	public static Tile plant1Tile = new DecorPlantTile(Assets.plant1, 32);
 	public static Tile plant2Tile = new DecorPlantTileSolid(Assets.plant2, 33);
 	public static Tile plant3Tile = new DecorPlantTile(Assets.plant3, 34);

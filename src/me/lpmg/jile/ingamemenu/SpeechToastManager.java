@@ -43,6 +43,8 @@ public class SpeechToastManager {
 		if (showToastRequestCounter == 0) {
 			if (isWriting) {
 				stopWriting = true;
+			}else {
+				stopWriting = false;
 			}
 			try {
 				String speechText = getSpeech(textID);
@@ -166,6 +168,7 @@ public class SpeechToastManager {
 			public void actionPerformed(ActionEvent e) {
 				if (stopWriting) {
 					((Timer) e.getSource()).stop();
+					
 					stopWriting = false;
 					System.out.println("STOP");
 					charIndex = 0;

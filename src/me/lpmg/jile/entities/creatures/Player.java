@@ -16,6 +16,8 @@ import me.lpmg.jile.gfx.Text;
 import me.lpmg.jile.healthbar.Healthbar;
 import me.lpmg.jile.inventory.Inventory;
 import me.lpmg.jile.inventory.ItemBar;
+import me.lpmg.jile.items.Item;
+import me.lpmg.jile.items.ItemManager;
 import me.lpmg.jile.states.DeadState;
 import me.lpmg.jile.states.MenuState;
 import me.lpmg.jile.states.State;
@@ -42,6 +44,7 @@ public class Player extends Creature {
 	private int healthRegenSpeed = 200;
 	private int manaRegenSpeed = 260;
 	private int multiplier = PLAYER_HEIGHT/32;
+	private String playerName = "--";
 	
 	public Player(Handler handler, float x, float y) {
 		super(handler, x, y, Creature.PLAYER_WIDTH, Creature.PLAYER_HEIGHT);
@@ -67,6 +70,7 @@ public class Player extends Creature {
 		animAttackRight = new Animation(100, Assets.player_attack_right);
 		
 		inventory = new Inventory(handler);
+		handler.getGame().loadPlayerInventory(this);
 		itemBar = new ItemBar(handler, inventory);
 		healthbar = new Healthbar(handler, this);
 	}
@@ -337,5 +341,11 @@ public class Player extends Creature {
 	}
 	public void freeze(boolean freeze) {
     frozen=freeze;
+	}
+	public void setPlayerName(String name) {
+		playerName=name;
+	}
+	public String getPlayerName() {
+		return playerName;
 	}
 }
