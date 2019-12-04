@@ -21,6 +21,7 @@ import me.lpmg.jile.items.ItemManager;
 import me.lpmg.jile.states.DeadState;
 import me.lpmg.jile.states.MenuState;
 import me.lpmg.jile.states.State;
+import me.lpmg.jile.tiles.Tile;
 
 public class Player extends Creature {
 	
@@ -313,6 +314,16 @@ public class Player extends Creature {
 				return;
 			}
 		}
+		
+		if(handler.getWorld().getTile((int)getX()+ar.x, (int)getY()+ar.y)==Tile.grassTile) {
+			//System.out.println("its dirt");
+		}
+		System.out.println("x "+(int)getX()/64);
+		System.out.println("arX "+ar.x/64);
+		System.out.println("y "+(int)getY()/64);
+		System.out.println("arY "+ar.y/64);
+		System.out.println(handler.getWorld().getSecondLayerTile(((int)getX()+ar.x)/64, ((int)getY()+64+ar.y)/64));
+		
 	}
 	
 	public Inventory getInventory() {
