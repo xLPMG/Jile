@@ -3,6 +3,7 @@ package me.lpmg.jile.states;
 import java.awt.Graphics;
 
 import me.lpmg.jile.Handler;
+import me.lpmg.jile.entities.EntityManager;
 import me.lpmg.jile.entities.creatures.Player;
 import me.lpmg.jile.gfx.Assets;
 import me.lpmg.jile.ui.ClickListener;
@@ -31,12 +32,17 @@ public class DeadState extends State {
 			public void onClick() {
 				handler.getMouseManager().setUIManager(null);
 				
-				Player player = new Player(handler, 300, 300);
+				//Player player = new Player(handler, 300, 300);
+				EntityManager entityManager = handler.getWorld().getEntityManager();
+				Player player = handler.getWorld().player;
+				player.setActive(true);
+				player.resetPlayer();
 				handler.getWorld().setPlayer(player);
 				int spawnX = handler.getWorld().getSpawnX();
 				int spawnY = handler.getWorld().getSpawnY();
-				player.setX(spawnX);
-				player.setY(spawnY);
+				entityManager.setPlayer(player);
+				entityManager.getPlayer().setX(spawnX);
+				entityManager.getPlayer().setY(spawnY);
 				State.setState(handler.getGame().gameState);
 				handler.getWorld().getSpeechToastManager().showToast("!PlayerPassedOut");
 			}

@@ -132,6 +132,7 @@ public class SpeechToastManager {
 
 			g.drawImage(Assets.speechToast, (handler.getWidth() - width) / 2, (handler.getHeight() - height) - 25,
 					width, height, null);
+			//colors
 			if (line1.startsWith("~c")) {
 
 				line1 = line1.replace("~c", "");
@@ -150,6 +151,7 @@ public class SpeechToastManager {
 			} else {
 				g.setColor(Color.WHITE);
 			}
+			
 			g.drawString(line1, ((handler.getWidth() - width) / 2) + 10, (handler.getHeight() - height) + 4);
 			g.setColor(Color.WHITE);
 			g.drawString(line2, ((handler.getWidth() - width) / 2) + 10, (handler.getHeight() - height) + 32);
@@ -204,7 +206,13 @@ public class SpeechToastManager {
 			}
 		} finally {
 			speechReader.close();
+		}		
+		String speech=builder.toString();
+		//variables
+		System.out.println(speech);
+		if(speech.contains("~playerName")) {
+			speech=speech.replace("~playerName", handler.getWorld().player.getPlayerName());
 		}
-		return builder.toString();
+		return speech;
 	}
 }

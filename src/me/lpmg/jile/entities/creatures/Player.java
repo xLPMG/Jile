@@ -7,6 +7,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 import me.lpmg.jile.Handler;
 import me.lpmg.jile.entities.Entity;
@@ -45,7 +46,7 @@ public class Player extends Creature {
 	private int healthRegenSpeed = 200;
 	private int manaRegenSpeed = 260;
 	private int multiplier = PLAYER_HEIGHT/32;
-	private String playerName = "--";
+	private String playerName = "???";
 	
 	public Player(Handler handler, float x, float y) {
 		super(handler, x, y, Creature.PLAYER_WIDTH, Creature.PLAYER_HEIGHT);
@@ -283,6 +284,15 @@ public class Player extends Creature {
 		}
 	}
 	
+	public void resetPlayer() {
+		health=maxHealth;
+		mana=maxMana;
+		money=0;
+		ArrayList<Item> invItems = inventory.getInventoryItems();
+		invItems.clear();
+		inventory.setInventoryItems(invItems);
+	}
+	
 	private void checkInteraction() {
 		Rectangle cb = getCollisionBounds(0, 0);
 		Rectangle ar = new Rectangle();
@@ -314,16 +324,10 @@ public class Player extends Creature {
 				return;
 			}
 		}
-		
-		if(handler.getWorld().getTile((int)getX()+ar.x, (int)getY()+ar.y)==Tile.grassTile) {
-			//System.out.println("its dirt");
+		//TODO
+		if(handler.getWorld().getSecondLayerTile(ar.x/64, ar.y/64)==Tile.sign1Tile) {
+			
 		}
-		System.out.println("x "+(int)getX()/64);
-		System.out.println("arX "+ar.x/64);
-		System.out.println("y "+(int)getY()/64);
-		System.out.println("arY "+ar.y/64);
-		System.out.println(handler.getWorld().getSecondLayerTile(((int)getX()+ar.x)/64, ((int)getY()+64+ar.y)/64));
-		
 	}
 	
 	public Inventory getInventory() {

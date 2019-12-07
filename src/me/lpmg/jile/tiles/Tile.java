@@ -42,6 +42,8 @@ public class Tile {
 	public static Tile plant2Tile = new DecorPlantTileSolid(Assets.plant2, 33);
 	public static Tile plant3Tile = new DecorPlantTile(Assets.plant3, 34);
 	public static Tile plant4Tile = new DecorPlantTile(Assets.plant4, 35);
+	public static Tile tallGrassTileTop = new TallGrassTile(Assets.tall_grass_top, 36);
+	public static Tile tallGrassTileBottom = new TallGrassTile(Assets.tall_grass_bottom, 37);
 	
 	public static Tile dirtWallLeftShadowTile = new WallTileCover(Assets.dirt_wall_left_shadow, 40);
 	public static Tile dirtWallLeftBottomTile = new WallTileSolid(Assets.dirt_wall_left_bottom, 41);
@@ -75,6 +77,9 @@ public class Tile {
 	public static Tile fence_CBRTile = new FenceTileSolid(Assets.fence_CBR, 75);
 	public static Tile fence_CTLTile = new FenceTileSolid(Assets.fence_CTL, 76);
 	public static Tile fence_CTRTile = new FenceTileSolid(Assets.fence_CTR, 77);
+	
+	public static Tile sign1Tile = new SignTileSolid(Assets.fence_CTR, 78);
+	public static Tile sign2Tile = new SignTileSolid(Assets.fence_CTR, 79);
 	
 	public static Tile hedge_hzBTile = new HedgeTileSolid(Assets.hedge_hzB, 80);
 	public static Tile hedge_hzTTile = new HedgeTileSolid(Assets.hedge_hzT, 81);

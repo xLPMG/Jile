@@ -1,12 +1,12 @@
 !PlayerPassedOut
-~g???
+~g~playerName:
 I must have passed out...
 My money and items seem to 
 be gone! I should be more careful
 from now on.
 !wizardspeech
 ~cHarold:
-Hey, how can I help you?
+Hey ~playerName, how can I help you?
 !jinafirstencounter
 Oh! You must be the new one everyone was talking about!
 !jinafirstencounter2

@@ -22,7 +22,7 @@ public class Assets {
 	
 	public static BufferedImage dirt_full, dirt_grassCTL, dirt_grassCTR, dirt_grassCBL, dirt_grassCBR, stone;
 	public static BufferedImage grass_full, grass_dirtBottom, grass_dirtTop, grass_dirtLeft, grass_dirtRight, grass_dirtCBL, grass_dirtCBR, grass_dirtCTL, grass_dirtCTR, grass_ramp;
-	public static BufferedImage tree, pebble, plant1, plant2, plant3, plant4;
+	public static BufferedImage tree, pebble, plant1, plant2, plant3, plant4, tall_grass_bottom, tall_grass_top;
 	public static BufferedImage bush, bush_dmg1, bush_dmg2, bush_dmg3;
 	public static BufferedImage rock, rock_dmg1, rock_dmg2, rock_dmg3;
 	public static BufferedImage woodItem, rockItem;
@@ -278,6 +278,8 @@ public class Assets {
 		plant2 = static_entities_sheet.crop(default_width*1, default_height * 4, default_width, default_height);
 		plant3 = static_entities_sheet.crop(default_width*2, default_height * 4, default_width, default_height);
 		plant4 = static_entities_sheet.crop(default_width*3, default_height * 4, default_width, default_height);
+		tall_grass_bottom = static_entities_sheet.crop(default_width*4, default_height * 4, default_width, default_height);
+		tall_grass_top = static_entities_sheet.crop(default_width*5, default_height * 4, default_width, default_height);
 		
 		//BUILDINGS
 		hermit_hut = buildings_exterior_sheet.crop(0,0,building_exterior_width*4, building_exterior_height*4);
