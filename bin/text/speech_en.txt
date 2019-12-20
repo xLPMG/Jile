@@ -7,7 +7,18 @@ from now on.
 !wizardspeech
 ~cHarold:
 Hey ~playerName, how can I help you?
-!jinafirstencounter
-Oh! You must be the new one everyone was talking about!
-!jinafirstencounter2
+!JinaFirstEncounter
+~r???:
+Oh! You must be the new one 
+everyone was talking about!
+!JinaFirstEncounter2
+~r???:
 So, what is your name?
+!JinaFirstEncounterPlayerName
+~rJina:
+Nice to meet you ~playerName,
+I am Jina by the way. Why don't
+we go outside and I show you
+around a little bit?
+I am sure it'll be fun!
+!PLACEHOLDER

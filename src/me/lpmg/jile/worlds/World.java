@@ -11,11 +11,13 @@ import me.lpmg.jile.buildings.HouseJina;
 import me.lpmg.jile.entities.Entity;
 import me.lpmg.jile.entities.EntityManager;
 import me.lpmg.jile.entities.creatures.Hermit;
+import me.lpmg.jile.entities.creatures.Jina;
 import me.lpmg.jile.entities.creatures.Log;
 import me.lpmg.jile.entities.creatures.Player;
 import me.lpmg.jile.entities.creatures.Wizard;
 import me.lpmg.jile.entities.statics.Bush;
 import me.lpmg.jile.entities.statics.Rock;
+import me.lpmg.jile.gfx.EmoteManager;
 import me.lpmg.jile.ingamemenu.SpeechToastManager;
 import me.lpmg.jile.input.MouseManager;
 import me.lpmg.jile.items.ItemManager;
@@ -41,9 +43,13 @@ public class World {
 	private int spawnTicker;
 	private int savedTicker;
 	private boolean justSaved = false;
+	//emote
+	private EmoteManager eM;
 
 	private final int SPAWN_CHANCE_LOG_DEFAULT = 96;
 	private final int SPAWN_CHANCE_HERMIT_DEFAULT = 90;
+	
+	Map<String, String> eventData;
 
 	public World(Handler handler, String firstLayer, String secondLayer, String thirdLayer) {
 		this.handler = handler;
@@ -51,14 +57,15 @@ public class World {
 		player = new Player(handler, 100, 100);
 		sTM = new SpeechToastManager(handler, "/text/speech_en.txt");
 		entityManager = new EntityManager(handler);
+		eM = new EmoteManager(handler);
 
+		loadGameData();
+		
 		loadWorld(firstLayer);
 		loadSecondLayer(secondLayer);
 		loadThirdLayer(thirdLayer);
 		spawnBuildings();
 		spawnEntities();
-
-		loadGameData();
 	}
 
 	public void tick() {
@@ -318,6 +325,8 @@ public class World {
 		if (playerData.containsKey("player_mana")) {
 			player.setMana(Utils.parseInt(playerData.get("player_mana")));
 		}
+		
+		eventData = handler.getGame().getEventData();
 	}
 
 	private void saveGameData() {
@@ -388,6 +397,10 @@ public class World {
 
 	public BuildingManager getBuildingManager() {
 		return buildingManager;
+	}
+	
+	public EmoteManager getEmoteManager() {
+		return eM;
 	}
 
 	public Handler getHandler() {

@@ -13,7 +13,7 @@ public class HouseJinaMap extends BuildingMap {
 	private int width, height;
 	private int[][] tiles;
 	private int[][] tilesSecondLayer;
-	private int spawnX, spawnY;
+	protected int spawnX, spawnY;
 	private int dimensionM;
 	private HouseJina houseJina;
 	private int index;
@@ -139,6 +139,13 @@ public class HouseJinaMap extends BuildingMap {
 
 	public int getHeight() {
 		return height;
+	}
+	public int getSpawnX() {
+		return spawnX;
+	}
+
+	public int getSpawnY() {
+		return spawnY;
 	}
 
 }

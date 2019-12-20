@@ -70,9 +70,11 @@ public class Game implements Runnable {
 	// stored data
 	private World world;
 	private Map<String, String> playerData = new HashMap<>();
+	private Map<String, String> eventData = new HashMap<>();
 	private Map<String, String> savedEntities = new HashMap<>();
 	// save files
 	private File playerDataFile;
+	private File eventDataFile;
 	private File entitiesFile;
 	private File playerInventoryFile;
 
@@ -232,6 +234,14 @@ public class Game implements Runnable {
 	public void setPlayerData(Map<String, String> playerData) {
 		this.playerData = playerData;
 	}
+	
+	public Map<String, String> getEventData() {
+		return eventData;
+	}
+
+	public void setEventData(Map<String, String> eventData) {
+		this.eventData = eventData;
+	}
 
 	public Map<String, String> getSavedEntities() {
 		return savedEntities;
@@ -258,6 +268,7 @@ public class Game implements Runnable {
 			if (returnValue == JFileChooser.APPROVE_OPTION) {
 				System.out.println(jfc.getSelectedFile());
 				playerDataFile = new File(jfc.getSelectedFile().getAbsolutePath() + "/playerData.dat");
+				eventDataFile = new File(jfc.getSelectedFile().getAbsolutePath() + "/eventData.dat");
 				entitiesFile = new File(jfc.getSelectedFile().getAbsolutePath() + "/entityData.dat");
 				playerInventoryFile = new File(jfc.getSelectedFile().getAbsolutePath() + "/playerInventoryData.dat");
 				
@@ -267,6 +278,8 @@ public class Game implements Runnable {
 				try {
 					if (!playerDataFile.exists()) {
 						System.exit(0);
+					} else if (!eventDataFile.exists()) {
+						createEventDataFile(jfc.getSelectedFile().getAbsolutePath());
 					} else if (!entitiesFile.exists()) {
 						entitiesFile.createNewFile();
 					} else if (!playerInventoryFile.exists()) {
@@ -294,11 +307,13 @@ public class Game implements Runnable {
 				try {
 					fileChooser.getSelectedFile().mkdir();
 
-					playerDataFile = new File(fileChooser.getSelectedFile().getAbsolutePath() + "/playerData.dat");
+					playerDataFile = new File(fileChooser.getSelectedFile().getAbsolutePath() + "/playerData.dat");	
+					createEventDataFile(fileChooser.getSelectedFile().getAbsolutePath());
 					entitiesFile = new File(fileChooser.getSelectedFile().getAbsolutePath() + "/entityData.dat");
 					playerInventoryFile = new File(
 							fileChooser.getSelectedFile().getAbsolutePath() + "/playerInventoryData.dat");
 					playerDataFile.createNewFile();
+					eventDataFile.createNewFile();
 					entitiesFile.createNewFile();
 					playerInventoryFile.createNewFile();
 					createWorldFiles(fileChooser.getSelectedFile().getAbsolutePath());
@@ -335,9 +350,23 @@ public class Game implements Runnable {
 			e.printStackTrace();
 		}
 	}
+	
+	private void createEventDataFile(String path){
+		eventDataFile = new File(path + "/eventData.dat");
+		try {
+			eventDataFile.createNewFile();
+			FileWriter writer = new FileWriter(eventDataFile.getAbsolutePath());
+			writer.write("encounteredJina:false,");
+			writer.write("placeholderkey:placeholderValue");
+			writer.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 	private void loadGameData() {
 		loadPlayerData();
+		loadEventData();
 		loadEntityData();
 	}
 
@@ -378,6 +407,44 @@ public class Game implements Runnable {
 		}
 		System.out.println("Done saving player data.");
 		loadPlayerData();
+	}
+	
+	private void loadEventData() {
+		eventData.clear();
+		try {
+			BufferedReader br = new BufferedReader(new FileReader(eventDataFile.getAbsolutePath()));
+			String line;
+			while ((line = br.readLine()) != null) {
+				if (!line.isEmpty()) {
+					String eventDataObject[] = line.split("[,]");
+					for (String singleData : eventDataObject) {
+						String singleInfo[] = singleData.split(":");
+						eventData.put(singleInfo[0], singleInfo[1]);
+					}
+				}
+			}
+			br.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void saveEventData() {
+		try {
+			FileWriter writer = new FileWriter(eventDataFile.getAbsolutePath());
+			writer.write("");
+			for (Entry<String, String> entry : eventData.entrySet()) {
+				String eventName = entry.getKey();
+				Object eventBoolean = entry.getValue();
+				writer.write(eventName + ":" + eventBoolean + ",");
+			}
+			writer.write("placeholderkey:placeholderValue");
+			writer.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		System.out.println("Done saving event data.");
+		loadEntityData();
 	}
 
 	private void loadEntityData() {

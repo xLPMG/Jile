@@ -1,8 +1,11 @@
 package me.lpmg.jile.buildings;
 
 import java.awt.Graphics;
+import java.util.Map;
 
 import me.lpmg.jile.Handler;
+import me.lpmg.jile.entities.Entity;
+import me.lpmg.jile.entities.creatures.Jina;
 import me.lpmg.jile.gfx.Assets;
 import me.lpmg.jile.worlds.HermitHutMap;
 import me.lpmg.jile.worlds.HouseJinaMap;
@@ -22,6 +25,7 @@ public class HouseJina extends Building {
 
 	@Override
 	public void onEnter() {
+		Map<String, String> eventData = handler.getGame().getEventData();
 		if(!initialized) {
 		hJM = new HouseJinaMap(handler, "/worlds/buildings/house_jina.txt","/worlds/buildings/house_jina-secondLayer.txt", this, getIndex());
 		hJM.setFlooring(getRandomFlooring(3));
@@ -30,9 +34,18 @@ public class HouseJina extends Building {
 		map = hJM;
 		System.out.println("map creation");
 		initialized=true;
+		hJM.spawnPlayer();
+		
+		if(eventData.containsKey("encounteredJina")) {
+			if(eventData.get("encounteredJina").equalsIgnoreCase("false")) {	
+				Entity jina = new Jina(handler, hJM.getSpawnX(),hJM.getSpawnY()-225);
+				handler.getWorld().getEntityManager().addEntity(jina);
+				((Jina)jina).firstEncounter();
+			}
+		}
 		}
 		entered=true;
-		hJM.spawnPlayer();
+
 	}
 	
 	@Override

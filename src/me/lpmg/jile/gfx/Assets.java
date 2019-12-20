@@ -26,8 +26,9 @@ public class Assets {
 	public static BufferedImage bush, bush_dmg1, bush_dmg2, bush_dmg3;
 	public static BufferedImage rock, rock_dmg1, rock_dmg2, rock_dmg3;
 	public static BufferedImage woodItem, rockItem;
-	public static BufferedImage[] player_down, player_up, player_left, player_right, player_idle, player_attack_down, player_attack_up, player_attack_left, player_attack_right;
+	public static BufferedImage[] player_down, player_up, player_left, player_right, player_idleUp,player_idleDown,player_idleLeft,player_idleRight, player_attack_down, player_attack_up, player_attack_left, player_attack_right;
 	public static BufferedImage[] wizard_down, wizard_up, wizard_left, wizard_right, wizard_idle;
+	public static BufferedImage[] jina_down, jina_up, jina_left, jina_right, jina_idle;
 	public static BufferedImage[] log_down, log_up, log_left, log_right, log_idle;
 	public static BufferedImage[] hermit_down, hermit_up, hermit_left, hermit_right, hermit_idle;
 	
@@ -46,6 +47,8 @@ public class Assets {
 	public static BufferedImage wooden_wall_1, white_wall_middle, white_wall_bottom, yellowStripes_wall_middle, yellowStripes_wall_bottom;
 	public static BufferedImage room_margin_left, room_margin_right, room_margin_bottom, room_margin_top, room_margin_ctl, room_margin_ctr, room_margin_cbl, room_margin_cbr, room_margin_bottom_end_left, room_margin_bottom_end_right;
 	
+	//emotes
+	public static BufferedImage emote_exclamations;
 	
 	static {
 		font9 = FontLoader.loadFont("/fonts/slkscr.ttf", 9);
@@ -58,6 +61,7 @@ public class Assets {
 		
 		SpriteSheet player_sheet = new SpriteSheet(ImageLoader.loadImage("/textures/player_sheet.png"));
 		SpriteSheet wizard_sheet = new SpriteSheet(ImageLoader.loadImage("/textures/wizard_sheet.png"));
+		SpriteSheet jina_sheet = new SpriteSheet(ImageLoader.loadImage("/textures/jina_sheet.png"));
 		SpriteSheet log_sheet = new SpriteSheet(ImageLoader.loadImage("/textures/log_sheet.png"));
 		SpriteSheet hermit_sheet = new SpriteSheet(ImageLoader.loadImage("/textures/hermit_sheet.png"));
 		
@@ -82,6 +86,8 @@ public class Assets {
 		wizardSellMenu = ImageLoader.loadImage("/textures/wizardSellMenu.png");
 		
 		speechToast = ImageLoader.loadImage("/textures/speechToast.png");
+		
+		emote_exclamations = ImageLoader.loadImage("/textures/emotes/emote_exclamations.png");
 		
 		woodItem = item_sheet.crop(0, 0, default_width, default_height);
 		rockItem = item_sheet.crop(default_width, 0, default_width, default_height);
@@ -115,7 +121,10 @@ public class Assets {
 		player_up = new BufferedImage[3];
 		player_right = new BufferedImage[3];
 		player_left = new BufferedImage[3];
-		player_idle = new BufferedImage[1];
+		player_idleUp = new BufferedImage[1];
+		player_idleDown = new BufferedImage[1];
+		player_idleLeft = new BufferedImage[1];
+		player_idleRight = new BufferedImage[1];
 		
 		player_attack_down = new BufferedImage[1];
 		player_attack_up = new BufferedImage[1];
@@ -127,6 +136,12 @@ public class Assets {
 		wizard_right = new BufferedImage[3];
 		wizard_left = new BufferedImage[3];
 		wizard_idle = new BufferedImage[1];
+		
+		jina_down = new BufferedImage[3];
+		jina_up = new BufferedImage[3];
+		jina_right = new BufferedImage[3];
+		jina_left = new BufferedImage[3];
+		jina_idle = new BufferedImage[1];
 		
 		log_down = new BufferedImage[2];
 		log_up = new BufferedImage[2];
@@ -152,7 +167,11 @@ public class Assets {
 		player_left[0] = player_sheet.crop(default_width * 0, default_height*1, default_width, default_height);
 		player_left[1] = player_sheet.crop(default_width * 1, default_height*1, default_width, default_height);
 		player_left[2] = player_sheet.crop(default_width * 2, default_height*1, default_width, default_height);
-		player_idle[0] = player_sheet.crop(default_width * 1, 0, default_width, default_height);
+		
+		player_idleUp[0] = player_sheet.crop(default_width * 1, default_height*3, default_width, default_height);
+		player_idleDown[0] = player_sheet.crop(default_width * 1, 0, default_width, default_height);
+		player_idleLeft[0] = player_sheet.crop(default_width * 1, default_height*1, default_width, default_height);
+		player_idleRight[0] = player_sheet.crop(default_width * 1, default_height*2, default_width, default_height);
 		
 		player_attack_down[0] = player_sheet.crop(player_sheet_width * 0, player_sheet_height * 3, player_sheet_width, player_sheet_height);
 		player_attack_up[0] = player_sheet.crop(player_sheet_width * 1, player_sheet_height * 3, player_sheet_width, player_sheet_height);
@@ -172,6 +191,20 @@ public class Assets {
 		wizard_left[1] = wizard_sheet.crop(default_width * 1, default_height*1, default_width, default_height);
 		wizard_left[2] = wizard_sheet.crop(default_width * 2, default_height*1, default_width, default_height);
 		wizard_idle[0] = wizard_sheet.crop(default_width * 1, 0, default_width, default_height);
+		
+		jina_down[0] = jina_sheet.crop(default_width * 0, 0, default_width, default_height);
+		jina_down[1] = jina_sheet.crop(default_width * 1, 0, default_width, default_height);
+		jina_down[2] = jina_sheet.crop(default_width * 2, 0, default_width, default_height);
+		jina_up[0] = jina_sheet.crop(default_width * 0, default_height*3, default_width, default_height);
+		jina_up[1] = jina_sheet.crop(default_width * 1, default_height*3, default_width, default_height);
+		jina_up[2] = jina_sheet.crop(default_width * 2, default_height*3, default_width, default_height);
+		jina_right[0] = jina_sheet.crop(default_width * 0, default_height*2, default_width, default_height);
+		jina_right[1] = jina_sheet.crop(default_width * 1, default_height*2, default_width, default_height);
+		jina_right[2] = jina_sheet.crop(default_width * 2, default_height*2, default_width, default_height);
+		jina_left[0] = jina_sheet.crop(default_width * 0, default_height*1, default_width, default_height);
+		jina_left[1] = jina_sheet.crop(default_width * 1, default_height*1, default_width, default_height);
+		jina_left[2] = jina_sheet.crop(default_width * 2, default_height*1, default_width, default_height);
+		jina_idle[0] = jina_sheet.crop(default_width * 1, 0, default_width, default_height);
 		
 		log_down[0] = log_sheet.crop(log_sheet_width * 0, 0, log_sheet_width, log_sheet_height);
 		log_down[1] = log_sheet.crop(log_sheet_width * 1, 0, log_sheet_width, log_sheet_height);

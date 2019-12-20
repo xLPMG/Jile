@@ -148,7 +148,12 @@ public class SpeechToastManager {
 				line1 = line1.replace("~g", "");
 				g.setColor(Color.DARK_GRAY);
 
-			} else {
+			} else if (line1.startsWith("~r")) {
+
+				line1 = line1.replace("~r", "");
+				g.setColor(Color.RED);
+
+			}else {
 				g.setColor(Color.WHITE);
 			}
 			
