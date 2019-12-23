@@ -16,16 +16,16 @@ import me.lpmg.jile.items.Item;
 public class Jina extends Creature {
 
 	// Animations
-	private Animation animDown, animUp, animLeft, animRight, animIdle, animAttackDown, animAttackUp, animAttackLeft,
+	private Animation animDown, animUp, animLeft, animRight, animIdleUp, animIdleDown, animIdleLeft, animIdleRight, animAttackDown, animAttackUp, animAttackLeft,
 			animAttackRight;
-
-	private int walkingDirection;
+	
 	private int tickCount;
 	private boolean attackMode = false;
 	private long lastAttackTimer, attackCooldown = 300, attackTimer = attackCooldown;
 	private boolean frozen = false;
 	private int multiplier = PLAYER_HEIGHT / 32;
 	private EmoteManager eM;
+	private int walkingDirection = 2;
 
 	public Jina(Handler handler, float x, float y) {
 		super(handler, x, y, Creature.PLAYER_WIDTH, Creature.PLAYER_HEIGHT);
@@ -41,7 +41,10 @@ public class Jina extends Creature {
 		animUp = new Animation(250, Assets.jina_up);
 		animLeft = new Animation(250, Assets.jina_left);
 		animRight = new Animation(250, Assets.jina_right);
-		animIdle = new Animation(500, Assets.jina_idle);
+		animIdleUp = new Animation(500, Assets.jina_idleUp);
+		animIdleDown = new Animation(500, Assets.jina_idleDown);
+		animIdleLeft = new Animation(500, Assets.jina_idleLeft);
+		animIdleRight = new Animation(500, Assets.jina_idleRight);
 
 		eM = handler.getWorld().getEmoteManager();
 
@@ -54,7 +57,10 @@ public class Jina extends Creature {
 		animUp.tick();
 		animRight.tick();
 		animLeft.tick();
-		animIdle.tick();
+		animIdleUp.tick();
+		animIdleDown.tick();
+		animIdleLeft.tick();
+		animIdleRight.tick();
 
 		checkAttacks();
 		if (!frozen) {
@@ -80,49 +86,21 @@ public class Jina extends Creature {
 		} else if (yMove > 0) {
 			return animDown.getCurrentFrame();
 		} else {
-			return animIdle.getCurrentFrame();
+			if (walkingDirection == 0) {
+				return animIdleUp.getCurrentFrame();
+			} else if (walkingDirection == 1) {
+				return animIdleRight.getCurrentFrame();
+			} else if (walkingDirection == 2) {
+				return animIdleDown.getCurrentFrame();
+			} else if (walkingDirection == 3) {
+				return animIdleLeft.getCurrentFrame();
+			}
 		}
+		return animIdleDown.getCurrentFrame();
 	}
 
 	@Override
 	public void die() {
-	}
-
-	private void calculateMovement() {
-		xMove = 0;
-		yMove = 0;
-
-		int up = 1;
-		int up_right = 2;
-		int right = 3;
-		int down_right = 4;
-		int down = 5;
-		int down_left = 6;
-		int left = 7;
-		int up_left = 8;
-
-		if (walkingDirection == up) {
-			yMove = 1 * speed;
-		} else if (walkingDirection == up_right) {
-			yMove = 1 * speed;
-			xMove = 1 * speed;
-		} else if (walkingDirection == right) {
-			xMove = 1 * speed;
-		} else if (walkingDirection == down_right) {
-			yMove = -1 * speed;
-			xMove = 1 * speed;
-		} else if (walkingDirection == down) {
-			yMove = -1 * speed;
-		} else if (walkingDirection == down_left) {
-			yMove = -1 * speed;
-			xMove = -1 * speed;
-		} else if (walkingDirection == left) {
-			xMove = -1 * speed;
-		} else if (walkingDirection == up_left) {
-			yMove = 1 * speed;
-			xMove = -1 * speed;
-		}
-
 	}
 
 	private void checkAttacks() {
@@ -137,9 +115,10 @@ public class Jina extends Creature {
 			// get and freeze player
 			Player player = handler.getWorld().player;
 			player.freeze(true);
+			player.setInvincible(true);
 			player.setWalkingDirection(0);
 			float playerY = player.getY();
-			// shoe exclamation emote
+			// shows exclamation emote
 			try {
 				Thread.sleep(200);
 			} catch (InterruptedException e) {
@@ -173,7 +152,7 @@ public class Jina extends Creature {
 			// ask for name
 			handler.getWorld().getSpeechToastManager().showToast("!JinaFirstEncounter2");
 			try {
-				Thread.sleep(5000);
+				Thread.sleep(4000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -184,6 +163,85 @@ public class Jina extends Creature {
 			}
 			handler.getWorld().player.setPlayerName(name);
 			handler.getWorld().getSpeechToastManager().showToast("!JinaFirstEncounterPlayerName");
+			try {
+				Thread.sleep(10100);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			//go outside
+			player.yMove=1*speed;
+			player.setWalkingDirection(2);
+			try {
+				Thread.sleep(750);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			x=player.getX();
+			y=player.getY()-64;
+			xMove=-1*speed;
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			xMove=0;
+			player.yMove=0*player.speed;
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			yMove=1*speed;
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			yMove=0;
+			walkingDirection=1;
+			player.setWalkingDirection(3);
+			try {
+				Thread.sleep(200);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			handler.getWorld().getSpeechToastManager().showToast("!JinaLogs");
+			try {
+				Thread.sleep(12500);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			handler.getWorld().getSpeechToastManager().showToast("!JinaLogsPlayerResponse");
+			try {
+				Thread.sleep(9600);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			handler.getWorld().getSpeechToastManager().showToast("!JinaLogs2");
+			try {
+				Thread.sleep(14000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			handler.getWorld().getSpeechToastManager().showToast("!JinaLogsPlayerResponse2");
+			try {
+				Thread.sleep(5800);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			handler.getWorld().getSpeechToastManager().showToast("!JinaLogs3");
+			try {
+				Thread.sleep(13600);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			handler.getWorld().getSpeechToastManager().showToast("!JinaLogsPlayerResponse3");
+			try {
+				Thread.sleep(5000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			handler.getWorld().getSpeechToastManager().showToast("!JinaLogs4");
 		}
 	};
 }

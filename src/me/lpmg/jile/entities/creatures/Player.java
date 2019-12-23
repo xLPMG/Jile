@@ -49,6 +49,7 @@ public class Player extends Creature {
 	private int multiplier = PLAYER_HEIGHT / 32;
 	private String playerName = "???";
 	private int walkingDirection = 2;
+	private boolean invincible=false;
 
 	public Player(Handler handler, float x, float y) {
 		super(handler, x, y, Creature.PLAYER_WIDTH, Creature.PLAYER_HEIGHT);
@@ -104,8 +105,8 @@ public class Player extends Creature {
 			// Movement
 			getInput();
 			checkInteraction();
-			move();
 		}
+		move();
 		handler.getGameCamera().centerOnEntity(this);
 		// Attack
 		checkAttacks();
@@ -115,6 +116,9 @@ public class Player extends Creature {
 		inventory.tick();
 		itemBar.tick();
 		healthbar.tick();
+		if(invincible) {
+			health=maxHealth;
+		}
 	}
 
 	private void checkAttacks() {
@@ -395,6 +399,8 @@ public class Player extends Creature {
 
 	public void freeze(boolean freeze) {
 		frozen = freeze;
+		xMove=0;
+		yMove=0;
 	}
 
 	public void setPlayerName(String name) {
@@ -407,5 +413,8 @@ public class Player extends Creature {
 	
 	public void setWalkingDirection(int direction) {
 		walkingDirection=direction;
+	}
+	public void setInvincible(boolean invincible) {
+		this.invincible=invincible;
 	}
 }

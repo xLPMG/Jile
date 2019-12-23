@@ -28,7 +28,7 @@ public class Assets {
 	public static BufferedImage woodItem, rockItem;
 	public static BufferedImage[] player_down, player_up, player_left, player_right, player_idleUp,player_idleDown,player_idleLeft,player_idleRight, player_attack_down, player_attack_up, player_attack_left, player_attack_right;
 	public static BufferedImage[] wizard_down, wizard_up, wizard_left, wizard_right, wizard_idle;
-	public static BufferedImage[] jina_down, jina_up, jina_left, jina_right, jina_idle;
+	public static BufferedImage[] jina_down, jina_up, jina_left, jina_right, jina_idleUp,jina_idleDown,jina_idleLeft,jina_idleRight;
 	public static BufferedImage[] log_down, log_up, log_left, log_right, log_idle;
 	public static BufferedImage[] hermit_down, hermit_up, hermit_left, hermit_right, hermit_idle;
 	
@@ -65,7 +65,7 @@ public class Assets {
 		SpriteSheet log_sheet = new SpriteSheet(ImageLoader.loadImage("/textures/log_sheet.png"));
 		SpriteSheet hermit_sheet = new SpriteSheet(ImageLoader.loadImage("/textures/hermit_sheet.png"));
 		
-		SpriteSheet floor_sheet = new SpriteSheet(ImageLoader.loadImage("/textures/floor_sheet.png"));
+		SpriteSheet floor_sheet = new SpriteSheet(ImageLoader.loadImage("/textures/floor_sheet_new.png"));
 		SpriteSheet wall_sheet = new SpriteSheet(ImageLoader.loadImage("/textures/walls_sheet.png"));
 		
 		SpriteSheet item_sheet = new SpriteSheet(ImageLoader.loadImage("/textures/item_sheet.png"));
@@ -141,7 +141,10 @@ public class Assets {
 		jina_up = new BufferedImage[3];
 		jina_right = new BufferedImage[3];
 		jina_left = new BufferedImage[3];
-		jina_idle = new BufferedImage[1];
+		jina_idleUp = new BufferedImage[1];
+		jina_idleDown = new BufferedImage[1];
+		jina_idleLeft = new BufferedImage[1];
+		jina_idleRight = new BufferedImage[1];
 		
 		log_down = new BufferedImage[2];
 		log_up = new BufferedImage[2];
@@ -204,7 +207,10 @@ public class Assets {
 		jina_left[0] = jina_sheet.crop(default_width * 0, default_height*1, default_width, default_height);
 		jina_left[1] = jina_sheet.crop(default_width * 1, default_height*1, default_width, default_height);
 		jina_left[2] = jina_sheet.crop(default_width * 2, default_height*1, default_width, default_height);
-		jina_idle[0] = jina_sheet.crop(default_width * 1, 0, default_width, default_height);
+				jina_idleUp[0] = jina_sheet.crop(default_width * 1, default_height*3, default_width, default_height);
+		jina_idleDown[0] = jina_sheet.crop(default_width * 1, 0, default_width, default_height);
+		jina_idleLeft[0] = jina_sheet.crop(default_width * 1, default_height*1, default_width, default_height);
+		jina_idleRight[0] = jina_sheet.crop(default_width * 1, default_height*2, default_width, default_height);
 		
 		log_down[0] = log_sheet.crop(log_sheet_width * 0, 0, log_sheet_width, log_sheet_height);
 		log_down[1] = log_sheet.crop(log_sheet_width * 1, 0, log_sheet_width, log_sheet_height);

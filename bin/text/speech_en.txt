@@ -13,12 +13,61 @@ Oh! You must be the new one
 everyone was talking about!
 !JinaFirstEncounter2
 ~r???:
-So, what is your name?
+I'm curious about your name
+though. How should I call you?
 !JinaFirstEncounterPlayerName
 ~rJina:
 Nice to meet you ~playerName,
 I am Jina by the way. Why don't
-we go outside and I show you
-around a little bit?
-I am sure it'll be fun!
+we go outside for a bit? I want
+to show you something.
+!JinaLogs
+~rJina:
+Can you see those walking logs, 
+~playerName? You must have been
+surprised when you saw them the
+first time... We don't know much
+about them yet, except that they
+are hostile.
+!JinaLogsPlayerResponse
+~g~playerName:
+But where did they come from?
+Shouldn't it be impossible for
+logs to come alive? Also, for 
+how long have they been around?
+!JinaLogs2
+~rJina:
+Honestly there's so much we don't
+know about them. They appeared 
+one morning after an extreme 
+thunderstorm. It was a few months
+ago, but we still have no clue 
+about what happened that night.
+!JinaLogsPlayerResponse2
+~g~playerName:
+And there is nothing to do about
+it except fighting them off?
+!JinaLogs3
+~rJina:
+For now, yes. But that's why we're
+so excited about your arrival! We
+are all sure that you're the one 
+destined to save our world from 
+suffering, as our holy religious 
+book predicts it. 
+!JinaLogsPlayerResponse3
+~g~playerName:
+I'm sorry but i don't think that
+I am the one you're looking for.
+I don't even have a weapon nor
+any skills to use it!
+!JinaLogs4
+~rJina:
+That's fine. I'll give you my old
+sword to practice and you'll be
+ready to fight in no time. Also,
+people have high hopes in you 
+~playerName. We all trust you. 
+Now lets go inside again and 
+I´ll show you how to fight!
 !PLACEHOLDER

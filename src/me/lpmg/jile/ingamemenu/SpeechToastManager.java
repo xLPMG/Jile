@@ -106,21 +106,26 @@ public class SpeechToastManager {
 					line4 = lines[3];
 					line5 = lines[4];
 				} else if (count == 5) {
-					line1 = lines[5];
+					line2 = lines[2];
+					line3 = lines[3];
+					line4 = lines[4];
+					line5 = lines[5];
 				} else if (count == 6) {
-					line1 = lines[5];
-					line2 = lines[6];
+					line2 = lines[3];
+					line3 = lines[4];
+					line4 = lines[5];
+					line5 = lines[6];
 				} else if (count == 7) {
-					line1 = lines[5];
-					line2 = lines[6];
-					line3 = lines[7];
+					line2 = lines[4];
+					line3 = lines[5];
+					line4 = lines[6];
+					line5 = lines[7];
 				} else if (count == 8) {
-					line1 = lines[5];
-					line2 = lines[6];
-					line3 = lines[7];
-					line4 = lines[8];
+					line2 = lines[5];
+					line3 = lines[6];
+					line4 = lines[7];
+					line5 = lines[8];
 				} else if (count == 9) {
-					line1 = lines[5];
 					line2 = lines[6];
 					line3 = lines[7];
 					line4 = lines[8];
@@ -170,7 +175,7 @@ public class SpeechToastManager {
 		textToShow = "";
 		showText = true;
 		isWriting = true;
-		Timer timer = new Timer(60, new ActionListener() {
+		Timer timer = new Timer(65, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (stopWriting) {
