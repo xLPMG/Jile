@@ -1,5 +1,6 @@
 package me.lpmg.jile.input;
 
+import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -11,6 +12,7 @@ public class MouseManager implements MouseListener, MouseMotionListener {
 	private boolean leftPressed, rightPressed;
 	private int mouseX, mouseY;
 	private UIManager uiManager;
+	private Point clickedPoint;
 	
 	public MouseManager(){
 		
@@ -38,6 +40,10 @@ public class MouseManager implements MouseListener, MouseMotionListener {
 		return mouseY;
 	}
 	
+	public Point getClickedPoint() {
+		return clickedPoint;
+	}
+	
 	// Implemented methods
 	
 	@Override
@@ -46,6 +52,8 @@ public class MouseManager implements MouseListener, MouseMotionListener {
 			leftPressed = true;
 		else if(e.getButton() == MouseEvent.BUTTON3)
 			rightPressed = true;
+		
+		clickedPoint=e.getPoint();
 	}
 
 	@Override
@@ -57,6 +65,8 @@ public class MouseManager implements MouseListener, MouseMotionListener {
 		
 		if(uiManager != null)
 			uiManager.onMouseRelease(e);
+		
+		clickedPoint=new Point(0,0);
 	}
 
 	@Override

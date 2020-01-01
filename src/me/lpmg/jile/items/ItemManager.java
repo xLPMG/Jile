@@ -41,6 +41,10 @@ public class ItemManager {
 			return Item.woodItem;
 		}else if(id==1) {
 			return Item.rockItem;
+		}else if(id==11) {
+			return Item.swordNormal;
+		}else if(id==12) {
+			return Item.swordCommon;
 		}
 		return null;
 	}

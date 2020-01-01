@@ -97,28 +97,28 @@ public class ItemMenu {
 	public void render(Graphics g) {
 		if (!active)
 			return;
-		if (selectedBtn == 0) {
-			g.drawImage(Assets.btn_remove[1], (int) removeBtnX, (int) removeBtnY, 192, 64, null);
-			g.drawImage(Assets.btn_build[0], (int) buildBtnX, (int) buildBtnY, 192, 64, null);
-		} else if (selectedBtn == 1) {
-			g.drawImage(Assets.btn_remove[0], (int) removeBtnX, (int) removeBtnY, 192, 64, null);
-			g.drawImage(Assets.btn_build[1], (int) buildBtnX, (int) buildBtnY, 192, 64, null);
-		} else {
-			g.drawImage(Assets.btn_remove[0], (int) removeBtnX, (int) removeBtnY, 192, 64, null);
-			g.drawImage(Assets.btn_build[0], (int) buildBtnX, (int) buildBtnY, 192, 64, null);
-		}
-
-		if (couldNotConstruct) {
-			String text = "Could not construct building";
-
-			Rectangle rect = new Rectangle(handler.getWidth(), handler.getHeight());
-			FontMetrics metrics = g.getFontMetrics(Assets.font28);
-			int x = rect.x + (rect.width - metrics.stringWidth(text)) / 2;
-			// int y = rect.y + ((rect.height - metrics.getHeight()) / 2) +
-			// metrics.getAscent();
-			g.setFont(Assets.font28);
-			g.drawString(text, x, (int) 500);
-		}
+//		if (selectedBtn == 0) {
+//			g.drawImage(Assets.btn_remove[1], (int) removeBtnX, (int) removeBtnY, 192, 64, null);
+//			g.drawImage(Assets.btn_build[0], (int) buildBtnX, (int) buildBtnY, 192, 64, null);
+//		} else if (selectedBtn == 1) {
+//			g.drawImage(Assets.btn_remove[0], (int) removeBtnX, (int) removeBtnY, 192, 64, null);
+//			g.drawImage(Assets.btn_build[1], (int) buildBtnX, (int) buildBtnY, 192, 64, null);
+//		} else {
+//			g.drawImage(Assets.btn_remove[0], (int) removeBtnX, (int) removeBtnY, 192, 64, null);
+//			g.drawImage(Assets.btn_build[0], (int) buildBtnX, (int) buildBtnY, 192, 64, null);
+//		}
+//
+//		if (couldNotConstruct) {
+//			String text = "Could not construct building";
+//
+//			Rectangle rect = new Rectangle(handler.getWidth(), handler.getHeight());
+//			FontMetrics metrics = g.getFontMetrics(Assets.font28);
+//			int x = rect.x + (rect.width - metrics.stringWidth(text)) / 2;
+//			// int y = rect.y + ((rect.height - metrics.getHeight()) / 2) +
+//			// metrics.getAscent();
+//			g.setFont(Assets.font28);
+//			g.drawString(text, x, (int) 500);
+//		}
 	}
 
 	private void build(Building b) {

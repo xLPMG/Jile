@@ -1,0 +1,1 @@
+player_name:LPMG|player_health:30|player_money:15|placeholderkey:placeholderValue

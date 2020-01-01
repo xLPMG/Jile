@@ -25,7 +25,7 @@ public class Assets {
 	public static BufferedImage tree, pebble, plant1, plant2, plant3, plant4, tall_grass_bottom, tall_grass_top;
 	public static BufferedImage bush, bush_dmg1, bush_dmg2, bush_dmg3;
 	public static BufferedImage rock, rock_dmg1, rock_dmg2, rock_dmg3;
-	public static BufferedImage woodItem, rockItem;
+
 	public static BufferedImage[] player_down, player_up, player_left, player_right, player_idleUp,player_idleDown,player_idleLeft,player_idleRight, player_attack_down, player_attack_up, player_attack_left, player_attack_right;
 	public static BufferedImage[] wizard_down, wizard_up, wizard_left, wizard_right, wizard_idle;
 	public static BufferedImage[] jina_down, jina_up, jina_left, jina_right, jina_idleUp,jina_idleDown,jina_idleLeft,jina_idleRight;
@@ -36,6 +36,7 @@ public class Assets {
 	public static BufferedImage hedge_hzB, hedge_hzT, hedge_vtL, hedge_vtR, hedge_CBL, hedge_CBR, hedge_CTL, hedge_CTR, hedge_plain, hedge_plainCBL, hedge_plainCBR, hedge_plainCTL, hedge_plainCTR;
 	
 	public static BufferedImage[] btn_start, btn_buy, btn_sell, btn_remove, btn_build;
+	public static BufferedImage  btn_equip, btn_unequip;
 	public static BufferedImage inventoryScreen, itemBar, itemBar_highlighted;
 	public static BufferedImage wizardBuyMenu, wizardSellMenu;
 	public static BufferedImage healthbar, healthbar_empty, healthbar_health_full, healthbar_mana_full, healthbar_corner_full;
@@ -50,6 +51,10 @@ public class Assets {
 	//emotes
 	public static BufferedImage emote_exclamations;
 	
+	//items
+	public static BufferedImage woodItem, rockItem;
+	public static BufferedImage sword_normal, sword_common;
+	
 	static {
 		font9 = FontLoader.loadFont("/fonts/slkscr.ttf", 9);
 		font28 = FontLoader.loadFont("/fonts/slkscr.ttf", 28);
@@ -57,7 +62,7 @@ public class Assets {
 		font48 = FontLoader.loadFont("/fonts/slkscr.ttf", 48);
 		font96 = FontLoader.loadFont("/fonts/slkscr.ttf", 96);
 
-		SpriteSheet sheet = new SpriteSheet(ImageLoader.loadImage("/textures/sheet.png"));
+		SpriteSheet sheet = new SpriteSheet(ImageLoader.loadImage("/textures/sheet_new.png"));
 		
 		SpriteSheet player_sheet = new SpriteSheet(ImageLoader.loadImage("/textures/player_sheet.png"));
 		SpriteSheet wizard_sheet = new SpriteSheet(ImageLoader.loadImage("/textures/wizard_sheet.png"));
@@ -66,10 +71,10 @@ public class Assets {
 		SpriteSheet hermit_sheet = new SpriteSheet(ImageLoader.loadImage("/textures/hermit_sheet.png"));
 		
 		SpriteSheet floor_sheet = new SpriteSheet(ImageLoader.loadImage("/textures/floor_sheet_new.png"));
-		SpriteSheet wall_sheet = new SpriteSheet(ImageLoader.loadImage("/textures/walls_sheet.png"));
+		SpriteSheet wall_sheet = new SpriteSheet(ImageLoader.loadImage("/textures/walls_sheet_new.png"));
 		
 		SpriteSheet item_sheet = new SpriteSheet(ImageLoader.loadImage("/textures/item_sheet.png"));
-		SpriteSheet static_entities_sheet = new SpriteSheet(ImageLoader.loadImage("/textures/static_entities_sheet.png"));
+		SpriteSheet static_entities_sheet = new SpriteSheet(ImageLoader.loadImage("/textures/static_entities_sheet_new.png"));
 		
 		SpriteSheet buildings_exterior_sheet = new SpriteSheet(ImageLoader.loadImage("/textures/buildings_exterior_sheet.png"));
 		SpriteSheet buildings_interior_sheet = new SpriteSheet(ImageLoader.loadImage("/textures/buildings_interior_sheet.png"));
@@ -78,6 +83,7 @@ public class Assets {
 		SpriteSheet startBtn = new SpriteSheet(ImageLoader.loadImage("/textures/button_start.png"));
 		SpriteSheet wizardBtn = new SpriteSheet(ImageLoader.loadImage("/textures/button_wizard.png"));
 		SpriteSheet itemMenuBtn = new SpriteSheet(ImageLoader.loadImage("/textures/button_itemMenu.png"));
+		SpriteSheet equipBtn = new SpriteSheet(ImageLoader.loadImage("/textures/button_Equip.png"));
 		
 		inventoryScreen = ImageLoader.loadImage("/textures/inventoryScreen.png");
 		itemBar = ImageLoader.loadImage("/textures/item_bar.png");
@@ -91,6 +97,8 @@ public class Assets {
 		
 		woodItem = item_sheet.crop(0, 0, default_width, default_height);
 		rockItem = item_sheet.crop(default_width, 0, default_width, default_height);
+		sword_normal = ImageLoader.loadImage("/textures/items/sword_normal.png");
+		sword_common = ImageLoader.loadImage("/textures/items/sword_common.png");
 		
 		btn_start = new BufferedImage[2];
 		btn_start[0] = startBtn.crop(0, 0, default_width * 2, default_height);
@@ -111,6 +119,9 @@ public class Assets {
 		btn_build = new BufferedImage[2];
 		btn_build[0] = itemMenuBtn.crop(default_width * 3, 0, default_width * 3, default_height);
 		btn_build[1] = itemMenuBtn.crop(default_width * 3, default_height, default_width * 3, default_height);
+		
+		btn_equip = equipBtn.crop(0, 0, default_width * 3, default_height);
+		btn_unequip = equipBtn.crop(default_width * 3, 0, default_width * 3, default_height);
 		
 		healthbar_empty = healthbar_sheet.crop(0, 0, healthbar_width, healthbar_height);
 		healthbar_health_full = healthbar_sheet.crop(0, healthbar_height, healthbar_width, healthbar_height);
@@ -207,7 +218,7 @@ public class Assets {
 		jina_left[0] = jina_sheet.crop(default_width * 0, default_height*1, default_width, default_height);
 		jina_left[1] = jina_sheet.crop(default_width * 1, default_height*1, default_width, default_height);
 		jina_left[2] = jina_sheet.crop(default_width * 2, default_height*1, default_width, default_height);
-				jina_idleUp[0] = jina_sheet.crop(default_width * 1, default_height*3, default_width, default_height);
+		jina_idleUp[0] = jina_sheet.crop(default_width * 1, default_height*3, default_width, default_height);
 		jina_idleDown[0] = jina_sheet.crop(default_width * 1, 0, default_width, default_height);
 		jina_idleLeft[0] = jina_sheet.crop(default_width * 1, default_height*1, default_width, default_height);
 		jina_idleRight[0] = jina_sheet.crop(default_width * 1, default_height*2, default_width, default_height);
@@ -302,15 +313,15 @@ public class Assets {
 
 		stone = sheet.crop(default_width * 3, 0, default_width, default_height);
 		
-		bush = sheet.crop(0, default_height, default_width, default_height);
-		bush_dmg1 = sheet.crop(default_width, default_height, default_width, default_height);
-		bush_dmg2 = sheet.crop(default_width*2, default_height, default_width, default_height);
-		bush_dmg3 = sheet.crop(default_width*3, default_height, default_width, default_height);
+		bush = static_entities_sheet.crop(0, 0, default_width, default_height);
+		bush_dmg1 = static_entities_sheet.crop(default_width, 0, default_width, default_height);
+		bush_dmg2 = static_entities_sheet.crop(default_width*2, 0, default_width, default_height);
+		bush_dmg3 = static_entities_sheet.crop(default_width*3, 0, default_width, default_height);
 		
-		rock = sheet.crop(0, default_height * 2, default_width, default_height);
-		rock_dmg1 = sheet.crop(default_width, default_height * 2, default_width, default_height);
-		rock_dmg2 = sheet.crop(default_width*2, default_height * 2, default_width, default_height);
-		rock_dmg3 = sheet.crop(default_width*3, default_height * 2, default_width, default_height);
+		rock = static_entities_sheet.crop(0, default_height, default_width, default_height);
+		rock_dmg1 = static_entities_sheet.crop(default_width, default_height, default_width, default_height);
+		rock_dmg2 = static_entities_sheet.crop(default_width*2, default_height, default_width, default_height);
+		rock_dmg3 = static_entities_sheet.crop(default_width*3, default_height, default_width, default_height);
 		
 		pebble = static_entities_sheet.crop(0, default_height * 3, default_width, default_height);
 		plant1 = static_entities_sheet.crop(0, default_height * 4, default_width, default_height);

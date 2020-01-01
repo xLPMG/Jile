@@ -203,7 +203,7 @@ public class Game implements Runnable {
 	public int getHeight() {
 		return height;
 	}
-
+	
 	public synchronized void start() {
 		if (running)
 			return;

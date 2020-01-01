@@ -60,7 +60,7 @@ public class SpeechToastManager {
 		if (requested) {
 			showToastRequestCounter++;
 		}
-		if (showToastRequestCounter >= 90) {
+		if (showToastRequestCounter >= 10) {
 			showToastRequestCounter = 0;
 			requested = false;
 		}
@@ -79,64 +79,81 @@ public class SpeechToastManager {
 		String line4 = "";
 		String line5 = "";
 
+		String[] linesToDraw; 
+		
 		if (showText) {
-			if (textToShow.contains("#")) {
-				String textToShowNew = textToShow;
-				if (textToShow.endsWith("#")) {
-					if ((textToShow != null) && (textToShow.length() > 0)) {
-						textToShowNew = textToShow.substring(0, textToShow.length() - 1);
-					}
-				}
-				String[] lines = textToShowNew.split("#");
-				int count = textToShowNew.length() - textToShowNew.replaceAll("#", "").length();
-				line1 = lines[0];
-
-				if (count == 1) {
-					line2 = lines[1];
-				} else if (count == 2) {
-					line2 = lines[1];
-					line3 = lines[2];
-				} else if (count == 3) {
-					line2 = lines[1];
-					line3 = lines[2];
-					line4 = lines[3];
-				} else if (count == 4) {
-					line2 = lines[1];
-					line3 = lines[2];
-					line4 = lines[3];
-					line5 = lines[4];
-				} else if (count == 5) {
-					line2 = lines[2];
-					line3 = lines[3];
-					line4 = lines[4];
-					line5 = lines[5];
-				} else if (count == 6) {
-					line2 = lines[3];
-					line3 = lines[4];
-					line4 = lines[5];
-					line5 = lines[6];
-				} else if (count == 7) {
-					line2 = lines[4];
-					line3 = lines[5];
-					line4 = lines[6];
-					line5 = lines[7];
-				} else if (count == 8) {
-					line2 = lines[5];
-					line3 = lines[6];
-					line4 = lines[7];
-					line5 = lines[8];
-				} else if (count == 9) {
-					line2 = lines[6];
-					line3 = lines[7];
-					line4 = lines[8];
-					line5 = lines[9];
-				}
-			} else {
-				line1 = textToShow;
-			}
 
 			g.drawImage(Assets.speechToast, (handler.getWidth() - width) / 2, (handler.getHeight() - height) - 25,
 					width, height, null);
+
+//			if (textToShow.contains("#")) {
+				String textToShowNew = textToShow;
+//				if (textToShow.endsWith("#")) {
+//					if ((textToShow != null) && (textToShow.length() > 0)) {
+//						textToShowNew = textToShow.substring(0, textToShow.length() - 1);
+//					}
+//				}
+				String[] lines = textToShowNew.split("#");
+				int count = lines.length/*textToShowNew.length() - textToShowNew.replaceAll("#", "").length()*/;
+				
+				
+				if (count > 5) 
+				{
+//					for (int i=1; i<=count; i++)
+//					{
+//						
+//					}
+				} else {
+					linesToDraw = lines;
+					
+				}
+				
+//				line1 = lines[0];
+//
+//				if (count == 1) {
+//					line2 = lines[1];
+//				} else if (count == 2) {
+//					line2 = lines[1];
+//					line3 = lines[2];
+//				} else if (count == 3) {
+//					line2 = lines[1];
+//					line3 = lines[2];
+//					line4 = lines[3];
+//				} else if (count == 4) {
+//					line2 = lines[1];
+//					line3 = lines[2];
+//					line4 = lines[3];
+//					line5 = lines[4];
+//				} else if (count == 5) {
+//					line2 = lines[2];
+//					line3 = lines[3];
+//					line4 = lines[4];
+//					line5 = lines[5];
+//				} else if (count == 6) {
+//					line2 = lines[3];
+//					line3 = lines[4];
+//					line4 = lines[5];
+//					line5 = lines[6];
+//				} else if (count == 7) {
+//					line2 = lines[4];
+//					line3 = lines[5];
+//					line4 = lines[6];
+//					line5 = lines[7];
+//				} else if (count == 8) {
+//					line2 = lines[5];
+//					line3 = lines[6];
+//					line4 = lines[7];
+//					line5 = lines[8];
+//				} else if (count == 9) {
+//					line2 = lines[6];
+//					line3 = lines[7];
+//					line4 = lines[8];
+//					line5 = lines[9];
+//				}
+//			} else {
+//				line1 = textToShow;
+//			}
+
 			//colors
 			if (line1.startsWith("~c")) {
 
@@ -209,6 +226,7 @@ public class SpeechToastManager {
 			String line;
 			while ((line = speechReader.readLine()) != null) {
 				if (line.equalsIgnoreCase(textID)) {
+					
 					while (!(line = speechReader.readLine()).startsWith("!")) {
 						builder.append(line + "#");
 					}

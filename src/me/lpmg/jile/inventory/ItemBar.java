@@ -54,7 +54,7 @@ public class ItemBar {
 		
 		itemY = barY+marginHeight;
 		
-		itemCountX = 26*zoom;
+		itemCountX = 22*zoom;
 		itemCountY = (26*zoom)+itemY;
 	}
 	

@@ -14,8 +14,12 @@ public class Item {
 	public static Item[] items = new Item[256];
 	
 	//Assets, Item Name, ID, buyingPrice,sellingPrice
-	public static Item woodItem = new Item(Assets.woodItem, "Wood", 0, 2, 2);
-	public static Item rockItem = new Item(Assets.rockItem, "Rock", 1, 3, 3);
+	public static Item woodItem = new Item(Assets.woodItem, "Wood", 0, 2, 2, "Ordinary piece of wood.");
+	public static Item rockItem = new Item(Assets.rockItem, "Rock", 1, 3, 3, "A hard and round rock.");
+	
+	//public static Item swordJinaOld = new Sword(Assets.rockItem, "Old Sword", 1, 0, 0, "An old sword which was use by Jina for many years.", 10);
+	public static Item swordNormal = new Sword(Assets.sword_normal, "Normal Sword", 11, 0, 0, "Just a normal sword.", 10);
+	public static Item swordCommon = new Sword(Assets.sword_common, "Common Sword", 12, 0, 0, "Just a common sword.", 10);
 	
 	// Class
 	
@@ -27,18 +31,20 @@ public class Item {
 	protected final int id;
 	protected int sellingPrice;
 	protected int buyingPrice;
+	protected String description;
 	
 	protected Rectangle bounds;
 	
 	protected int x, y, count;
 	protected boolean pickedUp = false;
 	
-	public Item(BufferedImage texture, String name, int id, int buyingPrice, int sellingPrice){
+	public Item(BufferedImage texture, String name, int id, int buyingPrice, int sellingPrice, String description){
 		this.texture = texture;
 		this.name = name;
 		this.id = id;
 		this.buyingPrice=buyingPrice;
 		this.sellingPrice=sellingPrice;
+		this.description=description;
 		count = 1;
 		
 		bounds = new Rectangle(x, y, ITEMWIDTH, ITEMHEIGHT);
@@ -64,14 +70,14 @@ public class Item {
 	}
 	
 	public Item createNew(int count){
-		Item i = new Item(texture, name, id, buyingPrice, sellingPrice);
+		Item i = new Item(texture, name, id, buyingPrice, sellingPrice, description);
 		i.setPickedUp(true);
 		i.setCount(count);
 		return i;
 	}
 	
 	public Item createNew(int x, int y){
-		Item i = new Item(texture, name, id, buyingPrice, sellingPrice);
+		Item i = new Item(texture, name, id, buyingPrice, sellingPrice, description);
 		i.setPosition(x, y);
 		return i;
 	}

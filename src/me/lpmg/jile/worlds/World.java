@@ -18,6 +18,7 @@ import me.lpmg.jile.entities.creatures.Wizard;
 import me.lpmg.jile.entities.statics.Bush;
 import me.lpmg.jile.entities.statics.Rock;
 import me.lpmg.jile.gfx.EmoteManager;
+import me.lpmg.jile.ingamemenu.SpeechDialogueManager;
 import me.lpmg.jile.ingamemenu.SpeechToastManager;
 import me.lpmg.jile.input.MouseManager;
 import me.lpmg.jile.items.ItemManager;
@@ -40,6 +41,7 @@ public class World {
 	private ItemManager itemManager;
 	public Player player;
 	private SpeechToastManager sTM;
+	private SpeechDialogueManager sDM;
 	private int spawnTicker;
 	private int savedTicker;
 	private boolean justSaved = false;
@@ -56,6 +58,7 @@ public class World {
 		itemManager = new ItemManager(handler);
 		player = new Player(handler, 100, 100);
 		sTM = new SpeechToastManager(handler, "/text/speech_en.txt");
+		sDM = new SpeechDialogueManager(handler, "text");
 		entityManager = new EntityManager(handler);
 		eM = new EmoteManager(handler);
 
@@ -66,6 +69,10 @@ public class World {
 		loadThirdLayer(thirdLayer);
 		spawnBuildings();
 		spawnEntities();
+	}
+	
+	public void initOnWorldLoaded() {
+		sDM.init();
 	}
 
 	public void tick() {
@@ -434,5 +441,9 @@ public class World {
 
 	public SpeechToastManager getSpeechToastManager() {
 		return sTM;
+	}
+	
+	public SpeechDialogueManager getSpeechDialogueManager() {
+		return sDM;
 	}
 }

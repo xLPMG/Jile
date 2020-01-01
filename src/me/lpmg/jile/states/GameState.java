@@ -15,6 +15,7 @@ public class GameState extends State {
 		super(handler);
 		this.world = world;
 		handler.setWorld(world);
+		world.initOnWorldLoaded();
 	}
 	
 	@Override
@@ -35,6 +36,7 @@ public class GameState extends State {
 		}
 		world.getEmoteManager().render(g);
 		world.getSpeechToastManager().render(g);
+		world.getSpeechDialogueManager().render(g);
 	}
 
 }

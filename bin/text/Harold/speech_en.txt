@@ -1,0 +1,10 @@
+!HaroldFirstEncounter
+~c???:
+Hey kid, come back later when you're more experienced.
+I think you should visit the house farther south from here, in the east.
+Someone's waiting there for you.
+Come back when you feel ready and I'll be here for you to trade.
+//
+!standardspeech
+~cHarold:
+Hey ~playerName, how can I help you?
