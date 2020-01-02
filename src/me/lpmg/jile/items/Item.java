@@ -49,6 +49,7 @@ public class Item {
 		
 		bounds = new Rectangle(x, y, ITEMWIDTH, ITEMHEIGHT);
 		
+		System.out.println("ID "+id);
 		items[id] = this;
 	}
 	
@@ -161,8 +162,6 @@ public class Item {
 	public void setSellingPrice(int sellingPrice) {
 		this.sellingPrice = sellingPrice;
 	}
-
-
 
 	public boolean isPickedUp() {
 		return pickedUp;

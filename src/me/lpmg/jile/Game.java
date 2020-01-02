@@ -100,13 +100,14 @@ public class Game implements Runnable {
 		LogoScreen logoScreen = new LogoScreen();
 
 		display = new Display(title, width, height);
-		display.getFrame().addKeyListener(keyManager);
-		display.getFrame().addMouseListener(mouseManager);
-		display.getFrame().addMouseMotionListener(mouseManager);
-		display.getCanvas().addMouseListener(mouseManager);
-		display.getCanvas().addMouseMotionListener(mouseManager);
+		handler = new Handler(this, display);
+		
+		handler.addKeyListener(keyManager);
+		handler.addMouseListener(mouseManager);
+		handler.addMouseMotionListener(mouseManager);
+		handler.addMouseListener(mouseManager);
+		handler.addMouseMotionListener(mouseManager);
 
-		handler = new Handler(this);
 		itembarScroll.transmitHandler(handler);
 		gameCamera = new GameCamera(handler, 0, 0);
 

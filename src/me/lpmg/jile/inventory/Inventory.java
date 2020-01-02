@@ -3,7 +3,9 @@ package me.lpmg.jile.inventory;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
@@ -62,6 +64,60 @@ public class Inventory {
 		this.handler = handler;
 		inventoryItems = new ArrayList<Item>();
 		itM = new ItemMenu(handler, buildingManager);
+		
+		MouseAdapter mA = new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+
+				if (e.getButton() == MouseEvent.BUTTON1) {
+
+					if (equipButtonBounds.contains(e.getPoint())) {
+						if (selectedItem <= inventoryItems.size()) {
+							Item item = inventoryItems.get(selectedItem);
+							if (item instanceof Sword/* or Shield, Ring, etc */) {
+								if (equippedSword != null) {
+									inventoryItems.add(equippedSword);
+									equippedSword = null;
+								}
+								equippedSword = (Sword) item;
+								removeItem(item, 1);
+							}
+						}
+					}
+				}
+			}
+		};
+		handler.addMouseListener(mA);
+		
+		KeyAdapter kA = new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode()==KeyEvent.VK_E)
+					active = !active;
+				if (e.getKeyCode()==KeyEvent.VK_W)
+					selectedItem--;
+				if (e.getKeyCode()==KeyEvent.VK_S)
+					selectedItem++;
+				if (e.getKeyCode()==KeyEvent.VK_Q) {
+
+					if (inventoryItems.size() != 0) {
+						handler.getWorld().getItemManager().addItem(inventoryItems.get(selectedItem).createNew(
+								(int) handler.getWorld().player.getX(), (int) handler.getWorld().player.getY() + 75));
+
+						int itemCount = inventoryItems.get(selectedItem).getCount();
+						if (itemCount > 1) {
+							inventoryItems.get(selectedItem).setCount(itemCount - 1);
+						} else if (itemCount == 1) {
+							inventoryItems.remove(selectedItem);
+							selectedItem = 0;
+						} else {
+							// do nothing
+						}
+					}
+				}
+			}
+		};
+		handler.addKeyListener(kA);
 	}
 
 	public void tick() {
@@ -74,53 +130,13 @@ public class Inventory {
 		if (disabled) {
 			active = false;
 		}
-		if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_E))
-			active = !active;
 		if (!active)
 			return;
-
-		if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_W))
-			selectedItem--;
-		if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_S))
-			selectedItem++;
 
 		if (selectedItem < 0)
 			selectedItem = inventoryItems.size() - 1;
 		else if (selectedItem >= inventoryItems.size())
 			selectedItem = 0;
-
-		if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_Q)) {
-
-			if (inventoryItems.size() != 0) {
-				handler.getWorld().getItemManager().addItem(inventoryItems.get(selectedItem).createNew(
-						(int) handler.getWorld().player.getX(), (int) handler.getWorld().player.getY() + 75));
-
-				int itemCount = inventoryItems.get(selectedItem).getCount();
-				if (itemCount > 1) {
-					inventoryItems.get(selectedItem).setCount(itemCount - 1);
-				} else if (itemCount == 1) {
-					inventoryItems.remove(selectedItem);
-					selectedItem = 0;
-				} else {
-					// do nothing
-				}
-			}
-		}
-		if (handler.getMouseManager().isLeftPressed()) {
-			if (equipButtonBounds.contains(handler.getMouseManager().getClickedPoint())) {
-				if (selectedItem <= inventoryItems.size()) {
-					Item item = inventoryItems.get(selectedItem);
-					if (item instanceof Sword/* or Shield, Ring, etc */) {
-							if (equippedSword != null) {
-								inventoryItems.add(equippedSword);
-								equippedSword = null;
-							}
-							equippedSword = (Sword) item;
-							removeItem(item,1);
-					}
-				}
-			}
-		}
 	}
 
 	public void render(Graphics g) {

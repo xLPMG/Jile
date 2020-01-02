@@ -37,16 +37,7 @@ public class ItemManager {
 	}
 	
 	public Item getItemByID(int id) {
-		if(id==0) {
-			return Item.woodItem;
-		}else if(id==1) {
-			return Item.rockItem;
-		}else if(id==11) {
-			return Item.swordNormal;
-		}else if(id==12) {
-			return Item.swordCommon;
-		}
-		return null;
+		return Item.items[id];
 	}
 	
 	// Getters and Setters
