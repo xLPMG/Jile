@@ -4,7 +4,10 @@ import java.awt.Color;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 import me.lpmg.jile.Handler;
@@ -31,51 +34,62 @@ public class WizardSellMenu {
 		this.handler = handler;
 		sellingItems = new ArrayList<Item>();
 		initItems();
+		
+		MouseAdapter mA = new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (e.getButton() == MouseEvent.BUTTON3 && active) {
+					active = false;
+					handler.getWorld().player.freeze(false);
+				}
+			}
+		};
+		handler.addMouseListener(mA);
+		
+		KeyAdapter kA = new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode()==KeyEvent.VK_W&&active)
+					selectedItem--;
+				if (e.getKeyCode()==KeyEvent.VK_S&&active)
+					selectedItem++;
+				// SELL
+				if (e.getKeyCode()==KeyEvent.VK_ENTER&&active) {
+					Item item = sellingItems.get(selectedItem);
+					inventoryItems = player.getInventory().getInventoryItems();
+					ArrayList<Item> inventoryItemsCopy = new ArrayList<Item>(inventoryItems);
+					
+					for (Item it : inventoryItems) {
+						if(it.getId()==item.getId()) {
+							if(it.getCount()>1) {
+							it.setCount(it.getCount()-1);
+							}else if(it.getCount()==1) {
+							inventoryItemsCopy.remove(inventoryItemsCopy.indexOf(it));
+							}
+							player.addMoney(it.getSellingPrice());
+						}
+					}
+					
+					player.getInventory().setInventoryItems(inventoryItemsCopy);
+				}
+			}
+		};
+		handler.addKeyListener(kA);
 	}
 
 	public void tick() {
 		if (player == null) {
 			player = handler.getWorld().getEntityManager().getPlayer();
 		}
-
-		if (handler.getMouseManager().isRightPressed() && active) {
-			active = false;
-			handler.getWorld().player.freeze(false);
-		}
 		if (!active) {
 			return;
 		}else {
 			handler.getWorld().player.freeze(true);
 		}
-
-		if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_W)&active)
-			selectedItem--;
-		if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_S)&&active)
-			selectedItem++;
 		if (selectedItem < 0)
 			selectedItem = sellingItems.size() - 1;
 		else if (selectedItem >= sellingItems.size())
 			selectedItem = 0;
-
-		// SELL
-		if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_ENTER)&&active) {
-			Item item = sellingItems.get(selectedItem);
-			inventoryItems = player.getInventory().getInventoryItems();
-			ArrayList<Item> inventoryItemsCopy = new ArrayList<Item>(inventoryItems);
-			
-			for (Item it : inventoryItems) {
-				if(it.getId()==item.getId()) {
-					if(it.getCount()>1) {
-					it.setCount(it.getCount()-1);
-					}else if(it.getCount()==1) {
-					inventoryItemsCopy.remove(inventoryItemsCopy.indexOf(it));
-					}
-					player.addMoney(it.getSellingPrice());
-				}
-			}
-			
-			player.getInventory().setInventoryItems(inventoryItemsCopy);
-		}
 	}
 
 	public void render(Graphics g) {

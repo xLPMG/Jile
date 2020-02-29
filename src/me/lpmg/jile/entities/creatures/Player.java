@@ -34,23 +34,32 @@ public class Player extends Creature {
 	// Inventory
 	private Inventory inventory;
 	private ItemBar itemBar;
+	
+	
 	private Healthbar healthbar;
 	private int attackDirection = 0;
 	private int healthTickCount;
+	private int defaultMaxHealth=maxHealth;
+	private int defaultMaxMana=maxMana;
 	private int manaTickCount;
-	private float defSpeed;
+	private float defaultSpeed;
 	private float sprintSpeed;
 	private boolean frozen = false;
+	
 	private int damagePerHit = 2;
+	private int defaultDamagePerHit = damagePerHit;
 
 	private int money;
 	private int healthRegenSpeed = 200;
+	private int defaultHealthRegenSpeed = healthRegenSpeed;
 	private int manaRegenSpeed = 260;
+	private int defaultManaRegenSpeed = manaRegenSpeed;
+	
 	private int multiplier = PLAYER_HEIGHT / 32;
 	private String playerName = "???";
 	private int walkingDirection = 2;
 	private boolean invincible=false;
-
+	
 	public Player(Handler handler, float x, float y) {
 		super(handler, x, y, Creature.PLAYER_WIDTH, Creature.PLAYER_HEIGHT);
 
@@ -59,7 +68,7 @@ public class Player extends Creature {
 		bounds.width = 22 * multiplier; // 9*3
 		bounds.height = 16 * multiplier; // 4*3
 		speed = 2.0f;
-		defSpeed = speed;
+		defaultSpeed = speed;
 		sprintSpeed = 3.2f;
 		money = 0;
 
@@ -79,7 +88,7 @@ public class Player extends Creature {
 		animAttackLeft = new Animation(100, Assets.player_attack_left);
 		animAttackRight = new Animation(100, Assets.player_attack_right);
 
-		inventory = new Inventory(handler);
+		inventory = new Inventory(handler, this);
 		handler.getGame().loadPlayerInventory(this);
 		itemBar = new ItemBar(handler, inventory);
 		healthbar = new Healthbar(handler, this);
@@ -194,7 +203,7 @@ public class Player extends Creature {
 		if (handler.getKeyManager().shift) {
 			speed = sprintSpeed;
 		} else if (!handler.getKeyManager().shift) {
-			speed = defSpeed;
+			speed = defaultSpeed;
 		}
 
 		if (handler.getKeyManager().up) {
@@ -368,7 +377,53 @@ public class Player extends Creature {
 
 		}
 	}
+	public int getDefaultMaxHealth() {
+		return defaultMaxHealth;
+	}
+	public int getDefaultMaxMana() {
+		return defaultMaxMana;
+	}
+	
+	public int getDefaultDamagePerHit() {
+		return defaultDamagePerHit;
+	}
+	
+	public int getDamagePerHit() {
+		return damagePerHit;
+	}
+	
+	public void setDamagePerHit(int damagePerHit) {
+		this.damagePerHit=damagePerHit;
+	}
+	
+	public float getDefaultSpeed() {
+		return defaultSpeed;
+	}
 
+	public int getHealthRegenSpeed() {
+		return healthRegenSpeed;
+	}
+
+	public void setHealthRegenSpeed(int healthRegenSpeed) {
+		this.healthRegenSpeed = healthRegenSpeed;
+	}
+
+	public int getDefaultHealthRegenSpeed() {
+		return defaultHealthRegenSpeed;
+	}
+
+	public int getManaRegenSpeed() {
+		return manaRegenSpeed;
+	}
+
+	public void setManaRegenSpeed(int manaRegenSpeed) {
+		this.manaRegenSpeed = manaRegenSpeed;
+	}
+
+	public int getDefaultManaRegenSpeed() {
+		return defaultManaRegenSpeed;
+	}
+	
 	public Inventory getInventory() {
 		return inventory;
 	}

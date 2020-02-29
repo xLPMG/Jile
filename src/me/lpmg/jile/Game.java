@@ -44,6 +44,7 @@ public class Game implements Runnable {
 	private int width, height;
 	public String title;
 	private String version;
+	private int FPS;
 
 	private boolean running = false;
 	private Thread thread;
@@ -176,6 +177,7 @@ public class Game implements Runnable {
 
 			if (timer >= 1000000000) {
 				System.out.println("FPS: " + ticks);
+				FPS=ticks;
 				ticks = 0;
 				timer = 0;
 			}
@@ -222,6 +224,10 @@ public class Game implements Runnable {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public int getFPS() {
+		return FPS;
 	}
 
 	public String getVersion() {
@@ -486,13 +492,21 @@ public class Game implements Runnable {
 		// loaded after inventory creation in player class
 		Inventory playerInventory = player.getInventory();
 		ArrayList<Item> inventoryItems = playerInventory.getInventoryItems();
+		HashMap<String, Integer> equippedItems = playerInventory.getEquippedItems();
 		inventoryItems.clear();
+		equippedItems.clear();
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(playerInventoryFile.getAbsolutePath()));
 			String line;
 			while ((line = br.readLine()) != null) {
 				if (!line.isEmpty()) {
 					String itemData[] = line.split("[:]");
+					if(itemData[0].startsWith("equipped")) {
+						System.out.println("loading a sword");
+						String itemType = itemData[0];
+						int itemID = Utils.parseInt(itemData[1]);
+						equippedItems.put(itemType, itemID);
+					}else {
 					int itemID = Utils.parseInt(itemData[0]);
 					int itemCount = Utils.parseInt(itemData[1]);
 					ItemManager itM = new ItemManager(handler);
@@ -500,24 +514,34 @@ public class Game implements Runnable {
 					item.setCount(itemCount);
 					playerInventory.addItem(item);
 					itM = null;
+					}
 				}
 			}
 			br.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		player.getInventory().setEquippedItems(equippedItems);
+		player.getInventory().loadEquippedItems();
 		player.setInventory(playerInventory);
 	}
 
 	public void savePlayerInventory(Player player) {
 		Inventory playerInventory = player.getInventory();
 		ArrayList<Item> inventoryItems = playerInventory.getInventoryItems();
+		HashMap<String, Integer> equippedItems = playerInventory.getEquippedItems();
 		try {
 			FileWriter writer = new FileWriter(playerInventoryFile.getAbsolutePath());
 			writer.write("");
 			for (Item item : inventoryItems) {
 				writer.write(item.getId() + ":" + item.getCount() + "\n");
 			}
+			Iterator it = equippedItems.entrySet().iterator();
+		    while (it.hasNext()) {
+		        Map.Entry pair = (Map.Entry)it.next();
+		        writer.write(pair.getKey() + ":" + pair.getValue() + "\n");
+		        it.remove();
+		    }
 			writer.close();
 		} catch (IOException e) {
 			e.printStackTrace();

@@ -1,8 +1,7 @@
 package me.lpmg.jile.ingamemenu;
 
-import java.awt.FontMetrics;
 import java.awt.Graphics;
-import java.awt.Rectangle;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
@@ -11,8 +10,6 @@ import me.lpmg.jile.buildings.Building;
 import me.lpmg.jile.buildings.BuildingManager;
 import me.lpmg.jile.buildings.HermitHut;
 import me.lpmg.jile.entities.Entity;
-import me.lpmg.jile.gfx.Assets;
-import me.lpmg.jile.inventory.Inventory;
 import me.lpmg.jile.items.Item;
 import me.lpmg.jile.tiles.Tile;
 
@@ -40,6 +37,16 @@ public class ItemMenu {
 		this.buildBtnX = (handler.getWidth() / 2) + 20;
 		this.buildBtnY = 200;
 		this.buildingManager = buildingManager;
+		KeyAdapter kA = new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode()==KeyEvent.VK_A && active)
+					selectedBtn--;
+				if (e.getKeyCode()==KeyEvent.VK_D && active)
+					selectedBtn++;
+			}
+		};
+		handler.addKeyListener(kA);
 	}
 
 	public void tick() {
@@ -56,11 +63,6 @@ public class ItemMenu {
 			handler.getWorld().player.getInventory().disableInventory(false);
 			// handler.getWorld().player.freeze(false);
 		}
-
-		if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_A) && active)
-			selectedBtn--;
-		if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_D) && active)
-			selectedBtn++;
 
 		if (selectedBtn < 0) {
 			selectedBtn = 2;

@@ -10,7 +10,7 @@ import java.awt.event.MouseEvent;
 import me.lpmg.jile.Handler;
 import me.lpmg.jile.gfx.Assets;
 import me.lpmg.jile.items.Item;
-import me.lpmg.jile.items.Sword;
+import me.lpmg.jile.items.armor.Sword;
 
 public class WizardMenu {
 

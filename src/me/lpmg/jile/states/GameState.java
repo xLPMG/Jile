@@ -1,10 +1,13 @@
 package me.lpmg.jile.states;
 
+import java.awt.Color;
 import java.awt.Graphics;
 
 import me.lpmg.jile.Handler;
 import me.lpmg.jile.entities.Entity;
 import me.lpmg.jile.entities.creatures.Wizard;
+import me.lpmg.jile.gfx.Assets;
+import me.lpmg.jile.gfx.Text;
 import me.lpmg.jile.worlds.World;
 
 public class GameState extends State {
@@ -37,6 +40,8 @@ public class GameState extends State {
 		world.getEmoteManager().render(g);
 		world.getSpeechToastManager().render(g);
 		world.getSpeechDialogueManager().render(g);
+		
+		Text.drawString(g, Integer.toString(handler.getGame().getFPS())+" FPS", (handler.getWidth()) - 38, (handler.getHeight()) - 14, true, Color.WHITE, Assets.font16);
 	}
 
 }

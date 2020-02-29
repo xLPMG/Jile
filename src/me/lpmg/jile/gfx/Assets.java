@@ -12,7 +12,7 @@ public class Assets {
 	private static final int building_exterior_width = 20, building_exterior_height = 20;
 	private static final int healthbar_width = 64, healthbar_height = 10;
 	
-	public static Font font9, font28, font32, font48, font96;
+	public static Font font9, font14, font16, font28, font32, font48, font96;
 	
 	public static BufferedImage placeholder, debug, black;
 	
@@ -54,9 +54,17 @@ public class Assets {
 	//items
 	public static BufferedImage woodItem, rockItem;
 	public static BufferedImage sword_normal, sword_common;
+	public static BufferedImage chestplate_metal_1;
+	public static BufferedImage chain_1;
+	public static BufferedImage boots_leather_1;
+	public static BufferedImage helmet_metal_1;
+	public static BufferedImage ring_metal_1;
+	public static BufferedImage shield_metal_1;
 	
 	static {
 		font9 = FontLoader.loadFont("/fonts/slkscr.ttf", 9);
+		font14 = FontLoader.loadFont("/fonts/slkscr.ttf", 14);
+		font16 = FontLoader.loadFont("/fonts/slkscr.ttf", 16);
 		font28 = FontLoader.loadFont("/fonts/slkscr.ttf", 28);
 		font32 = FontLoader.loadFont("/fonts/slkscr.ttf", 32);
 		font48 = FontLoader.loadFont("/fonts/slkscr.ttf", 48);
@@ -97,8 +105,21 @@ public class Assets {
 		
 		woodItem = item_sheet.crop(0, 0, default_width, default_height);
 		rockItem = item_sheet.crop(default_width, 0, default_width, default_height);
+		
 		sword_normal = ImageLoader.loadImage("/textures/items/sword_normal.png");
 		sword_common = ImageLoader.loadImage("/textures/items/sword_common.png");
+
+		chestplate_metal_1 = ImageLoader.loadImage("/textures/items/chestplate_metal_1.png");
+		
+		chain_1 = ImageLoader.loadImage("/textures/items/chain_1.png");
+		
+		boots_leather_1 = ImageLoader.loadImage("/textures/items/boots_leather_1.png");
+		
+		helmet_metal_1 = ImageLoader.loadImage("/textures/items/helmet_metal_1.png");
+		
+		ring_metal_1 = ImageLoader.loadImage("/textures/items/ring_metal_1.png");
+		
+		shield_metal_1 = ImageLoader.loadImage("/textures/items/shield_metal_1.png");
 		
 		btn_start = new BufferedImage[2];
 		btn_start[0] = startBtn.crop(0, 0, default_width * 2, default_height);

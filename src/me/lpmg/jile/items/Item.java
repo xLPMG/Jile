@@ -6,6 +6,13 @@ import java.awt.image.BufferedImage;
 
 import me.lpmg.jile.Handler;
 import me.lpmg.jile.gfx.Assets;
+import me.lpmg.jile.items.armor.Boots;
+import me.lpmg.jile.items.armor.Chain;
+import me.lpmg.jile.items.armor.Chestplate;
+import me.lpmg.jile.items.armor.Helmet;
+import me.lpmg.jile.items.armor.Ring;
+import me.lpmg.jile.items.armor.Shield;
+import me.lpmg.jile.items.armor.Sword;
 
 public class Item {
 	
@@ -18,8 +25,20 @@ public class Item {
 	public static Item rockItem = new Item(Assets.rockItem, "Rock", 1, 3, 3, "A hard and round rock.");
 	
 	//public static Item swordJinaOld = new Sword(Assets.rockItem, "Old Sword", 1, 0, 0, "An old sword which was use by Jina for many years.", 10);
-	public static Item swordNormal = new Sword(Assets.sword_normal, "Normal Sword", 11, 0, 0, "Just a normal sword.", 10);
+	public static Item swordNormal = new Sword(Assets.sword_normal, "Normal Sword", 11, 0, 0, "Just a normal sword.", 9);
 	public static Item swordCommon = new Sword(Assets.sword_common, "Common Sword", 12, 0, 0, "Just a common sword.", 10);
+	
+	public static Item chestplate_metal_1 = new Chestplate(Assets.chestplate_metal_1, "Metal Chestplate", 21, 0, 0, "x", 10, -1.0f);
+	
+	public static Item chain_1 = new Chain(Assets.chain_1, "Common Chain", 31, 0, 0, "x", 10, 2, 4);
+	
+	public static Item boots_leather_1 = new Boots(Assets.boots_leather_1, "Ordinary Leather Boots", 41, 0, 0, "x", 5, 1.0f);
+	
+	public static Item helmet_metal_1 = new Helmet(Assets.helmet_metal_1, "Metal Helmet", 51, 0, 0, "x", 4);
+	
+	public static Item ring_metal_1 = new Ring(Assets.ring_metal_1, "Common Metal Ring", 61, 0, 0, "x", 5, 3, 3);
+	
+	public static Item shield_metal_1 = new Shield(Assets.shield_metal_1, "Metal Shield", 71, 0, 0, "x", 10);
 	
 	// Class
 	
@@ -52,7 +71,7 @@ public class Item {
 		System.out.println("ID "+id);
 		items[id] = this;
 	}
-	
+
 	public void tick(){
 		if(handler.getWorld().getEntityManager().getPlayer().getCollisionBounds(0f, 0f).intersects(bounds)){
 			pickedUp = true;
@@ -161,6 +180,14 @@ public class Item {
 
 	public void setSellingPrice(int sellingPrice) {
 		this.sellingPrice = sellingPrice;
+	}
+	
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public boolean isPickedUp() {
