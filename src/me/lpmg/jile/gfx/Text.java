@@ -21,6 +21,18 @@ public class Text {
 		}
 		g.drawString(text, x, y);
 	}
+	public static void drawString(Graphics g, String text, int xPos, int yPos, boolean center, boolean right, Color c, Font font){
+		g.setColor(c);
+		g.setFont(font);
+		int x = xPos;
+		int y = yPos;
+		if(right){
+			FontMetrics fm = g.getFontMetrics(font);
+			
+			y = (yPos - fm.getHeight() / 2) + fm.getAscent();
+		}
+		g.drawString(text, x, y);
+	}
 	
 	public static String formatSpeech(String inputString, int chars) {
 		StringBuilder builder = new StringBuilder();

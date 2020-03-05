@@ -31,11 +31,13 @@ public class Tile {
 	public static Tile grassTileDirtCTL = new GrassTile(Assets.grass_dirtCTL, 17);
 	public static Tile grassTileDirtCTR = new GrassTile(Assets.grass_dirtCTR, 18);
 	public static Tile grassTileRamp = new GrassTile(Assets.grass_ramp, 19);
+	public static Tile grassTileRampShadowless = new GrassTile(Assets.grass_ramp_shadowless, 20);
+	public static Tile grassTileRampShadowHalf = new GrassTile(Assets.grass_ramp_shadowHalf, 21);
 
-	public static Tile dirtTileGrassCTL = new GrassTile(Assets.dirt_grassCTL, 21);
 	public static Tile dirtTileGrassCTR = new GrassTile(Assets.dirt_grassCTR, 22);
 	public static Tile dirtTileGrassCBL = new GrassTile(Assets.dirt_grassCBL, 23);
 	public static Tile dirtTileGrassCBR = new GrassTile(Assets.dirt_grassCBR, 24);
+	public static Tile dirtTileGrassCTL = new GrassTile(Assets.dirt_grassCTL, 25);
 	
 	public static Tile pebbleTile = new StoneTile(Assets.pebble, 31);
 	public static Tile plant1Tile = new DecorPlantTile(Assets.plant1, 32);

@@ -9,7 +9,7 @@ public class Chestplate extends ArmorItem {
 	
 	public Chestplate(BufferedImage texture, String name, int id, int buyingPrice, int sellingPrice, String description,
 			int armorPoints, float speedPoints) {
-		super(texture, name, id, buyingPrice, sellingPrice, description, armorPoints, speedPoints, 0, 0, 0, 0, 0, 0, 0.0f);
+		super(texture, name, id, buyingPrice, sellingPrice, description, armorPoints, speedPoints, 0, 0, 0, 0, 0, 0, 0);
 	}
 
 }

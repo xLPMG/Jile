@@ -358,6 +358,10 @@ public class Game implements Runnable {
 		}
 	}
 	
+	public void saveWorldFiles(HashMap<String, Integer> worldFirstLayer, HashMap<String, Integer> worldSecondLayer, HashMap<String, Integer> worldThirdLayer) {
+		System.out.println("Done saving world files.");
+	}
+	
 	private void createEventDataFile(String path){
 		eventDataFile = new File(path + "/eventData.dat");
 		try {
@@ -502,7 +506,7 @@ public class Game implements Runnable {
 				if (!line.isEmpty()) {
 					String itemData[] = line.split("[:]");
 					if(itemData[0].startsWith("equipped")) {
-						System.out.println("loading a sword");
+						//System.out.println("Loading equipped item: "+itemData[0]);
 						String itemType = itemData[0];
 						int itemID = Utils.parseInt(itemData[1]);
 						equippedItems.put(itemType, itemID);
@@ -522,8 +526,9 @@ public class Game implements Runnable {
 			e.printStackTrace();
 		}
 		player.getInventory().setEquippedItems(equippedItems);
-		player.getInventory().loadEquippedItems();
+		player.getInventory().updateEquippedItems();
 		player.setInventory(playerInventory);
+		System.out.println("Done loading inventory data.");
 	}
 
 	public void savePlayerInventory(Player player) {
@@ -539,8 +544,9 @@ public class Game implements Runnable {
 			Iterator it = equippedItems.entrySet().iterator();
 		    while (it.hasNext()) {
 		        Map.Entry pair = (Map.Entry)it.next();
+		        //System.out.println("Saving equipped item: "+pair.getKey());
 		        writer.write(pair.getKey() + ":" + pair.getValue() + "\n");
-		        it.remove();
+		        //it.remove();
 		    }
 			writer.close();
 		} catch (IOException e) {

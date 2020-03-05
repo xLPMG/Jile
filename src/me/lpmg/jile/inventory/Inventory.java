@@ -1,12 +1,8 @@
 package me.lpmg.jile.inventory;
 
 import java.awt.Color;
-import java.awt.FontMetrics;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -16,14 +12,11 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import javax.swing.Timer;
-
 import me.lpmg.jile.Handler;
 import me.lpmg.jile.buildings.BuildingManager;
 import me.lpmg.jile.entities.creatures.Player;
 import me.lpmg.jile.gfx.Assets;
 import me.lpmg.jile.gfx.Text;
-import me.lpmg.jile.ingamemenu.ItemMenu;
 import me.lpmg.jile.items.ArmorItem;
 import me.lpmg.jile.items.Item;
 import me.lpmg.jile.items.ItemManager;
@@ -44,7 +37,6 @@ public class Inventory {
 	private ArrayList<Item> inventoryItems;
 	private HashMap<String, Integer> equippedItems;
 	private BuildingManager buildingManager;
-	private ItemMenu itMenu;
 	private Player player;
 
 	private Boots equippedBoots;
@@ -123,13 +115,12 @@ public class Inventory {
 	private int slownessDurationB;
 
 	private int iTick;
-	
+
 	public Inventory(Handler handler, Player player) {
 		this.handler = handler;
 		this.player = player;
 		inventoryItems = new ArrayList<Item>();
 		equippedItems = new HashMap<String, Integer>();
-		itMenu = new ItemMenu(handler, buildingManager);
 
 		MouseAdapter mA = new MouseAdapter() {
 			@Override
@@ -274,24 +265,49 @@ public class Inventory {
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_E)
 					active = !active;
-				if (e.getKeyCode() == KeyEvent.VK_W)
-					selectedItem--;
-				if (e.getKeyCode() == KeyEvent.VK_S)
-					selectedItem++;
 				if (e.getKeyCode() == KeyEvent.VK_Q) {
-
 					if (inventoryItems.size() != 0) {
-						handler.getWorld().getItemManager().addItem(inventoryItems.get(selectedItem).createNew(
-								(int) handler.getWorld().player.getX(), (int) handler.getWorld().player.getY() + 75));
+						handler.getWorld().getItemManager()
+								.addItem(inventoryItems.get(selectedItem).createNew(
+										(int) handler.getWorld().player.getX(),
+										(int) handler.getWorld().player.getY() + 75, inventoryItems.get(selectedItem)));
 
 						int itemCount = inventoryItems.get(selectedItem).getCount();
 						if (itemCount > 1) {
 							inventoryItems.get(selectedItem).setCount(itemCount - 1);
 						} else if (itemCount == 1) {
 							inventoryItems.remove(selectedItem);
-							selectedItem = 0;
-						} else {
-							// do nothing
+							if (selectedItem > 0) {
+								selectedItem--;
+							}
+						}
+					}
+				}
+				//inv only keybindings (inv needs to be opened)
+				if (!isActive())
+					return;
+				
+				if (e.getKeyCode() == KeyEvent.VK_W)
+					selectedItem--;
+				if (e.getKeyCode() == KeyEvent.VK_S)
+					selectedItem++;
+				if (e.getKeyCode() == KeyEvent.VK_UP) {
+					if (active) {
+						Item item = inventoryItems.get(selectedItem);
+						if (selectedItem > 0) {
+							inventoryItems.remove(selectedItem);
+							inventoryItems.add(selectedItem - 1, item);
+							selectedItem -= 1;
+						}
+					}
+				}
+				if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+					if (active) {
+						Item item = inventoryItems.get(selectedItem);
+						if (selectedItem < inventoryItems.size() - 1) {
+							inventoryItems.remove(selectedItem);
+							inventoryItems.add(selectedItem + 1, item);
+							selectedItem += 1;
 						}
 					}
 				}
@@ -301,142 +317,196 @@ public class Inventory {
 	}
 
 	public void tick() {
-		itMenu.tick();
-		itMenu.setInventoryItems(inventoryItems);
-		itMenu.setSelectedItem(selectedItem);
-
 		updateItemEffects();
 
 		iTick++;
+
+		if (selectedItem < 0)
+			selectedItem = 0;
+		else if (selectedItem > inventoryItems.size() - 1) {
+			if (inventoryItems.size() == 0) {
+				selectedItem = 0;
+			} else {
+				selectedItem = inventoryItems.size() - 1;
+			}
+		}
 		// itemActions();
 		if (disabled) {
 			active = false;
 		}
 		if (!active)
 			return;
-
-		if (selectedItem < 0)
-			selectedItem = inventoryItems.size() - 1;
-		else if (selectedItem >= inventoryItems.size())
-			selectedItem = 0;
 	}
 
 	public void render(Graphics g) {
-		itMenu.render(g);
 		if (!active)
 			return;
 		g.drawImage(Assets.inventoryScreen, invX, invY, invWidth, invHeight, null);
 
 		int len = inventoryItems.size();
-		if (len == 0)
-			return;
+		if (len != 0) {
 
-		for (int i = -5; i < 6; i++) {
-			if (selectedItem + i < 0 || selectedItem + i >= len)
-				continue;
-			
-		String itemName = inventoryItems.get(selectedItem + i).getName();
-		if(itemName.length()<=13) {
-			if (i == 0) {
-				Text.drawString(g, "> " + itemName + " <", invListCenterX,
-						invListCenterY + i * invListSpacing, true, Color.YELLOW, Assets.font28);
-			} else {
-				Text.drawString(g, itemName, invListCenterX,
-						invListCenterY + i * invListSpacing, true, Color.WHITE, Assets.font28);
-			}
-		}else {
-			String newItemName = itemName;
-			//every second
-			int iCharCounter=0;
-				if(iTick==60) {
-					iTick=0;
-					if(iCharCounter<=itemName.length()-13) {
-						System.out.println("iCharCounter"+iCharCounter);
-					iCharCounter++;
-					newItemName=itemName.substring(iCharCounter);
-					}else {
-						iCharCounter=0;
-						newItemName=itemName;
+			for (int i = -5; i < 6; i++) {
+				if (selectedItem + i < 0 || selectedItem + i >= len)
+					continue;
+
+				String itemName = inventoryItems.get(selectedItem + i).getName();
+
+				if (itemName.length() <= 13) {
+					if (i == 0) {
+						Text.drawString(g, "> " + itemName + " <", invListCenterX, invListCenterY + i * invListSpacing,
+								true, Color.YELLOW, Assets.font28);
+					} else {
+						Text.drawString(g, itemName, invListCenterX, invListCenterY + i * invListSpacing, true,
+								Color.WHITE, Assets.font28);
+					}
+				} else {
+					if (iTick >= 1800) {
+						iTick = 0;
+						// to stop iTick getting extremely high to prevent lags or errors
+					}
+					int charCounter = 0;
+					int lettersToShift = itemName.length() - 13;
+
+					// IGNORE
+					charCounter = (iTick / 25) % (lettersToShift + 1 + 2 + 1);
+					if (charCounter < 3) {
+						charCounter = 0;
+
+					} else {
+						charCounter -= 2;
+					}
+					// This algorithm does: 0,1,2,3,4,5,6,7,8,9 -> 0,0,0,1,2,3,4,5,6,7,8,9 which
+					// makes the name move only after a few secs of standing still
+					// The following algorithm does: 0,0,0,1,2,3,4,5,6,7,8,9 ->
+					// 0,0,0,1,2,3,4,5,6,7,8,9,9,9 to make the name stay a bit longer after moving
+					if (charCounter >= lettersToShift) {
+						charCounter = lettersToShift;
+					}
+					// END IGNORE
+
+					String fittedItemName = itemName.substring(0, 13);
+					String charsToAppend = itemName.substring(13, 13 + charCounter);
+					String newItemName = fittedItemName.substring(charCounter) + charsToAppend;
+					if (i == 0) {
+						Text.drawString(g, "> " + newItemName + " <", invListCenterX,
+								invListCenterY + i * invListSpacing, true, Color.YELLOW, Assets.font28);
+					} else {
+						Text.drawString(g, newItemName, invListCenterX, invListCenterY + i * invListSpacing, true,
+								Color.WHITE, Assets.font28);
 					}
 				}
-			if (i == 0) {
-				Text.drawString(g, "> " + newItemName + " <", invListCenterX,
-						invListCenterY + i * invListSpacing, true, Color.YELLOW, Assets.font28);
-			} else {
-				Text.drawString(g, newItemName, invListCenterX,
-						invListCenterY + i * invListSpacing, true, Color.WHITE, Assets.font28);
 			}
-		}
-		}if(selectedItem<inventoryItems.size()&&selectedItem>=0)
+			if (selectedItem <= inventoryItems.size() - 1 && selectedItem >= 0)
 
-	{
-		Item item = inventoryItems.get(selectedItem);
-		g.drawImage(item.getTexture(), invImageX, invImageY, invImageWidth, invImageHeight, null);
-		Text.drawString(g, Integer.toString(item.getCount()), invCountX, invCountY, true, Color.WHITE, Assets.font28);
-		g.setFont(Assets.font14);
-		Text.drawStringMultiLine(g, item.getDescription(), itemDescWidth, itemDescX, itemDescY);
-		// show equip button
-		if (item instanceof ArmorItem) {
-			if (item != equippedRing && item != equippedSword && item != equippedShield && item != equippedChain
-					&& item != equippedHelmet && item != equippedChestplate && item != equippedLeggins
-					&& item != equippedBoots) {
-				g.drawImage(Assets.btn_equip, equipButtonX, equipButtonY, equipButtonWidth, equipButtonHeight, null);
-			} else {
-				g.drawImage(Assets.btn_unequip, equipButtonX, equipButtonY, equipButtonWidth, equipButtonHeight, null);
+			{
+				Item item = inventoryItems.get(selectedItem);
+				g.drawImage(item.getTexture(), invImageX, invImageY, invImageWidth, invImageHeight, null);
+				Text.drawString(g, Integer.toString(item.getCount()), invCountX, invCountY, true, Color.WHITE,
+						Assets.font28);
+				g.setFont(Assets.font14);
+				Text.drawStringMultiLine(g, item.getDescription(), itemDescWidth - 8, itemDescX, itemDescY);
+				// show equip button
+				if (item instanceof ArmorItem) {
+					if (item != equippedRing && item != equippedSword && item != equippedShield && item != equippedChain
+							&& item != equippedHelmet && item != equippedChestplate && item != equippedLeggins
+							&& item != equippedBoots) {
+						g.drawImage(Assets.btn_equip, equipButtonX, equipButtonY, equipButtonWidth, equipButtonHeight,
+								null);
+					} else {
+						g.drawImage(Assets.btn_unequip, equipButtonX, equipButtonY, equipButtonWidth, equipButtonHeight,
+								null);
+					}
+				}
 			}
 		}
-	}
-	// EQUIPMENT
-	if(equippedRing!=null)
-	{
-		g.drawImage(equippedRing.getTexture(), equipSlotX1, equipSlotY1, equipSlotImageWidth, equipSlotImageHeight,
-				null);
-	}if(equippedSword!=null)
-	{
-		g.drawImage(equippedSword.getTexture(), equipSlotX2, equipSlotY2, equipSlotImageWidth, equipSlotImageHeight,
-				null);
-	}if(equippedShield!=null)
-	{
-		g.drawImage(equippedShield.getTexture(), equipSlotX3, equipSlotY3, equipSlotImageWidth, equipSlotImageHeight,
-				null);
-	}if(equippedChain!=null)
-	{
-		g.drawImage(equippedChain.getTexture(), equipSlotX4, equipSlotY4, equipSlotImageWidth, equipSlotImageHeight,
-				null);
-	}if(equippedHelmet!=null)
-	{
-		g.drawImage(equippedHelmet.getTexture(), equipSlotX5, equipSlotY5, equipSlotImageWidth, equipSlotImageHeight,
-				null);
-	}if(equippedChestplate!=null)
-	{
-		g.drawImage(equippedChestplate.getTexture(), equipSlotX6, equipSlotY6, equipSlotImageWidth,
-				equipSlotImageHeight, null);
-	}if(equippedLeggins!=null)
-	{
-		g.drawImage(equippedLeggins.getTexture(), equipSlotX7, equipSlotY7, equipSlotImageWidth, equipSlotImageHeight,
-				null);
-	}if(equippedBoots!=null)
-	{
-		g.drawImage(equippedBoots.getTexture(), equipSlotX8, equipSlotY8, equipSlotImageWidth, equipSlotImageHeight,
-				null);
-	}
-	// EFFECTS
-	Text.drawString(g,"+"+armorPointsB+" Armor Points",effect1X,effect1Y,true,Color.GREEN,Assets.font16);Text.drawString(g,"+"+speedPointsB+" Speed Points",effect2X,effect2Y,true,Color.GREEN,Assets.font16);Text.drawString(g,"+"+manaPointsB+" Mana Points",effect3X,effect3Y,true,Color.GREEN,Assets.font16);Text.drawString(g,"+"+manaRegenerationPointsB+" Mana Reg. Points",effect4X,effect4Y,true,Color.GREEN,Assets.font16);Text.drawString(g,"+"+healthRegenerationPointsB+" Health Reg. Points",effect5X,effect5Y,true,Color.GREEN,Assets.font16);Text.drawString(g,"+"+attackDamageB+" Attack Damage",effect6X,effect6Y,true,Color.GREEN,Assets.font16);
+		// EQUIPMENT
+		if (equippedRing != null) {
+			g.drawImage(equippedRing.getTexture(), equipSlotX1, equipSlotY1, equipSlotImageWidth, equipSlotImageHeight,
+					null);
+		}
+		if (equippedSword != null) {
+			g.drawImage(equippedSword.getTexture(), equipSlotX2, equipSlotY2, equipSlotImageWidth, equipSlotImageHeight,
+					null);
+		}
+		if (equippedShield != null) {
+			g.drawImage(equippedShield.getTexture(), equipSlotX3, equipSlotY3, equipSlotImageWidth,
+					equipSlotImageHeight, null);
+		}
+		if (equippedChain != null) {
+			g.drawImage(equippedChain.getTexture(), equipSlotX4, equipSlotY4, equipSlotImageWidth, equipSlotImageHeight,
+					null);
+		}
+		if (equippedHelmet != null) {
+			g.drawImage(equippedHelmet.getTexture(), equipSlotX5, equipSlotY5, equipSlotImageWidth,
+					equipSlotImageHeight, null);
+		}
+		if (equippedChestplate != null) {
+			g.drawImage(equippedChestplate.getTexture(), equipSlotX6, equipSlotY6, equipSlotImageWidth,
+					equipSlotImageHeight, null);
+		}
+		if (equippedLeggins != null) {
+			g.drawImage(equippedLeggins.getTexture(), equipSlotX7, equipSlotY7, equipSlotImageWidth,
+					equipSlotImageHeight, null);
+		}
+		if (equippedBoots != null) {
+			g.drawImage(equippedBoots.getTexture(), equipSlotX8, equipSlotY8, equipSlotImageWidth, equipSlotImageHeight,
+					null);
+		}
+		// EFFECTS
+		if (armorPointsB >= 0) {
+			Text.drawString(g, "+" + armorPointsB + " Armor", effect1X-16, effect1Y, true, Color.GREEN,
+					Assets.font16);
+		} else {
+			Text.drawString(g, armorPointsB + " Armor", effect1X-16, effect1Y, true, Color.RED, Assets.font16);
+		}
+		if (manaRegenerationPointsB >= 0) {
+			Text.drawString(g, "+" + String.format("%.1f", (float)manaRegenerationPointsB/60) + "/s Mana Regeneration", effect2X, effect2Y, true,
+					Color.GREEN, Assets.font16);
+		} else {
+			Text.drawString(g, String.format("%.1f", (float)manaRegenerationPointsB/60) + "/s Mana Regeneration", effect2X, effect2Y, true, Color.RED,
+					Assets.font16);
+		}		
+		if (speedPointsB >= 0) {
+			Text.drawString(g, "+" + speedPointsB + " Speed Points", effect3X+16, effect3Y, true, Color.GREEN,
+					Assets.font16);
+		} else {
+			Text.drawString(g, speedPointsB + " Speed Points", effect3X+16, effect3Y, true, Color.RED, Assets.font16);
+		}
+		if (manaPointsB >= 0) {
+			Text.drawString(g, "+" + manaPointsB + " Mana", effect4X-16, effect4Y, true, Color.GREEN,
+					Assets.font16);
+		} else {
+			Text.drawString(g, manaPointsB + " Mana", effect4X-16, effect4Y, true, Color.RED, Assets.font16);
+		}
+		if (healthRegenerationPointsB >= 0) {
+			Text.drawString(g, "+" + String.format("%.1f", (float)healthRegenerationPointsB/60) + "/s Health Regeneration", effect5X, effect5Y, true,
+					Color.GREEN, Assets.font16);
+		} else {
+			Text.drawString(g, String.format("%.1f", (float)healthRegenerationPointsB/60) + " Health Regeneration", effect5X, effect5Y, true, Color.RED,
+					Assets.font16);
+		}
+		if (attackDamageB >= 0) {
+			Text.drawString(g, "+" + attackDamageB + " Attack Damage", effect6X+16, effect6Y, true, Color.GREEN,
+					Assets.font16);
+		} else {
+			Text.drawString(g, attackDamageB + " Attack Damage", effect6X+16, effect6Y, true, Color.RED, Assets.font16);
+		}
 
 	}
 	// Inventory methods
 
 	public void addItem(Item item) {
-		debugItems();
-		System.out.println("Add item(" + item.getId() + ") count: " + item.getCount());
+		//debugItems();
+		//System.out.println("Add item(" + item.getId() + ") count: " + item.getCount());
 		for (Item i : inventoryItems) {
 			if (i.getId() == item.getId()) {
-				System.out.println("exis item(" + item.getId() + ") count: " + i.getCount());
+				//System.out.println("existing item(" + item.getId() + ") count: " + i.getCount());
 				int count = i.getCount() + item.getCount();
-				System.out.println("set count: " + i.getCount() + "+" + item.getCount() + "=" + count);
+				//System.out.println("set count: " + i.getCount() + "+" + item.getCount() + "=" + count);
 				i.setCount(i.getCount() + item.getCount());
-				System.out.println("final count: " + i.getCount());
-				debugItems();
+				//System.out.println("final count: " + i.getCount());
+				//debugItems();
 				return;
 			}
 		}
@@ -567,16 +637,19 @@ public class Inventory {
 		}
 
 		player.setMaxHealth(player.getDefaultMaxHealth() + armorPointsB);
-		player.setSpeed(player.getDefaultSpeed() + speedPointsB);
+		if(!player.isSprinting()) {
+			player.setSpeed(player.getDefaultSpeed() + speedPointsB);
+		}else {
+			player.setSpeed(player.getSprintSpeed() + speedPointsB);
+		}
 		player.setMaxMana(player.getDefaultMaxMana() + manaPointsB);
-		player.setManaRegenSpeed(player.getDefaultManaRegenSpeed() + manaRegenerationPointsB);
-		player.setHealthRegenSpeed(player.getDefaultHealthRegenSpeed() + healthRegenerationPointsB);
+		player.setManaRegenSpeed(player.getDefaultManaRegenSpeed() - manaRegenerationPointsB);
+		player.setHealthRegenSpeed(player.getDefaultHealthRegenSpeed() - healthRegenerationPointsB);
 		player.setDamagePerHit(player.getDefaultDamagePerHit() + attackDamageB);
 
 	}
 
-	public void loadEquippedItems() {
-		System.out.println("Loading Equipped Items");
+	public void updateEquippedItems() {
 		Iterator it = equippedItems.entrySet().iterator();
 		ItemManager itManager = new ItemManager(handler);
 		while (it.hasNext()) {
@@ -605,9 +678,10 @@ public class Inventory {
 			if (pair.getKey().equals("equippedBoots")) {
 				equippedBoots = (Boots) itManager.getItemByID((int) pair.getValue());
 			}
-			it.remove();
+			// it.remove();
 		}
 		itManager = null;
+		System.out.println("Updated equipped items.");
 	}
 
 //	private void itemActions() {
@@ -641,6 +715,10 @@ public class Inventory {
 		if (inventoryItems.size() > slotID) {
 			selectedItem = slotID;
 		}
+	}
+
+	public int getSelectedItem() {
+		return selectedItem;
 	}
 
 	public void disableInventory(boolean disabled) {

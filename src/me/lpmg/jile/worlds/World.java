@@ -1,6 +1,7 @@
 package me.lpmg.jile.worlds;
 
 import java.awt.Graphics;
+import java.util.HashMap;
 import java.util.Map;
 
 import me.lpmg.jile.Handler;
@@ -11,7 +12,6 @@ import me.lpmg.jile.buildings.HouseJina;
 import me.lpmg.jile.entities.Entity;
 import me.lpmg.jile.entities.EntityManager;
 import me.lpmg.jile.entities.creatures.Hermit;
-import me.lpmg.jile.entities.creatures.Jina;
 import me.lpmg.jile.entities.creatures.Log;
 import me.lpmg.jile.entities.creatures.Player;
 import me.lpmg.jile.entities.creatures.Wizard;
@@ -20,7 +20,6 @@ import me.lpmg.jile.entities.statics.Rock;
 import me.lpmg.jile.gfx.EmoteManager;
 import me.lpmg.jile.ingamemenu.SpeechDialogueManager;
 import me.lpmg.jile.ingamemenu.SpeechToastManager;
-import me.lpmg.jile.input.MouseManager;
 import me.lpmg.jile.items.ItemManager;
 import me.lpmg.jile.tiles.Tile;
 import me.lpmg.jile.utils.Utils;
@@ -33,6 +32,10 @@ public class World {
 	private int[][] tiles;
 	private int[][] tilesSecondLayer;
 	private int[][] tilesThirdLayer;
+	
+	private HashMap<String, Integer> worldFirstLayer = new HashMap<>();
+	private HashMap<String, Integer> worldSecondLayer= new HashMap<>();
+	private HashMap<String, Integer> worldThirdLayer= new HashMap<>();
 	// Entities
 	private EntityManager entityManager;
 	// Buildings
@@ -45,16 +48,25 @@ public class World {
 	private int spawnTicker;
 	private int savedTicker;
 	private boolean justSaved = false;
-	//emote
+	// emote
 	private EmoteManager eM;
 
+	private int timePlayed;
+	long timeStart;
+	long timeEnd;
+	long timeDelta;
+
+	private int iTick;
+	
 	private final int SPAWN_CHANCE_LOG_DEFAULT = 96;
 	private final int SPAWN_CHANCE_HERMIT_DEFAULT = 90;
-	
+
 	Map<String, String> eventData;
 
 	public World(Handler handler, String firstLayer, String secondLayer, String thirdLayer) {
 		this.handler = handler;
+		timeStart = System.currentTimeMillis();
+
 		itemManager = new ItemManager(handler);
 		player = new Player(handler, 100, 100);
 		sTM = new SpeechToastManager(handler, "/text/speech_en.txt");
@@ -62,15 +74,16 @@ public class World {
 		entityManager = new EntityManager(handler);
 		eM = new EmoteManager(handler);
 
-		loadGameData();
-		
 		loadWorld(firstLayer);
 		loadSecondLayer(secondLayer);
 		loadThirdLayer(thirdLayer);
+		
+		loadGameData();
+		
 		spawnBuildings();
 		spawnEntities();
 	}
-	
+
 	public void initOnWorldLoaded() {
 		sDM.init();
 	}
@@ -81,6 +94,13 @@ public class World {
 		buildingManager.tick();
 		entityManager.tick();
 		sTM.tick();
+		iTick++;
+		
+		if(iTick>=60*30) {
+			//once per 30 second
+			calcTime();
+			iTick=0;
+		}
 
 		if (spawnTicker > 3000) {
 			System.out.println("Spawning new entities...");
@@ -169,7 +189,7 @@ public class World {
 	public Tile getTile(int x, int y) {
 		if (x < 0 || y < 0 || x >= width || y >= height)
 			return Tile.grassTile;
-		
+
 		Tile t = Tile.tiles[tiles[x][y]];
 		if (t == null)
 			return Tile.placeHolderTile;
@@ -205,11 +225,12 @@ public class World {
 		System.out.println("width " + width);
 		System.out.println("height " + height);
 		System.out.println("total tiles  " + tokens.length);
-
+		
 		tiles = new int[width][height];
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
 				tiles[x][y] = Utils.parseInt(tokens[(x + y * width) + 4]);
+				worldFirstLayer.put(x+":"+y, tiles[x][y]);
 			}
 		}
 	}
@@ -222,6 +243,7 @@ public class World {
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
 				tilesSecondLayer[x][y] = Utils.parseInt(tokens[(x + y * width)]);
+				worldSecondLayer.put(x+":"+y, tiles[x][y]);
 			}
 
 		}
@@ -235,6 +257,7 @@ public class World {
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
 				tilesThirdLayer[x][y] = Utils.parseInt(tokens[(x + y * width)]);
+				worldThirdLayer.put(x+":"+y, tiles[x][y]);
 			}
 		}
 	}
@@ -246,15 +269,13 @@ public class World {
 
 	private void spawnEntities() {
 		entityManager.setPlayer(player);
-		entityManager.getPlayer().setX(spawnX);
-		entityManager.getPlayer().setY(spawnY);
 		entityManager.addEntity(new Wizard(handler, 200, 300));
-		if(handler.getGame().getSavedEntities().isEmpty()) {
+		if (handler.getGame().getSavedEntities().isEmpty()) {
 			loadStandardEntities();
-		}else {
+		} else {
 			loadEntities();
 		}
-		
+
 		spawnHermits();
 	}
 
@@ -326,24 +347,64 @@ public class World {
 		if (playerData.containsKey("player_money")) {
 			player.setMoney(Utils.parseInt(playerData.get("player_money")));
 		}
+		if (playerData.containsKey("player_totalEarnedMoney")) {
+			player.setTotalEarnedMoney(Utils.parseInt(playerData.get("player_totalEarnedMoney")));
+		}
 		if (playerData.containsKey("player_health")) {
 			player.setHealth(Utils.parseInt(playerData.get("player_health")));
+		}
+		if (playerData.containsKey("player_deaths")) {
+			player.setDeathCount(Utils.parseInt(playerData.get("player_deaths")));
 		}
 		if (playerData.containsKey("player_mana")) {
 			player.setMana(Utils.parseInt(playerData.get("player_mana")));
 		}
-		
+		if (playerData.containsKey("player_timePlayed")) {
+			timePlayed = Utils.parseInt(playerData.get("player_timePlayed"));
+		}
+		if (playerData.containsKey("player_x")) {
+			player.setX(Utils.parseFloat(playerData.get("player_x")));
+			System.out.println("setting player x to " + Utils.parseFloat(playerData.get("player_x")));
+		} else {
+			player.setX(spawnX);
+			player.setY(spawnY);
+		}
+		if (playerData.containsKey("player_y")) {
+			player.setY(Utils.parseFloat(playerData.get("player_y")));
+		} else {
+			player.setX(spawnX);
+			player.setY(spawnY);
+		}
+
 		eventData = handler.getGame().getEventData();
 	}
 
 	private void saveGameData() {
+		calcTime();
+
 		Map<String, String> playerData = handler.getGame().getPlayerData();
 		playerData.put("player_name", player.getPlayerName());
 		playerData.put("player_money", player.getMoney() + "");
+		playerData.put("player_totalEarnedMoney", player.getTotalEarnedMoney() + "");
 		playerData.put("player_health", player.getHealth() + "");
+		playerData.put("player_deaths", player.getDeathCount() + "");
 		playerData.put("player_mana", player.getMana() + "");
+		playerData.put("player_timePlayed", timePlayed + "");
+		playerData.put("player_x", player.getX() + "");
+		playerData.put("player_y", player.getY() + "");
 		handler.getGame().setPlayerData(playerData);
 		handler.getGame().savePlayerData();
+		
+		handler.getGame().saveWorldFiles(worldFirstLayer, worldSecondLayer, worldThirdLayer);
+
+	}
+
+	private void calcTime() {
+		timeEnd = System.currentTimeMillis();
+		long tDelta = timeEnd - timeStart;
+		int elapsedSeconds = (int) (tDelta / 1000.0);
+		timePlayed += elapsedSeconds;
+		timeStart = System.currentTimeMillis();
 	}
 
 	private void loadStandardEntities() {
@@ -356,18 +417,18 @@ public class World {
 	private void loadEntities() {
 		Map<String, String> savedEntities = handler.getGame().getSavedEntities();
 		for (String entity : savedEntities.keySet()) {
-			if(savedEntities.get(entity).equalsIgnoreCase("Bush")) {
+			if (savedEntities.get(entity).equalsIgnoreCase("Bush")) {
 				String coordinates[] = entity.split("/");
-				entityManager
-						.addEntity(new Bush(handler, Utils.parseFloat(coordinates[0]), Utils.parseFloat(coordinates[1])));
-			}else if(savedEntities.get(entity).equalsIgnoreCase("Rock")) {
+				entityManager.addEntity(
+						new Bush(handler, Utils.parseFloat(coordinates[0]), Utils.parseFloat(coordinates[1])));
+			} else if (savedEntities.get(entity).equalsIgnoreCase("Rock")) {
 				String coordinates[] = entity.split("/");
-				entityManager
-						.addEntity(new Rock(handler, Utils.parseFloat(coordinates[0]), Utils.parseFloat(coordinates[1])));
-			}else if(savedEntities.get(entity).equalsIgnoreCase("Log")) {
+				entityManager.addEntity(
+						new Rock(handler, Utils.parseFloat(coordinates[0]), Utils.parseFloat(coordinates[1])));
+			} else if (savedEntities.get(entity).equalsIgnoreCase("Log")) {
 				String coordinates[] = entity.split("/");
-				entityManager
-						.addEntity(new Log(handler, Utils.parseFloat(coordinates[0]), Utils.parseFloat(coordinates[1])));
+				entityManager.addEntity(
+						new Log(handler, Utils.parseFloat(coordinates[0]), Utils.parseFloat(coordinates[1])));
 			}
 		}
 	}
@@ -377,13 +438,11 @@ public class World {
 		savedEntities.clear();
 		for (Entity entity : entityManager.getEntities()) {
 			if (entity instanceof Bush) {
-				savedEntities.put(entity.getX()+"/"+entity.getY(), "Bush");
-			}
-			else if (entity instanceof Rock) {
-				savedEntities.put(entity.getX()+"/"+entity.getY(), "Rock");
-			}
-			else if (entity instanceof Log) {
-				savedEntities.put(entity.getX()+"/"+entity.getY(), "Log");
+				savedEntities.put(entity.getX() + "/" + entity.getY(), "Bush");
+			} else if (entity instanceof Rock) {
+				savedEntities.put(entity.getX() + "/" + entity.getY(), "Rock");
+			} else if (entity instanceof Log) {
+				savedEntities.put(entity.getX() + "/" + entity.getY(), "Log");
 			}
 		}
 		handler.getGame().setSavedEntities(savedEntities);
@@ -405,7 +464,7 @@ public class World {
 	public BuildingManager getBuildingManager() {
 		return buildingManager;
 	}
-	
+
 	public EmoteManager getEmoteManager() {
 		return eM;
 	}
@@ -442,8 +501,17 @@ public class World {
 	public SpeechToastManager getSpeechToastManager() {
 		return sTM;
 	}
-	
+
 	public SpeechDialogueManager getSpeechDialogueManager() {
 		return sDM;
 	}
+
+	public int getTimePlayed() {
+		return timePlayed;
+	}
+
+	public void setTimePlayed(int timePlayed) {
+		this.timePlayed = timePlayed;
+	}
+
 }

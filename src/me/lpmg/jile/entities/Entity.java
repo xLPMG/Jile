@@ -113,7 +113,7 @@ public abstract class Entity {
 		return maxHealth;
 	}
 
-	public void setMaxHealth(int health) {
+	public void setMaxHealth(int maxHealth) {
 		this.maxHealth = maxHealth;
 	}
 	//mana

@@ -21,9 +21,11 @@ public class WizardSellMenu {
 	private Handler handler;
 	private Player player;
 	private boolean active;
-	private int menuX = 119, menuY = 64, menuWidth = 512, menuHeight = 384, menuListCenterX = menuX + 171,
+	private int menuX = 32, menuY = 64, menuWidth = 685, menuHeight = 384, menuListCenterX = menuX + 216,
 			menuListCenterY = menuY + menuHeight / 2 + 5, menuListSpacing = 30,
-			menuListItemNameX = menuListCenterX - 100, menuListItemPriceX = menuX + menuWidth - 20, menuCenterX = menuX+(menuWidth/2);
+			menuListItemNameX = menuX + 22, menuListItemPriceX = menuX + menuWidth - 22,
+			menuCenterX = menuX + (menuWidth / 2);
+	private int iTick;
 
 	private int selectedItem = 0;
 
@@ -78,6 +80,8 @@ public class WizardSellMenu {
 	}
 
 	public void tick() {
+		iTick++;
+		
 		if (player == null) {
 			player = handler.getWorld().getEntityManager().getPlayer();
 		}
@@ -104,18 +108,89 @@ public class WizardSellMenu {
 		for (int i = -5; i < 6; i++) {
 			if (selectedItem + i < 0 || selectedItem + i >= len)
 				continue;
-			if (i == 0) {
-				Text.drawString(g, sellingItems.get(selectedItem + i).getName(), menuListItemNameX,
-						menuListCenterY + i * menuListSpacing, true, Color.YELLOW, Assets.font28);
-				g.drawImage(sellingItems.get(selectedItem + i).getTexture(), menuCenterX-16, menuListCenterY -16 + i * menuListSpacing,32, 32, null);
-				renderMoneySelected(g, sellingItems.get(selectedItem + i).getSellingPrice(), i);
+			String itemName = sellingItems.get(selectedItem + i).getName();
+
+			if (itemName.length() <= 15) {
+				if (i == 0) {
+					Text.drawString(g, sellingItems.get(selectedItem + i).getName(), menuListItemNameX,
+							menuListCenterY + i * menuListSpacing, false, true, Color.YELLOW, Assets.font28);
+					g.drawImage(sellingItems.get(selectedItem + i).getTexture(), menuCenterX - 16,
+							menuListCenterY - 16 + i * menuListSpacing, 32, 32, null);
+					renderMoneySelected(g, sellingItems.get(selectedItem + i).getBuyingPrice(), i);
+				} else {
+					Text.drawString(g, sellingItems.get(selectedItem + i).getName(), menuListItemNameX,
+							menuListCenterY + i * menuListSpacing, true, true, Color.WHITE, Assets.font28);
+					g.drawImage(sellingItems.get(selectedItem + i).getTexture(), menuCenterX - 16,
+							menuListCenterY - 16 + i * menuListSpacing, 32, 32, null);
+					renderMoney(g, sellingItems.get(selectedItem + i).getBuyingPrice(), i);
+				}
 			} else {
-				Text.drawString(g, sellingItems.get(selectedItem + i).getName(), menuListItemNameX,
-						menuListCenterY + i * menuListSpacing, true, Color.WHITE, Assets.font28);
-				g.drawImage(sellingItems.get(selectedItem + i).getTexture(), menuCenterX-16, menuListCenterY -16 + i * menuListSpacing, 32, 32, null);
-				renderMoney(g, sellingItems.get(selectedItem + i).getSellingPrice(), i);
+				if (iTick >= 1800) {
+					iTick = 0;
+					// to stop iTick getting extremely high to prevent lags or errors
+				}
+				int charCounter = 0;
+				int lettersToShift = itemName.length() - 15;
+
+				// IGNORE
+				charCounter = (iTick / 20) % (lettersToShift + 1 + 2 + 1);
+				if (charCounter < 3) {
+					charCounter = 0;
+
+				} else {
+					charCounter -= 2;
+				}
+				// This algorithm does: 0,1,2,3,4,5,6,7,8,9 -> 0,0,0,1,2,3,4,5,6,7,8,9 which
+				// makes the name move only after a few secs of standing still
+				// The following algorithm does: 0,0,0,1,2,3,4,5,6,7,8,9 ->
+				// 0,0,0,1,2,3,4,5,6,7,8,9,9,9 to make the name stay a bit longer after moving
+				if (charCounter >= lettersToShift) {
+					charCounter = lettersToShift;
+				}
+				// END IGNORE
+
+				String fittedItemName = itemName.substring(0, 15);
+				String charsToAppend = itemName.substring(15, 15 + charCounter);
+				String newItemName = fittedItemName.substring(charCounter) + charsToAppend;
+				if (i == 0) {
+					Text.drawString(g, newItemName, menuListItemNameX, menuListCenterY + i * menuListSpacing, true,
+							true, Color.YELLOW, Assets.font28);
+					g.drawImage(sellingItems.get(selectedItem + i).getTexture(), menuCenterX - 16,
+							menuListCenterY - 16 + i * menuListSpacing, 32, 32, null);
+					renderMoneySelected(g, sellingItems.get(selectedItem + i).getBuyingPrice(), i);
+				} else {
+					Text.drawString(g, newItemName, menuListItemNameX, menuListCenterY + i * menuListSpacing, true,
+							true, Color.WHITE, Assets.font28);
+					g.drawImage(sellingItems.get(selectedItem + i).getTexture(), menuCenterX - 16,
+							menuListCenterY - 16 + i * menuListSpacing, 32, 32, null);
+					renderMoney(g, sellingItems.get(selectedItem + i).getBuyingPrice(), i);
+				}
 			}
+
 		}
+//		if (!active)
+//			return;
+//		g.drawImage(Assets.wizardSellMenu, menuX, menuY, menuWidth, menuHeight, null);
+//
+//		int len = sellingItems.size();
+//		if (len == 0)
+//			return;
+//
+//		for (int i = -5; i < 6; i++) {
+//			if (selectedItem + i < 0 || selectedItem + i >= len)
+//				continue;
+//			if (i == 0) {
+//				Text.drawString(g, sellingItems.get(selectedItem + i).getName(), menuListItemNameX,
+//						menuListCenterY + i * menuListSpacing, true, Color.YELLOW, Assets.font28);
+//				g.drawImage(sellingItems.get(selectedItem + i).getTexture(), menuCenterX-16, menuListCenterY -16 + i * menuListSpacing,32, 32, null);
+//				renderMoneySelected(g, sellingItems.get(selectedItem + i).getSellingPrice(), i);
+//			} else {
+//				Text.drawString(g, sellingItems.get(selectedItem + i).getName(), menuListItemNameX,
+//						menuListCenterY + i * menuListSpacing, true, Color.WHITE, Assets.font28);
+//				g.drawImage(sellingItems.get(selectedItem + i).getTexture(), menuCenterX-16, menuListCenterY -16 + i * menuListSpacing, 32, 32, null);
+//				renderMoney(g, sellingItems.get(selectedItem + i).getSellingPrice(), i);
+//			}
+//		}
 	}
 	
 	private void renderMoney(Graphics g, int money, int i) {

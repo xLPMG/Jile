@@ -1,16 +1,12 @@
 package me.lpmg.jile.ingamemenu;
 
-import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Rectangle;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import me.lpmg.jile.Handler;
 import me.lpmg.jile.gfx.Assets;
-import me.lpmg.jile.items.Item;
-import me.lpmg.jile.items.armor.Sword;
 
 public class WizardMenu {
 

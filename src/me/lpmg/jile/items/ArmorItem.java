@@ -2,6 +2,15 @@ package me.lpmg.jile.items;
 
 import java.awt.image.BufferedImage;
 
+import me.lpmg.jile.items.armor.Boots;
+import me.lpmg.jile.items.armor.Chain;
+import me.lpmg.jile.items.armor.Chestplate;
+import me.lpmg.jile.items.armor.Helmet;
+import me.lpmg.jile.items.armor.Leggins;
+import me.lpmg.jile.items.armor.Ring;
+import me.lpmg.jile.items.armor.Shield;
+import me.lpmg.jile.items.armor.Sword;
+
 public class ArmorItem extends Item {
 
 	private int armorPoints;
@@ -16,7 +25,7 @@ public class ArmorItem extends Item {
 
 	public ArmorItem(BufferedImage texture, String name, int id, int buyingPrice, int sellingPrice, String description,
 			int armorPoints, float speedPoints, int manaPoints, int manaRegenerationPoints, int healthRegenerationPoints,
-			int attackDamage, int usedManaPoints, int ignitionDuration, float f) {
+			int attackDamage, int usedManaPoints, int ignitionDuration, int slownessDuration) {
 		super(texture, name, id, buyingPrice, sellingPrice, description);
 		this.armorPoints = armorPoints;
 		this.speedPoints = speedPoints;

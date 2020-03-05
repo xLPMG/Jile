@@ -1,24 +1,25 @@
 package me.lpmg.jile.entities.creatures;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import me.lpmg.jile.Handler;
 import me.lpmg.jile.entities.Entity;
 import me.lpmg.jile.gfx.Animation;
 import me.lpmg.jile.gfx.Assets;
-import me.lpmg.jile.gfx.Text;
-import me.lpmg.jile.healthbar.Healthbar;
 import me.lpmg.jile.inventory.Inventory;
 import me.lpmg.jile.inventory.ItemBar;
 import me.lpmg.jile.items.Item;
-import me.lpmg.jile.items.ItemManager;
+import me.lpmg.jile.miscgui.Healthbar;
+import me.lpmg.jile.miscgui.StatsGUI;
 import me.lpmg.jile.states.DeadState;
 import me.lpmg.jile.states.MenuState;
 import me.lpmg.jile.states.State;
@@ -27,56 +28,72 @@ import me.lpmg.jile.tiles.Tile;
 public class Player extends Creature {
 
 	// Animations
-	private Animation animDown, animUp, animLeft, animRight, animIdleUp, animIdleDown, animIdleLeft, animIdleRight,
+	private Animation animDown, animDownNormal, animDownFast, animUp, animUpNormal, animUpFast, animLeft, animLeftNormal, animLeftFast, animRight, animRightNormal, animRightFast, animIdleUp, animIdleDown, animIdleLeft, animIdleRight,
 			animAttackDown, animAttackUp, animAttackLeft, animAttackRight;
 	// Attack timer
 	private long lastAttackTimer, attackCooldown = 100, attackTimer = attackCooldown;
 	// Inventory
 	private Inventory inventory;
 	private ItemBar itemBar;
-	
-	
+
 	private Healthbar healthbar;
+	private StatsGUI statsGUI;
+	
 	private int attackDirection = 0;
 	private int healthTickCount;
-	private int defaultMaxHealth=maxHealth;
-	private int defaultMaxMana=maxMana;
+	private int defaultMaxHealth = maxHealth;
+	private int defaultMaxMana = maxMana;
 	private int manaTickCount;
 	private float defaultSpeed;
 	private float sprintSpeed;
 	private boolean frozen = false;
-	
+
 	private int damagePerHit = 2;
 	private int defaultDamagePerHit = damagePerHit;
 
 	private int money;
+	private int totalEarnedMoney;
+	private int deathCount;
 	private int healthRegenSpeed = 200;
 	private int defaultHealthRegenSpeed = healthRegenSpeed;
 	private int manaRegenSpeed = 260;
 	private int defaultManaRegenSpeed = manaRegenSpeed;
-	
+
 	private int multiplier = PLAYER_HEIGHT / 32;
 	private String playerName = "???";
 	private int walkingDirection = 2;
-	private boolean invincible=false;
+	private boolean invincible = false;
 	
+	private boolean isSprinting=false;
+
 	public Player(Handler handler, float x, float y) {
 		super(handler, x, y, Creature.PLAYER_WIDTH, Creature.PLAYER_HEIGHT);
-
+		
 		bounds.x = 6 * multiplier;
 		bounds.y = 16 * multiplier; // 19*3
 		bounds.width = 22 * multiplier; // 9*3
 		bounds.height = 16 * multiplier; // 4*3
-		speed = 2.0f;
+		speed = 1.5f;
 		defaultSpeed = speed;
-		sprintSpeed = 3.2f;
+		sprintSpeed = 3.0f;
 		money = 0;
 
 		// Animatons
-		animDown = new Animation(250, Assets.player_down);
-		animUp = new Animation(250, Assets.player_up);
-		animLeft = new Animation(250, Assets.player_left);
-		animRight = new Animation(250, Assets.player_right);
+		animDownNormal = new Animation(250, Assets.player_down);
+		animDownFast = new Animation(100, Assets.player_down);
+		animDown = animDownNormal;
+		
+		animUpNormal = new Animation(250, Assets.player_up);
+		animUpFast = new Animation(100, Assets.player_up);
+		animUp = animUpNormal;
+		
+		animLeftNormal = new Animation(250, Assets.player_left);
+		animLeftFast = new Animation(100, Assets.player_left);
+		animLeft = animLeftNormal;
+		
+		animRightNormal = new Animation(250, Assets.player_right);
+		animRightFast = new Animation(100, Assets.player_right);
+		animRight = animRightNormal;
 
 		animIdleUp = new Animation(500, Assets.player_idleUp);
 		animIdleDown = new Animation(500, Assets.player_idleDown);
@@ -92,6 +109,41 @@ public class Player extends Creature {
 		handler.getGame().loadPlayerInventory(this);
 		itemBar = new ItemBar(handler, inventory);
 		healthbar = new Healthbar(handler, this);
+		statsGUI = new StatsGUI(handler, this);
+
+		KeyAdapter kA = new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (inventory.isActive())
+					return;
+
+				if (e.getKeyCode() == KeyEvent.VK_SHIFT) {
+					speed = sprintSpeed;
+					animDown = animDownFast;
+					animUp = animUpFast;
+					animLeft = animLeftFast;
+					animRight = animRightFast;
+					isSprinting=true;
+				}
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				if (inventory.isActive())
+					return;
+
+				if (e.getKeyCode() == KeyEvent.VK_SHIFT) {
+					speed = defaultSpeed;
+					animDown = animDownNormal;
+					animUp = animUpNormal;
+					animLeft = animLeftNormal;
+					animRight = animRightNormal;
+					isSprinting=false;
+				}
+			}
+		};
+		handler.addKeyListener(kA);
+
 	}
 
 	@Override
@@ -125,8 +177,13 @@ public class Player extends Creature {
 		inventory.tick();
 		itemBar.tick();
 		healthbar.tick();
-		if(invincible) {
-			health=maxHealth;
+		statsGUI.tick();
+		if (invincible) {
+			health = maxHealth;
+		}
+		
+		if(totalEarnedMoney<money) {
+			totalEarnedMoney=money;
 		}
 	}
 
@@ -175,7 +232,7 @@ public class Player extends Creature {
 			if (e.getCollisionBounds(0, 0).intersects(ar)) {
 				healthbar.showCorner();
 				e.hurt(damagePerHit);
-				System.out.println("Hitting " + e);
+				//System.out.println("Hitting " + e);
 				if (e.getHealth() <= 0 && e instanceof Creature) {
 					addMoney(((Creature) e).getMoneyOnDeath());
 				}
@@ -190,6 +247,7 @@ public class Player extends Creature {
 
 	@Override
 	public void die() {
+		deathCount+=1;
 		State.setState(new DeadState(handler));
 	}
 
@@ -199,12 +257,6 @@ public class Player extends Creature {
 
 		if (inventory.isActive())
 			return;
-
-		if (handler.getKeyManager().shift) {
-			speed = sprintSpeed;
-		} else if (!handler.getKeyManager().shift) {
-			speed = defaultSpeed;
-		}
 
 		if (handler.getKeyManager().up) {
 			yMove = -speed;
@@ -240,6 +292,7 @@ public class Player extends Creature {
 	public void postRender(Graphics g) {
 		healthbar.render(g);
 		itemBar.render(g);
+		statsGUI.render(g);
 		renderMoney(g);
 		inventory.render(g);
 	}
@@ -249,8 +302,10 @@ public class Player extends Creature {
 		g2.setFont(Assets.font48);
 		g2.setColor(Color.WHITE);
 		FontMetrics fontMetrics = g2.getFontMetrics();
-		String moneyString = Integer.toString(money) + "$";
-		g2.drawString(moneyString, (handler.getWidth()) - fontMetrics.stringWidth(moneyString), 35);
+		String moneyString = Integer.toString(money);
+		g2.drawString(moneyString, (handler.getWidth()-32) - fontMetrics.stringWidth(moneyString), 35);
+		
+		g.drawImage(Assets.coin, handler.getWidth()-32, 4, 32, 32, null);
 	}
 
 	private BufferedImage getCurrentAnimationFrame() {
@@ -322,13 +377,18 @@ public class Player extends Creature {
 				health += 1;
 				healthTickCount = 0;
 			}
+		}else if(health>maxHealth) {
+			health=maxHealth;
 		}
+		
 		if (mana < maxMana) {
 			manaTickCount++;
 			if (manaTickCount >= manaRegenSpeed) {
 				mana += 1;
 				manaTickCount = 0;
 			}
+		}else if(mana>maxMana) {
+			mana=maxMana;
 		}
 	}
 
@@ -339,6 +399,10 @@ public class Player extends Creature {
 		ArrayList<Item> invItems = inventory.getInventoryItems();
 		invItems.clear();
 		inventory.setInventoryItems(invItems);
+		
+		HashMap<String, Integer> equippedItems = inventory.getEquippedItems();
+		equippedItems.clear();
+		inventory.setEquippedItems(equippedItems);
 	}
 
 	private void checkInteraction() {
@@ -377,27 +441,32 @@ public class Player extends Creature {
 
 		}
 	}
+
 	public int getDefaultMaxHealth() {
 		return defaultMaxHealth;
 	}
+
 	public int getDefaultMaxMana() {
 		return defaultMaxMana;
 	}
-	
+
 	public int getDefaultDamagePerHit() {
 		return defaultDamagePerHit;
 	}
-	
+
 	public int getDamagePerHit() {
 		return damagePerHit;
 	}
-	
+
 	public void setDamagePerHit(int damagePerHit) {
-		this.damagePerHit=damagePerHit;
+		this.damagePerHit = damagePerHit;
 	}
-	
+
 	public float getDefaultSpeed() {
 		return defaultSpeed;
+	}
+	public float getSprintSpeed() {
+		return sprintSpeed;
 	}
 
 	public int getHealthRegenSpeed() {
@@ -423,7 +492,7 @@ public class Player extends Creature {
 	public int getDefaultManaRegenSpeed() {
 		return defaultManaRegenSpeed;
 	}
-	
+
 	public Inventory getInventory() {
 		return inventory;
 	}
@@ -445,6 +514,7 @@ public class Player extends Creature {
 	}
 
 	public void addMoney(int money) {
+		totalEarnedMoney+=money;
 		this.money += money;
 	}
 
@@ -452,10 +522,18 @@ public class Player extends Creature {
 		this.money -= money;
 	}
 
+	public int getTotalEarnedMoney() {
+		return totalEarnedMoney;
+	}
+
+	public void setTotalEarnedMoney(int totalEarnedMoney) {
+		this.totalEarnedMoney = totalEarnedMoney;
+	}
+
 	public void freeze(boolean freeze) {
 		frozen = freeze;
-		xMove=0;
-		yMove=0;
+		xMove = 0;
+		yMove = 0;
 	}
 
 	public void setPlayerName(String name) {
@@ -465,11 +543,24 @@ public class Player extends Creature {
 	public String getPlayerName() {
 		return playerName;
 	}
-	
+
 	public void setWalkingDirection(int direction) {
-		walkingDirection=direction;
+		walkingDirection = direction;
 	}
+
 	public void setInvincible(boolean invincible) {
-		this.invincible=invincible;
+		this.invincible = invincible;
+	}
+	
+	public boolean isSprinting() {
+		return isSprinting;
+	}
+
+	public int getDeathCount() {
+		return deathCount;
+	}
+
+	public void setDeathCount(int deathCount) {
+		this.deathCount = deathCount;
 	}
 }

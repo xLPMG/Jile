@@ -32,25 +32,26 @@ public class SpeechDialogueManager {
 	}
 
 	public void init() {
-		speechFiles.clear();
-		speechTexts.clear();
-
-		loadSpeechFiles();
-
-		for (File speechFile : speechFiles) {
-			try {
-				String[] resourcePath = speechFile.getAbsolutePath().split("(?=[\\\\]text)");
-				resourcePath[1] = resourcePath[1].replaceAll("[\\\\]", "/");
-				System.out.println("READING FILE: " + resourcePath[1]);
-				loadSpeechText(resourcePath[1]);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		System.out.println("--FINAL SPEECH TEXTS--");
-		for (String key : speechTexts.keySet()) {
-			System.out.println(key + ": " + "\n" + speechTexts.get(key));
-		}
+		//TODO
+//		speechFiles.clear();
+//		speechTexts.clear();
+//
+//		loadSpeechFiles();
+//
+//		for (File speechFile : speechFiles) {
+//			try {
+//				String[] resourcePath = speechFile.getAbsolutePath().split("(?=[\\\\]text)");
+//				resourcePath[1] = resourcePath[1].replaceAll("[\\\\]", "/");
+//				System.out.println("READING FILE: " + resourcePath[1]);
+//				loadSpeechText(resourcePath[1]);
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}
+//		}
+//		System.out.println("--FINAL SPEECH TEXTS--");
+//		for (String key : speechTexts.keySet()) {
+//			System.out.println(key + ": " + "\n" + speechTexts.get(key));
+//		}
 	}
 
 	public void render(Graphics g) {
