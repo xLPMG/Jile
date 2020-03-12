@@ -236,7 +236,7 @@ public class Player extends Creature {
 				if (e.getHealth() <= 0 && e instanceof Creature) {
 					addMoney(((Creature) e).getMoneyOnDeath());
 				}
-				if (e instanceof Wizard) {
+				if (e instanceof Merchant) {
 					mana -= 1;
 				}
 				return;
@@ -431,8 +431,8 @@ public class Player extends Creature {
 		for (Entity e : handler.getWorld().getEntityManager().getEntities()) {
 			if (e.equals(this))
 				continue;
-			if (e.getCollisionBounds(0, 0).intersects(ar) && e instanceof Wizard) {
-				((Wizard) e).interact();
+			if (e.getCollisionBounds(0, 0).intersects(ar) && e instanceof Merchant) {
+				((Merchant) e).interact();
 				return;
 			}
 		}

@@ -5,7 +5,7 @@ import java.awt.Graphics;
 
 import me.lpmg.jile.Handler;
 import me.lpmg.jile.entities.Entity;
-import me.lpmg.jile.entities.creatures.Wizard;
+import me.lpmg.jile.entities.creatures.Merchant;
 import me.lpmg.jile.gfx.Assets;
 import me.lpmg.jile.gfx.Text;
 import me.lpmg.jile.worlds.World;
@@ -33,8 +33,8 @@ public class GameState extends State {
 		world.renderThirdLayer(g);
 		world.player.postRender(g);
 		for(Entity e : world.getEntityManager().getEntities()){
-			if(e instanceof Wizard) {
-			((Wizard) e).renderMenu(g);
+			if(e instanceof Merchant) {
+			((Merchant) e).renderMenu(g);
 			}
 		}
 		world.getEmoteManager().render(g);

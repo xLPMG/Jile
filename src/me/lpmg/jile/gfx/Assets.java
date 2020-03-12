@@ -51,7 +51,7 @@ public class Assets {
 	public static BufferedImage wizardBuyMenu, wizardSellMenu;
 	public static BufferedImage healthbar, healthbar_empty, healthbar_health_full, healthbar_mana_full,
 			healthbar_corner_full;
-	public static BufferedImage speechToast;
+	public static BufferedImage speechToast, dialogue_arrow;
 	public static BufferedImage coin;
 
 	// buildings
@@ -123,6 +123,7 @@ public class Assets {
 		coin = ImageLoader.loadImage("/textures/coin.png");
 
 		speechToast = ImageLoader.loadImage("/textures/speechToast.png");
+		dialogue_arrow= ImageLoader.loadImage("/textures/dialogue_arrow.png");
 
 		emote_exclamations = ImageLoader.loadImage("/textures/emotes/emote_exclamations.png");
 

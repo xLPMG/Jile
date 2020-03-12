@@ -43,6 +43,8 @@ public class HouseJina extends Building {
 				((Jina)jina).firstEncounter();
 			}
 		}
+		}else {
+		hJM.spawnPlayer();
 		}
 		entered=true;
 

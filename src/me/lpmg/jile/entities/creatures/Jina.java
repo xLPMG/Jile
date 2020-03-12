@@ -65,8 +65,10 @@ public class Jina extends Creature {
 		checkAttacks();
 		if (!frozen) {
 			move();
-		} else {
-
+		}
+		
+		if(health<maxHealth) {
+			health=maxHealth;
 		}
 	}
 
@@ -107,7 +109,8 @@ public class Jina extends Creature {
 	}
 
 	public void firstEncounter() {
-		meetplayerThread.start();
+//		meetplayerThread.start();
+		handler.getWorld().getSpeechDialogueManager().showDialog("!JinaFirstEncounter");
 	}
 
 	Thread meetplayerThread = new Thread() {

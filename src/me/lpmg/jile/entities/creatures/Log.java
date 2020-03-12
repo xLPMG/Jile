@@ -83,7 +83,7 @@ public class Log extends Creature {
 
 	@Override
 	public void die() {
-		handler.getWorld().getItemManager().addItem(Item.woodItem.createNew((int) x, (int) y));
+		handler.getWorld().getItemManager().addItem(Item.woodItem.createNew((int) x+bounds.x/2, (int) y+bounds.y/2));
 		System.out.println("Entity Debug: Log died.");
 
 	}

@@ -9,7 +9,7 @@ import me.lpmg.jile.gfx.Assets;
 import me.lpmg.jile.ingamemenu.WizardMenu;
 import me.lpmg.jile.items.Item;
 
-public class Wizard extends Creature {
+public class Merchant extends Creature {
 	
 	//Animations
 	private Animation animDown, animUp, animLeft, animRight, animIdle;
@@ -19,7 +19,7 @@ public class Wizard extends Creature {
 	private float defspeed;
 	private int multiplier = 64/32;
 	
-	public Wizard(Handler handler, float x, float y) {
+	public Merchant(Handler handler, float x, float y) {
 		super(handler, x, y, 64, 64);
 		
 		bounds.x = 6*multiplier;
@@ -140,7 +140,7 @@ public class Wizard extends Creature {
 	}
 	
 	public void interact() {
-		//handler.getWorld().getSpeechToastManager().showToast("!wizardspeech");
+	handler.getWorld().getSpeechDialogueManager().showDialog("!HaroldFirstEncounter");
 		wizardMenu.setActive(true);
 	}
 

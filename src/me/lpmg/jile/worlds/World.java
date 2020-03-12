@@ -14,7 +14,7 @@ import me.lpmg.jile.entities.EntityManager;
 import me.lpmg.jile.entities.creatures.Hermit;
 import me.lpmg.jile.entities.creatures.Log;
 import me.lpmg.jile.entities.creatures.Player;
-import me.lpmg.jile.entities.creatures.Wizard;
+import me.lpmg.jile.entities.creatures.Merchant;
 import me.lpmg.jile.entities.statics.Bush;
 import me.lpmg.jile.entities.statics.Rock;
 import me.lpmg.jile.gfx.EmoteManager;
@@ -269,7 +269,7 @@ public class World {
 
 	private void spawnEntities() {
 		entityManager.setPlayer(player);
-		entityManager.addEntity(new Wizard(handler, 200, 300));
+		entityManager.addEntity(new Merchant(handler, 200, 300));
 		if (handler.getGame().getSavedEntities().isEmpty()) {
 			loadStandardEntities();
 		} else {

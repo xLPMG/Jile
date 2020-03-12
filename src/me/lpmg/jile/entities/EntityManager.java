@@ -7,7 +7,7 @@ import java.util.Iterator;
 
 import me.lpmg.jile.Handler;
 import me.lpmg.jile.entities.creatures.Player;
-import me.lpmg.jile.entities.creatures.Wizard;
+import me.lpmg.jile.entities.creatures.Merchant;
 
 public class EntityManager {
 	

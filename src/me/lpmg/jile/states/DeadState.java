@@ -44,7 +44,7 @@ public class DeadState extends State {
 				entityManager.getPlayer().setX(spawnX);
 				entityManager.getPlayer().setY(spawnY);
 				State.setState(handler.getGame().gameState);
-				handler.getWorld().getSpeechToastManager().showToast("!PlayerPassedOut");
+				handler.getWorld().getSpeechDialogueManager().showDialog("!PlayerPassedOut");
 			}
 		}));
 	}
