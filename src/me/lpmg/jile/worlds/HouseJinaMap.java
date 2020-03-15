@@ -14,26 +14,24 @@ public class HouseJinaMap extends BuildingMap {
 	private int[][] tiles;
 	private int[][] tilesSecondLayer;
 	protected int spawnX, spawnY;
-	private int dimensionM;
+	private int mapX;
 	private HouseJina houseJina;
-	private int index;
 
-	public HouseJinaMap(Handler handler, String firstLayer,  String secondLayer, HouseJina houseJina, int index) {
+	public HouseJinaMap(Handler handler, String firstLayer,  String secondLayer, HouseJina houseJina, int mapX) {
 		this.handler = handler;
 		this.houseJina = houseJina;
-		this.index=index;
-		dimensionM = 1000+(100*index);
+		this.mapX=mapX;
 		loadWorld(firstLayer);
 		loadSecondLayer(secondLayer);
 	}
 
 	@Override
 	public void render(Graphics g) {
-		int xStart = (int) Math.max(dimensionM, handler.getGameCamera().getxOffset() / Tile.TILEWIDTH);
-		int xEnd = (int) Math.min(dimensionM + width,
+		int xStart = (int) Math.max(mapX, handler.getGameCamera().getxOffset() / Tile.TILEWIDTH);
+		int xEnd = (int) Math.min(mapX + width,
 				(handler.getGameCamera().getxOffset() + handler.getWidth()) / Tile.TILEWIDTH + 1);
-		int yStart = (int) Math.max(dimensionM, handler.getGameCamera().getyOffset() / Tile.TILEHEIGHT);
-		int yEnd = (int) Math.min(dimensionM+height,
+		int yStart = (int) Math.max(mapX, handler.getGameCamera().getyOffset() / Tile.TILEHEIGHT);
+		int yEnd = (int) Math.min(mapX+height,
 				(handler.getGameCamera().getyOffset() + handler.getHeight()) / Tile.TILEHEIGHT + 1);
 
 		for (int y = yStart; y < yEnd; y++) {
@@ -45,10 +43,10 @@ public class HouseJinaMap extends BuildingMap {
 	}
 	@Override
 	public void renderSecondLayer(Graphics g) {
-		int xStart = (int) Math.max(dimensionM, handler.getGameCamera().getxOffset() / Tile.TILEWIDTH);
-		int xEnd = (int) Math.min(dimensionM+width, (handler.getGameCamera().getxOffset() + handler.getWidth()) / Tile.TILEWIDTH + 1);
-		int yStart = (int) Math.max(dimensionM, handler.getGameCamera().getyOffset() / Tile.TILEHEIGHT);
-		int yEnd = (int) Math.min(dimensionM+height, (handler.getGameCamera().getyOffset() + handler.getHeight()) / Tile.TILEHEIGHT + 1);
+		int xStart = (int) Math.max(mapX, handler.getGameCamera().getxOffset() / Tile.TILEWIDTH);
+		int xEnd = (int) Math.min(mapX+width, (handler.getGameCamera().getxOffset() + handler.getWidth()) / Tile.TILEWIDTH + 1);
+		int yStart = (int) Math.max(mapX, handler.getGameCamera().getyOffset() / Tile.TILEHEIGHT);
+		int yEnd = (int) Math.min(mapX+height, (handler.getGameCamera().getyOffset() + handler.getHeight()) / Tile.TILEHEIGHT + 1);
 		
 		for(int y = yStart;y < yEnd;y++){
 			for(int x = xStart;x < xEnd;x++){
@@ -59,8 +57,8 @@ public class HouseJinaMap extends BuildingMap {
 	}
 
 	public Tile getTile(int x, int y) {
-		x-=dimensionM;
-		y-=dimensionM;
+		x-=mapX;
+		y-=mapX;
 		if (x < 0 || y < 0 || x >= width || y >= height)
 			return Tile.stoneTile;
 
@@ -79,8 +77,8 @@ public class HouseJinaMap extends BuildingMap {
 		return t;
 	}
 	public Tile getSecondLayerTile(int x, int y){
-		x-=dimensionM;
-		y-=dimensionM;
+		x-=mapX;
+		y-=mapX;
 		if (x < 0 || y < 0 || x >= width || y >= height)
 			return Tile.placeHolderTile;
 
@@ -95,8 +93,8 @@ public class HouseJinaMap extends BuildingMap {
 		String[] tokens = file.split("\\s+");
 		width = Utils.parseInt(tokens[0]);
 		height = Utils.parseInt(tokens[1]);
-		spawnX = (Utils.parseInt(tokens[2])+dimensionM)*Tile.TILEWIDTH;
-		spawnY = (Utils.parseInt(tokens[3])+dimensionM)*Tile.TILEHEIGHT;
+		spawnX = (Utils.parseInt(tokens[2])+mapX)*Tile.TILEWIDTH;
+		spawnY = (Utils.parseInt(tokens[3])+mapX)*Tile.TILEHEIGHT;
 		System.out.println("width " + width);
 		System.out.println("height " + height);
 		System.out.println("total tiles  " + tokens.length);
@@ -131,6 +129,13 @@ public class HouseJinaMap extends BuildingMap {
 			handler.getWorld().player.setX(houseJina.getX()+105);
 			houseJina.setEntered(false);
 		}
+	}
+	
+	public boolean isPlayerInside() {
+		if(handler.getWorld().player.getX()>=(mapX*Tile.TILEWIDTH)&&handler.getWorld().player.getX()<=(mapX+width)*Tile.TILEWIDTH) {
+			return true;
+		}
+		return false;
 	}
 
 	public int getWidth() {

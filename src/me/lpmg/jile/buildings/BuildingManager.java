@@ -53,9 +53,15 @@ public class BuildingManager {
 		}
 	}
 	
-	public void addBuilding(Building b){
+	public void addBuildingWithIndex(Building b, int index){
 		buildings.add(b);
-		b.setIndex(buildings.indexOf(b));
+		//b.setIndex(buildings.indexOf(b));
+		b.setIndex(index);
+	}
+	public void addBuilding(Building b, int mapX){
+		buildings.add(b);
+		b.setMapX(mapX);
+		//b.setIndex(buildings.indexOf(b));
 	}
 	
 	//GETTERS SETTERS

@@ -10,6 +10,7 @@ public abstract class UIObject {
 	protected int width, height;
 	protected Rectangle bounds;
 	protected boolean hovering = false;
+	protected boolean active = false;
 	
 	public UIObject(float x, float y, int width, int height){
 		this.x = x;
@@ -33,8 +34,17 @@ public abstract class UIObject {
 	}
 	
 	public void onMouseRelease(MouseEvent e){
-		if(hovering)
-			onClick();
+	}
+	
+	public void onMouseClicked(MouseEvent e) {
+		if(hovering) {
+		if(active) {
+			active=false;
+		}else {
+			active=true;
+		}
+		onClick();
+		}
 	}
 	
 	// Getters and setters

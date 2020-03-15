@@ -4,11 +4,9 @@ import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -17,13 +15,11 @@ import java.util.Map.Entry;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
 
 import me.lpmg.jile.display.Display;
 import me.lpmg.jile.display.LogoScreen;
 import me.lpmg.jile.entities.creatures.Player;
-import me.lpmg.jile.gfx.Assets;
 import me.lpmg.jile.gfx.GameCamera;
 import me.lpmg.jile.input.ItemBarScroll;
 import me.lpmg.jile.input.KeyManager;
@@ -34,6 +30,7 @@ import me.lpmg.jile.items.ItemManager;
 import me.lpmg.jile.states.DeadState;
 import me.lpmg.jile.states.GameState;
 import me.lpmg.jile.states.MenuState;
+import me.lpmg.jile.states.OptionsState;
 import me.lpmg.jile.states.State;
 import me.lpmg.jile.utils.Utils;
 import me.lpmg.jile.worlds.World;
@@ -54,8 +51,6 @@ public class Game implements Runnable {
 
 	// States
 	public State gameState;
-	public State deadState;
-	public State menuState;
 
 	// Input
 	private KeyManager keyManager;
@@ -82,7 +77,7 @@ public class Game implements Runnable {
 	private String orgWorldFirstLayer = "/worlds/world1-firstLayer.txt";
 	private String orgWorldSecondLayer = "/worlds/world1-secondLayer.txt";
 	private String orgWorldThirdLayer = "/worlds/world1-thirdLayer.txt";
-	
+
 	private File worldFirstLayerFile;
 	private File worldSecondLayerFile;
 	private File worldThirdLayerFile;
@@ -102,13 +97,10 @@ public class Game implements Runnable {
 
 		display = new Display(title, width, height);
 		handler = new Handler(this, display);
-		
+
 		handler.addKeyListener(keyManager);
 		handler.addMouseListener(mouseManager);
 		handler.addMouseMotionListener(mouseManager);
-		handler.addMouseListener(mouseManager);
-		handler.addMouseMotionListener(mouseManager);
-
 		itembarScroll.transmitHandler(handler);
 		gameCamera = new GameCamera(handler, 0, 0);
 
@@ -116,12 +108,11 @@ public class Game implements Runnable {
 
 		loadGameFolder();
 		loadGameData();
-		world = new World(handler, worldFirstLayerFile.getAbsolutePath(),  worldSecondLayerFile.getAbsolutePath(),  worldThirdLayerFile.getAbsolutePath());
+		world = new World(handler, worldFirstLayerFile.getAbsolutePath(), worldSecondLayerFile.getAbsolutePath(),
+				worldThirdLayerFile.getAbsolutePath());
 
 		gameState = new GameState(handler, world);
-		deadState = new DeadState(handler);
-		menuState = new MenuState(handler);
-		State.setState(menuState);
+		State.setState(new MenuState(handler));
 	}
 
 	private void tick() {
@@ -129,6 +120,7 @@ public class Game implements Runnable {
 
 		if (State.getState() != null)
 			State.getState().tick();
+//		State.getState().tick();
 	}
 
 	private void render() {
@@ -144,6 +136,7 @@ public class Game implements Runnable {
 
 		if (State.getState() != null)
 			State.getState().render(g);
+//		State.getState().render(g);
 
 		// End Drawing!
 		bs.show();
@@ -177,7 +170,7 @@ public class Game implements Runnable {
 
 			if (timer >= 1000000000) {
 				System.out.println("FPS: " + ticks);
-				FPS=ticks;
+				FPS = ticks;
 				ticks = 0;
 				timer = 0;
 			}
@@ -206,7 +199,7 @@ public class Game implements Runnable {
 	public int getHeight() {
 		return height;
 	}
-	
+
 	public synchronized void start() {
 		if (running)
 			return;
@@ -225,7 +218,7 @@ public class Game implements Runnable {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public int getFPS() {
 		return FPS;
 	}
@@ -241,7 +234,7 @@ public class Game implements Runnable {
 	public void setPlayerData(Map<String, String> playerData) {
 		this.playerData = playerData;
 	}
-	
+
 	public Map<String, String> getEventData() {
 		return eventData;
 	}
@@ -278,7 +271,7 @@ public class Game implements Runnable {
 				eventDataFile = new File(jfc.getSelectedFile().getAbsolutePath() + "/eventData.dat");
 				entitiesFile = new File(jfc.getSelectedFile().getAbsolutePath() + "/entityData.dat");
 				playerInventoryFile = new File(jfc.getSelectedFile().getAbsolutePath() + "/playerInventoryData.dat");
-				
+
 				worldFirstLayerFile = new File(jfc.getSelectedFile().getAbsolutePath() + "/world1.dat");
 				worldSecondLayerFile = new File(jfc.getSelectedFile().getAbsolutePath() + "/world2.dat");
 				worldThirdLayerFile = new File(jfc.getSelectedFile().getAbsolutePath() + "/world3.dat");
@@ -291,8 +284,8 @@ public class Game implements Runnable {
 						entitiesFile.createNewFile();
 					} else if (!playerInventoryFile.exists()) {
 						playerInventoryFile.createNewFile();
-					}
-					else if (!worldFirstLayerFile.exists()||!worldSecondLayerFile.exists()||!worldThirdLayerFile.exists()) {
+					} else if (!worldFirstLayerFile.exists() || !worldSecondLayerFile.exists()
+							|| !worldThirdLayerFile.exists()) {
 						createWorldFiles(jfc.getSelectedFile().getAbsolutePath());
 					}
 				} catch (IOException e) {
@@ -314,7 +307,7 @@ public class Game implements Runnable {
 				try {
 					fileChooser.getSelectedFile().mkdir();
 
-					playerDataFile = new File(fileChooser.getSelectedFile().getAbsolutePath() + "/playerData.dat");	
+					playerDataFile = new File(fileChooser.getSelectedFile().getAbsolutePath() + "/playerData.dat");
 					createEventDataFile(fileChooser.getSelectedFile().getAbsolutePath());
 					entitiesFile = new File(fileChooser.getSelectedFile().getAbsolutePath() + "/entityData.dat");
 					playerInventoryFile = new File(
@@ -332,8 +325,8 @@ public class Game implements Runnable {
 			}
 		}
 	}
-	
-	private void createWorldFiles(String path){
+
+	private void createWorldFiles(String path) {
 		worldFirstLayerFile = new File(path + "/world1.dat");
 		worldSecondLayerFile = new File(path + "/world2.dat");
 		worldThirdLayerFile = new File(path + "/world3.dat");
@@ -357,12 +350,20 @@ public class Game implements Runnable {
 			e.printStackTrace();
 		}
 	}
-	
-	public void saveWorldFiles(HashMap<String, Integer> worldFirstLayer, HashMap<String, Integer> worldSecondLayer, HashMap<String, Integer> worldThirdLayer) {
+
+	public void saveWorldFiles(HashMap<String, Integer> worldFirstLayer, HashMap<String, Integer> worldSecondLayer,
+			HashMap<String, Integer> worldThirdLayer) {
+
+		for (String coord : worldSecondLayer.keySet()) {
+			int x = Utils.parseInt(coord.split(":")[0]);
+			int y = Utils.parseInt(coord.split(":")[1]);
+			int id = worldSecondLayer.get(coord);
+		}
+
 		System.out.println("Done saving world files.");
 	}
-	
-	private void createEventDataFile(String path){
+
+	private void createEventDataFile(String path) {
 		eventDataFile = new File(path + "/eventData.dat");
 		try {
 			eventDataFile.createNewFile();
@@ -419,7 +420,7 @@ public class Game implements Runnable {
 		System.out.println("Done saving player data.");
 		loadPlayerData();
 	}
-	
+
 	private void loadEventData() {
 		eventData.clear();
 		try {
@@ -439,7 +440,7 @@ public class Game implements Runnable {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void saveEventData() {
 		try {
 			FileWriter writer = new FileWriter(eventDataFile.getAbsolutePath());
@@ -505,19 +506,19 @@ public class Game implements Runnable {
 			while ((line = br.readLine()) != null) {
 				if (!line.isEmpty()) {
 					String itemData[] = line.split("[:]");
-					if(itemData[0].startsWith("equipped")) {
-						//System.out.println("Loading equipped item: "+itemData[0]);
+					if (itemData[0].startsWith("equipped")) {
+						// System.out.println("Loading equipped item: "+itemData[0]);
 						String itemType = itemData[0];
 						int itemID = Utils.parseInt(itemData[1]);
 						equippedItems.put(itemType, itemID);
-					}else {
-					int itemID = Utils.parseInt(itemData[0]);
-					int itemCount = Utils.parseInt(itemData[1]);
-					ItemManager itM = new ItemManager(handler);
-					Item item = itM.getItemByID(itemID);
-					item.setCount(itemCount);
-					playerInventory.addItem(item);
-					itM = null;
+					} else {
+						int itemID = Utils.parseInt(itemData[0]);
+						int itemCount = Utils.parseInt(itemData[1]);
+						ItemManager itM = new ItemManager(handler);
+						Item item = itM.getItemByID(itemID);
+						item.setCount(itemCount);
+						playerInventory.addItem(item);
+						itM = null;
 					}
 				}
 			}
@@ -542,12 +543,12 @@ public class Game implements Runnable {
 				writer.write(item.getId() + ":" + item.getCount() + "\n");
 			}
 			Iterator it = equippedItems.entrySet().iterator();
-		    while (it.hasNext()) {
-		        Map.Entry pair = (Map.Entry)it.next();
-		        //System.out.println("Saving equipped item: "+pair.getKey());
-		        writer.write(pair.getKey() + ":" + pair.getValue() + "\n");
-		        //it.remove();
-		    }
+			while (it.hasNext()) {
+				Map.Entry pair = (Map.Entry) it.next();
+				// System.out.println("Saving equipped item: "+pair.getKey());
+				writer.write(pair.getKey() + ":" + pair.getValue() + "\n");
+				// it.remove();
+			}
 			writer.close();
 		} catch (IOException e) {
 			e.printStackTrace();

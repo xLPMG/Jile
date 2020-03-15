@@ -22,7 +22,7 @@ public class WizardBuyMenu {
 	private Handler handler;
 	private Player player;
 	private boolean active;
-	private int menuX = 32, menuY = 64, menuWidth = 685, menuHeight = 384, menuListCenterX = menuX + 216,
+	private int menuWidth = 685, menuHeight = 384, menuX = (1000/2)-menuWidth/2, menuY = 128, menuListCenterX = menuX + 216,
 			menuListCenterY = menuY + menuHeight / 2 + 5, menuListSpacing = 30, menuListItemNameX = menuX + 22,
 			menuListItemPriceX = menuX + menuWidth - 22, menuCenterX = menuX + (menuWidth / 2);
 	private int iTick;

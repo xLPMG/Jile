@@ -6,6 +6,7 @@ import java.util.Map;
 import me.lpmg.jile.Handler;
 import me.lpmg.jile.entities.Entity;
 import me.lpmg.jile.entities.creatures.Jina;
+import me.lpmg.jile.events.EventContext;
 import me.lpmg.jile.gfx.Assets;
 import me.lpmg.jile.worlds.HermitHutMap;
 import me.lpmg.jile.worlds.HouseJinaMap;
@@ -27,27 +28,42 @@ public class HouseJina extends Building {
 	public void onEnter() {
 		Map<String, String> eventData = handler.getGame().getEventData();
 		if(!initialized) {
-		hJM = new HouseJinaMap(handler, "/worlds/buildings/house_jina.txt","/worlds/buildings/house_jina-secondLayer.txt", this, getIndex());
-		hJM.setFlooring(getRandomFlooring(3));
-		hJM.setWallMiddle(getWallMiddle(2));
-		hJM.setWallBottom(getWallBottom(2));
-		map = hJM;
-		System.out.println("map creation");
-		initialized=true;
+			init();
+		}
+		entered=true;
 		hJM.spawnPlayer();
 		
 		if(eventData.containsKey("encounteredJina")) {
 			if(eventData.get("encounteredJina").equalsIgnoreCase("false")) {	
-				Entity jina = new Jina(handler, hJM.getSpawnX(),hJM.getSpawnY()-225);
-				handler.getWorld().getEntityManager().addEntity(jina);
-				((Jina)jina).firstEncounter();
+				
+				EventContext eventContext = new EventContext();
+				eventContext.putAttribute("spawnX", hJM.getSpawnX());
+				eventContext.putAttribute("spawnY", hJM.getSpawnY()-225);
+				handler.getEventHandler().triggerEvent("firstEncounteredJina", eventContext );
+				
+//				Entity jina = new Jina(handler, hJM.getSpawnX(),hJM.getSpawnY()-225);
+//				handler.getWorld().getEntityManager().addEntity(jina);
+//				((Jina)jina).firstEncounter();
 			}
-		}
-		}else {
-		hJM.spawnPlayer();
-		}
-		entered=true;
+		}	
 
+	}
+	
+	@Override
+	public void init() {
+		hJM = new HouseJinaMap(handler, "/worlds/buildings/house_jina.txt","/worlds/buildings/house_jina-secondLayer.txt", this, mapX);
+		hJM.setFlooring(getRandomFlooring(3));
+		hJM.setWallMiddle(getWallMiddle(2));
+		hJM.setWallBottom(getWallBottom(2));
+		map = hJM;
+		System.out.println("House Jina map created");
+		initialized=true;
+	}
+	
+	public void checkEntered() {
+		if(hJM.isPlayerInside()) {
+			entered=true;
+		}
 	}
 	
 	@Override

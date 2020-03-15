@@ -45,9 +45,6 @@ public class Jina extends Creature {
 		animIdleDown = new Animation(500, Assets.jina_idleDown);
 		animIdleLeft = new Animation(500, Assets.jina_idleLeft);
 		animIdleRight = new Animation(500, Assets.jina_idleRight);
-
-		eM = handler.getWorld().getEmoteManager();
-
 	}
 
 	@Override
@@ -112,7 +109,7 @@ public class Jina extends Creature {
 //		meetplayerThread.start();
 		handler.getWorld().getSpeechDialogueManager().showDialog("!JinaFirstEncounter");
 	}
-
+	
 	Thread meetplayerThread = new Thread() {
 		public void run() {
 			// get and freeze player
@@ -146,14 +143,14 @@ public class Jina extends Creature {
 				e.printStackTrace();
 			}
 			// say hi to player
-			handler.getWorld().getSpeechToastManager().showToast("!JinaFirstEncounter");
+//			handler.getWorld().getSpeechToastManager().showToast("!JinaFirstEncounter");
 			try {
 				Thread.sleep(5000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 			// ask for name
-			handler.getWorld().getSpeechToastManager().showToast("!JinaFirstEncounter2");
+//			handler.getWorld().getSpeechToastManager().showToast("!JinaFirstEncounter2");
 			try {
 				Thread.sleep(4000);
 			} catch (InterruptedException e) {
@@ -165,7 +162,7 @@ public class Jina extends Creature {
 				name = "Luca";
 			}
 			handler.getWorld().player.setPlayerName(name);
-			handler.getWorld().getSpeechToastManager().showToast("!JinaFirstEncounterPlayerName");
+//			handler.getWorld().getSpeechToastManager().showToast("!JinaFirstEncounterPlayerName");
 			try {
 				Thread.sleep(10100);
 			} catch (InterruptedException e) {
@@ -208,43 +205,43 @@ public class Jina extends Creature {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			handler.getWorld().getSpeechToastManager().showToast("!JinaLogs");
+//			handler.getWorld().getSpeechToastManager().showToast("!JinaLogs");
 			try {
 				Thread.sleep(12500);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			handler.getWorld().getSpeechToastManager().showToast("!JinaLogsPlayerResponse");
+//			handler.getWorld().getSpeechToastManager().showToast("!JinaLogsPlayerResponse");
 			try {
 				Thread.sleep(9600);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			handler.getWorld().getSpeechToastManager().showToast("!JinaLogs2");
+//			handler.getWorld().getSpeechToastManager().showToast("!JinaLogs2");
 			try {
 				Thread.sleep(14000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			handler.getWorld().getSpeechToastManager().showToast("!JinaLogsPlayerResponse2");
+//			handler.getWorld().getSpeechToastManager().showToast("!JinaLogsPlayerResponse2");
 			try {
 				Thread.sleep(5800);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			handler.getWorld().getSpeechToastManager().showToast("!JinaLogs3");
+//			handler.getWorld().getSpeechToastManager().showToast("!JinaLogs3");
 			try {
 				Thread.sleep(13600);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			handler.getWorld().getSpeechToastManager().showToast("!JinaLogsPlayerResponse3");
+//			handler.getWorld().getSpeechToastManager().showToast("!JinaLogsPlayerResponse3");
 			try {
 				Thread.sleep(5000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			handler.getWorld().getSpeechToastManager().showToast("!JinaLogs4");
+//			handler.getWorld().getSpeechToastManager().showToast("!JinaLogs4");
 		}
 	};
 }

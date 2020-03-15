@@ -5,9 +5,12 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
 import me.lpmg.jile.display.Display;
+import me.lpmg.jile.events.EventHandler;
 import me.lpmg.jile.gfx.GameCamera;
 import me.lpmg.jile.input.KeyManager;
 import me.lpmg.jile.input.MouseManager;
+import me.lpmg.jile.utils.AudioHandler;
+import me.lpmg.jile.utils.Settings;
 import me.lpmg.jile.worlds.World;
 
 public class Handler {
@@ -15,10 +18,17 @@ public class Handler {
 	private Game game;
 	private Display display;
 	private World world;
+	private Settings settings;
+	private AudioHandler audioHandler;
+	private EventHandler eventHandler;
 	
 	public Handler(Game game, Display display){
 		this.game = game;
 		this.display=display;
+		this.settings = new Settings();
+		this.audioHandler = new AudioHandler(settings);
+		this.eventHandler = new EventHandler();
+		
 	}
 	
 	public GameCamera getGameCamera(){
@@ -45,9 +55,9 @@ public class Handler {
 		return game;
 	}
 
-	public void setGame(Game game) {
-		this.game = game;
-	}
+//	public void setGame(Game game) {
+//		this.game = game;
+//	}
 
 	public World getWorld() {
 		return world;
@@ -61,6 +71,27 @@ public class Handler {
 		return game.getVersion();
 	}
 	
+	
+	public Settings getSettings() {
+		return settings;
+	}
+
+//	public void setSettings(Settings settings) {
+//		this.settings = settings;
+//	}
+
+	public AudioHandler getAudioHandler() {
+		return audioHandler;
+	}
+
+	public EventHandler getEventHandler() {
+		return eventHandler;
+	}
+	
+//	public void setAudioHandler(AudioHandler audioHandler) {
+//		this.audioHandler = audioHandler;
+//	}
+
 	public void addMouseListener(MouseListener mouseListener) {
 		display.getFrame().addMouseListener(mouseListener);
 		display.getCanvas().addMouseListener(mouseListener);

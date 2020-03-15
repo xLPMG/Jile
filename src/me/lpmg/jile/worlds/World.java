@@ -1,6 +1,7 @@
 package me.lpmg.jile.worlds;
 
 import java.awt.Graphics;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,14 +13,16 @@ import me.lpmg.jile.buildings.HouseJina;
 import me.lpmg.jile.entities.Entity;
 import me.lpmg.jile.entities.EntityManager;
 import me.lpmg.jile.entities.creatures.Hermit;
+import me.lpmg.jile.entities.creatures.Jina;
 import me.lpmg.jile.entities.creatures.Log;
 import me.lpmg.jile.entities.creatures.Player;
 import me.lpmg.jile.entities.creatures.Merchant;
 import me.lpmg.jile.entities.statics.Bush;
 import me.lpmg.jile.entities.statics.Rock;
+import me.lpmg.jile.events.Event;
+import me.lpmg.jile.events.JinaFirstEncounter;
 import me.lpmg.jile.gfx.EmoteManager;
 import me.lpmg.jile.ingamemenu.SpeechDialogueManager;
-import me.lpmg.jile.ingamemenu.SpeechToastManager;
 import me.lpmg.jile.items.ItemManager;
 import me.lpmg.jile.tiles.Tile;
 import me.lpmg.jile.utils.Utils;
@@ -32,10 +35,10 @@ public class World {
 	private int[][] tiles;
 	private int[][] tilesSecondLayer;
 	private int[][] tilesThirdLayer;
-	
+
 	private HashMap<String, Integer> worldFirstLayer = new HashMap<>();
-	private HashMap<String, Integer> worldSecondLayer= new HashMap<>();
-	private HashMap<String, Integer> worldThirdLayer= new HashMap<>();
+	private HashMap<String, Integer> worldSecondLayer = new HashMap<>();
+	private HashMap<String, Integer> worldThirdLayer = new HashMap<>();
 	// Entities
 	private EntityManager entityManager;
 	// Buildings
@@ -43,7 +46,6 @@ public class World {
 	// Item
 	private ItemManager itemManager;
 	public Player player;
-	private SpeechToastManager sTM;
 	private SpeechDialogueManager sDM;
 	private int spawnTicker;
 	private int savedTicker;
@@ -57,7 +59,7 @@ public class World {
 	long timeDelta;
 
 	private int iTick;
-	
+
 	private final int SPAWN_CHANCE_LOG_DEFAULT = 96;
 	private final int SPAWN_CHANCE_HERMIT_DEFAULT = 90;
 
@@ -69,7 +71,6 @@ public class World {
 
 		itemManager = new ItemManager(handler);
 		player = new Player(handler, 100, 100);
-		sTM = new SpeechToastManager(handler, "/text/speech_en.txt");
 		sDM = new SpeechDialogueManager(handler, "text");
 		entityManager = new EntityManager(handler);
 		eM = new EmoteManager(handler);
@@ -77,15 +78,23 @@ public class World {
 		loadWorld(firstLayer);
 		loadSecondLayer(secondLayer);
 		loadThirdLayer(thirdLayer);
-		
+
 		loadGameData();
-		
+
 		spawnBuildings();
 		spawnEntities();
+		initEvents();
 	}
 
 	public void initOnWorldLoaded() {
 		sDM.init();
+		
+		for(Building b : buildingManager.getBuildings()) {
+			b.init();
+			b.checkEntered();
+		}
+	}
+	private void initEvents() {
 	}
 
 	public void tick() {
@@ -93,19 +102,18 @@ public class World {
 		itemManager.tick();
 		buildingManager.tick();
 		entityManager.tick();
-		sTM.tick();
 		iTick++;
-		
-		if(iTick>=60*30) {
-			//once per 30 second
+
+		if (iTick >= 60 * 30) {
+			// once per 30 second
 			calcTime();
-			iTick=0;
+			iTick = 0;
 		}
 
 		if (spawnTicker > 3000) {
-			System.out.println("Spawning new entities...");
-			spawnRandomLogs();
-			spawnHermits();
+//			System.out.println("Spawning new entities...");
+//			spawnRandomLogs();
+//			spawnHermits();
 			spawnTicker = 0;
 		}
 
@@ -217,7 +225,7 @@ public class World {
 
 	private void loadWorld(String path) {
 		String file = Utils.loadFileAsString(path);
-		String[] tokens = file.split("\\s+");
+		String[] tokens = file.split(",");
 		width = Utils.parseInt(tokens[0]);
 		height = Utils.parseInt(tokens[1]);
 		spawnX = Utils.parseInt(tokens[2]);
@@ -225,12 +233,12 @@ public class World {
 		System.out.println("width " + width);
 		System.out.println("height " + height);
 		System.out.println("total tiles  " + tokens.length);
-		
+
 		tiles = new int[width][height];
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
 				tiles[x][y] = Utils.parseInt(tokens[(x + y * width) + 4]);
-				worldFirstLayer.put(x+":"+y, tiles[x][y]);
+				worldFirstLayer.put(x + ":" + y, tiles[x][y]);
 			}
 		}
 	}
@@ -243,7 +251,8 @@ public class World {
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
 				tilesSecondLayer[x][y] = Utils.parseInt(tokens[(x + y * width)]);
-				worldSecondLayer.put(x+":"+y, tiles[x][y]);
+				worldSecondLayer.put(x + ":" + y, tiles[x][y]);
+				//System.out.println(x + ":" + y +", id: "+ tiles[x][y]);
 			}
 
 		}
@@ -257,14 +266,15 @@ public class World {
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
 				tilesThirdLayer[x][y] = Utils.parseInt(tokens[(x + y * width)]);
-				worldThirdLayer.put(x+":"+y, tiles[x][y]);
+				worldThirdLayer.put(x + ":" + y, tiles[x][y]);
 			}
 		}
 	}
 
 	private void spawnBuildings() {
 		buildingManager = new BuildingManager(handler, player);
-		buildingManager.addBuilding(new HouseJina(handler, 1000, 840));
+		//TODO
+		buildingManager.addBuilding(new HouseJina(handler, 1000, 840), 10000);
 	}
 
 	private void spawnEntities() {
@@ -394,9 +404,9 @@ public class World {
 		playerData.put("player_y", player.getY() + "");
 		handler.getGame().setPlayerData(playerData);
 		handler.getGame().savePlayerData();
-		
-		handler.getGame().saveWorldFiles(worldFirstLayer, worldSecondLayer, worldThirdLayer);
 
+		handler.getGame().saveWorldFiles(worldFirstLayer, worldSecondLayer, worldThirdLayer);
+		
 	}
 
 	private void calcTime() {
@@ -429,6 +439,10 @@ public class World {
 				String coordinates[] = entity.split("/");
 				entityManager.addEntity(
 						new Log(handler, Utils.parseFloat(coordinates[0]), Utils.parseFloat(coordinates[1])));
+			} else if (savedEntities.get(entity).equalsIgnoreCase("Jina")) {
+				String coordinates[] = entity.split("/");
+				entityManager.addEntity(
+						new Jina(handler, Utils.parseFloat(coordinates[0]), Utils.parseFloat(coordinates[1])));
 			}
 		}
 	}
@@ -443,6 +457,8 @@ public class World {
 				savedEntities.put(entity.getX() + "/" + entity.getY(), "Rock");
 			} else if (entity instanceof Log) {
 				savedEntities.put(entity.getX() + "/" + entity.getY(), "Log");
+			} else if (entity instanceof Jina) {
+				savedEntities.put(entity.getX() + "/" + entity.getY(), "Jina");
 			}
 		}
 		handler.getGame().setSavedEntities(savedEntities);
@@ -496,10 +512,6 @@ public class World {
 	public void setPlayer(Player player) {
 		this.player = player;
 		entityManager.setPlayer(player);
-	}
-
-	public SpeechToastManager getSpeechToastManager() {
-		return sTM;
 	}
 
 	public SpeechDialogueManager getSpeechDialogueManager() {

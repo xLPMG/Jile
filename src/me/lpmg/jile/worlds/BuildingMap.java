@@ -18,7 +18,8 @@ public abstract class BuildingMap {
 	protected abstract void loadWorld(String path);
 	protected abstract void loadSecondLayer(String path);
 	public abstract void spawnPlayer();
-	public abstract void checkExit();	
+	public abstract void checkExit();
+	public abstract boolean isPlayerInside();	
 	
 	public void setFlooring(FloorTile flooring) {
 		this.flooring=flooring;

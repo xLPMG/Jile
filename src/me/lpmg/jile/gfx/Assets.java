@@ -45,12 +45,14 @@ public class Assets {
 	public static BufferedImage hedge_hzB, hedge_hzT, hedge_vtL, hedge_vtR, hedge_CBL, hedge_CBR, hedge_CTL, hedge_CTR,
 			hedge_plain, hedge_plainCBL, hedge_plainCBR, hedge_plainCTL, hedge_plainCTR;
 
+	public static BufferedImage treeForest1_TR,treeForest1_TL,treeForest1_ML,treeForest1_MR,treeForest1_BL,treeForest1_BR, treeForest1_STL,treeForest1_STR,treeForest1_SML,treeForest1_SMR,treeForest1_SBL,treeForest1_SBR;
+	
 	public static BufferedImage[] btn_start, btn_buy, btn_sell, btn_remove, btn_build;
 	public static BufferedImage btn_equip, btn_unequip;
 	public static BufferedImage inventoryScreen, itemBar, itemBar_highlighted, statsGUI_full, statsGUI_prev;
 	public static BufferedImage wizardBuyMenu, wizardSellMenu;
 	public static BufferedImage healthbar, healthbar_empty, healthbar_health_full, healthbar_mana_full,
-			healthbar_corner_full;
+			healthbar_corner_full, money_bar, background_plain,background_plain_small, checkbox_off, checkbox_on;
 	public static BufferedImage speechToast, dialogue_arrow;
 	public static BufferedImage coin;
 
@@ -121,7 +123,11 @@ public class Assets {
 		statsGUI_full = ImageLoader.loadImage("/textures/statsGUI_full.png");
 		statsGUI_prev = ImageLoader.loadImage("/textures/statsGUI_prev.png");
 		coin = ImageLoader.loadImage("/textures/coin.png");
-
+		money_bar = ImageLoader.loadImage("/textures/money_bar.png");
+		background_plain = ImageLoader.loadImage("/textures/background_plain.png");
+		background_plain_small= ImageLoader.loadImage("/textures/background_plain_small.png");
+		checkbox_off = ImageLoader.loadImage("/textures/checkbox_off.png");
+		checkbox_on = ImageLoader.loadImage("/textures/checkbox_on.png");
 		speechToast = ImageLoader.loadImage("/textures/speechToast.png");
 		dialogue_arrow= ImageLoader.loadImage("/textures/dialogue_arrow.png");
 
@@ -400,6 +406,20 @@ public class Assets {
 				default_height);
 		tall_grass_top = static_entities_sheet.crop(default_width * 5, default_height * 4, default_width,
 				default_height);
+		
+		treeForest1_TR= sheet.crop(0,default_height * 7, default_width, default_height);
+		treeForest1_TL= sheet.crop(default_width,default_height * 7, default_width, default_height);
+		treeForest1_ML= sheet.crop(0,default_height * 8, default_width, default_height);
+		treeForest1_MR= sheet.crop(default_width,default_height * 8, default_width, default_height);
+		treeForest1_BL= sheet.crop(0,default_height * 9, default_width, default_height);
+		treeForest1_BR= sheet.crop(default_width,default_height * 9, default_width, default_height);
+		
+		treeForest1_STL= sheet.crop(default_width*2,default_height * 7, default_width, default_height);
+		treeForest1_STR= sheet.crop(default_width*3,default_height * 7, default_width, default_height);
+		treeForest1_SML= sheet.crop(default_width*2,default_height * 8, default_width, default_height);
+		treeForest1_SMR= sheet.crop(default_width*3,default_height * 8, default_width, default_height);
+		treeForest1_SBL= sheet.crop(default_width*2,default_height * 9, default_width, default_height);
+		treeForest1_SBR= sheet.crop(default_width*3,default_height * 9, default_width, default_height);
 
 		// BUILDINGS
 		hermit_hut = buildings_exterior_sheet.crop(0, 0, building_exterior_width * 4, building_exterior_height * 4);

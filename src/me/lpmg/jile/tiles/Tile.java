@@ -113,6 +113,21 @@ public class Tile {
 	public static Tile roomMarginBottomEndLeftTile = new RoomMarginTile(Assets.room_margin_bottom_end_left, 128);
 	public static Tile roomMarginBottomEndRightTile = new RoomMarginTile(Assets.room_margin_bottom_end_right, 129);
 	
+	public static Tile treeForest1_TR = new WallTileCover(Assets.treeForest1_TR, 130);
+	public static Tile treeForest1_TL = new WallTileCover(Assets.treeForest1_TL, 131);
+	public static Tile treeForest1_ML = new WallTileSolid(Assets.treeForest1_ML, 132);
+	public static Tile treeForest1_MR = new WallTileSolid(Assets.treeForest1_MR, 133);
+	public static Tile treeForest1_BL = new WallTileSolid(Assets.treeForest1_BL, 134);
+	public static Tile treeForest1_BR = new WallTileSolid(Assets.treeForest1_BR, 135);
+	
+	public static Tile treeForest1_STL = new WallTileSolid(Assets.treeForest1_STL, 136);
+	public static Tile treeForest1_STR = new WallTileCover(Assets.treeForest1_STR, 137);
+	public static Tile treeForest1_SML = new WallTileSolid(Assets.treeForest1_SML, 138);
+	public static Tile treeForest1_SMR = new WallTileSolid(Assets.treeForest1_SMR, 139);
+	public static Tile treeForest1_SBL = new WallTileSolid(Assets.treeForest1_SBL, 140);
+	public static Tile treeForest1_SBR = new WallTileSolid(Assets.treeForest1_SBR, 141);
+	
+	public static Tile treeForest1_TR_Solid = new WallTileSolid(Assets.treeForest1_TR, 142);
 	//CLASS
 	
 	public static final int TILEWIDTH = 64, TILEHEIGHT = 64;

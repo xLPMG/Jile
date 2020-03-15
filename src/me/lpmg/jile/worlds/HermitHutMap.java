@@ -19,13 +19,13 @@ public class HermitHutMap extends BuildingMap {
 	private int spawnX, spawnY;
 	private int dimensionM;
 	private HermitHut herH;
-	private int index;
+	private int mapX;
 
-	public HermitHutMap(Handler handler, String firstLayer,  String secondLayer, HermitHut herH, int index) {
+	public HermitHutMap(Handler handler, String firstLayer,  String secondLayer, HermitHut herH, int mapX) {
 		this.handler = handler;
 		this.herH = herH;
-		this.index=index;
-		dimensionM = 1000+(100*index);
+		this.mapX=mapX;
+		dimensionM = mapX;
 		loadWorld(firstLayer);
 		loadSecondLayer(secondLayer);
 	}
@@ -132,6 +132,12 @@ public class HermitHutMap extends BuildingMap {
 			handler.getWorld().player.setX(herH.getX()+105);
 			herH.setEntered(false);
 		}
+	}
+	public boolean isPlayerInside() {
+		if(handler.getWorld().player.getX()>=(mapX*Tile.TILEWIDTH)&&handler.getWorld().player.getX()<=(mapX+width)*Tile.TILEWIDTH) {
+			return true;
+		}
+		return false;
 	}
 
 	public int getWidth() {

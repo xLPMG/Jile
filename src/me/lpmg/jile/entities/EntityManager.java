@@ -45,7 +45,11 @@ public class EntityManager {
 			if(!e.isActive())
 				it.remove();
 		}
+		try{
 		entities.sort(renderSorter);
+		}catch(Exception e) {
+			System.out.println("Entity Sorting Error: "+e);
+		}
 	}
 	
 	public void render(Graphics g){

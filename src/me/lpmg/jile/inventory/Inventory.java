@@ -47,10 +47,10 @@ public class Inventory {
 	private Ring equippedRing;
 	private Shield equippedShield;
 	private Sword equippedSword;
-
+	
 	private int equipWidth = 173;
 
-	private int invX = 32, invY = 64, invWidth = 512 + equipWidth, invHeight = 458,
+	private int invWidth = 512 + equipWidth, invHeight = 458, invX = 1000/2-invWidth/2, invY = (750/2-invHeight/2)-32, 
 			invListCenterX = invX + equipWidth + 171, invListCenterY = invY + (invHeight - 74) / 2 + 5,
 			invListSpacing = 30;
 

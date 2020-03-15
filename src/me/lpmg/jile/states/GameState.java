@@ -38,7 +38,6 @@ public class GameState extends State {
 			}
 		}
 		world.getEmoteManager().render(g);
-		world.getSpeechToastManager().render(g);
 		world.getSpeechDialogueManager().render(g);
 		
 		Text.drawString(g, Integer.toString(handler.getGame().getFPS())+" FPS", (handler.getWidth()) - 38, (handler.getHeight()) - 14, true, Color.WHITE, Assets.font16);

@@ -24,6 +24,7 @@ public abstract class Building {
 	protected int index;
 	protected boolean entered = false;
 	protected BuildingMap map;
+	protected int mapX;
 
 	public Building(Handler handler, float x, float y, int width, int height, int doorX, int doorY, int doorWidth,
 			int doorHeight, int tileWidth, int tileHeight) {
@@ -56,7 +57,11 @@ public abstract class Building {
 	public abstract void renderOverlay(Graphics g);
 
 	public abstract void onEnter();
+	
+	public abstract void init();
 
+	public abstract void checkEntered();
+	
 	public Rectangle getCollisionBounds(float xOffset, float yOffset) {
 		return new Rectangle((int) (x + bounds.x + xOffset), (int) (y + bounds.y + yOffset), bounds.width,
 				bounds.height);
@@ -237,6 +242,10 @@ public abstract class Building {
 
 	public BuildingMap getMap() {
 		return map;
+	}
+	
+	public void setMapX(int mapX) {
+		this.mapX=mapX;
 	}
 
 	public int getDoorX() {

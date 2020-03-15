@@ -82,20 +82,21 @@ public class SpeechDialogueManager {
 			try {
 				String[] resourcePath = speechFile.getAbsolutePath().split("(?=[\\\\]text)");
 				resourcePath[1] = resourcePath[1].replaceAll("[\\\\]", "/");
-				System.out.println("READING FILE: " + resourcePath[1]);
+//				System.out.println("READING FILE: " + resourcePath[1]);
 				loadSpeechText(resourcePath[1]);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
-		System.out.println("--FINAL SPEECH TEXTS--");
+//		System.out.println("--FINAL SPEECH TEXTS--");
 		for (String key : speechTexts.keySet()) {
-			System.out.println(key + ": " + "\n" + speechTexts.get(key));
+//			System.out.println(key + ": " + "\n" + speechTexts.get(key));
 		}
 	}
 
 	public void render(Graphics g) {
 		boolean updateTrigger = (tickCount % tickTrigger == 0);
+		g.setFont(Assets.font32);
 
 		if (textToDisplay != null && textToDisplay.length > 0 && !finished) {
 			g.drawImage(Assets.speechToast, (handler.getWidth() - width) / 2, (handler.getHeight() - height) - 25,
@@ -103,7 +104,7 @@ public class SpeechDialogueManager {
 			g.setColor(Color.decode("#302922"));
 			g.drawString(speakerName, ((handler.getWidth() - width) / 2) + 32, (handler.getHeight() - height) + 1);
 		}
-		if(waitingForPress) {
+		if (waitingForPress) {
 			g.drawImage(Assets.dialogue_arrow, ((handler.getWidth() - width) / 2) + width - 28,
 					(handler.getHeight() - 52), 16, 16, null);
 		}
@@ -224,7 +225,7 @@ public class SpeechDialogueManager {
 					if (speech.contains("~playerName")) {
 						speech = speech.replace("~playerName", handler.getWorld().player.getPlayerName());
 					}
-					System.out.println("SPEECH: " + speech);
+//					System.out.println("SPEECH: " + speech);
 					// format speech
 					String[] formattedSpeech = formatSpeech(speech);
 					// add speech
@@ -246,7 +247,7 @@ public class SpeechDialogueManager {
 
 		// line break after colon (for names)
 		while (mColon.find()) {
-			System.out.println("FORMATTING TITLE: " + mColon.group().trim()); // Debug
+//			System.out.println("FORMATTING TITLE: " + mColon.group().trim()); // Debug
 			// builder.append(mColon.group() + "\n");
 			lines.add(mColon.group());
 			String match = mColon.group();
@@ -256,7 +257,7 @@ public class SpeechDialogueManager {
 		Pattern p = Pattern.compile("[|]|\\b.{1," + (lineSize - 1) + "}\\b\\W?");
 		Matcher m = p.matcher(inputString);
 		while (m.find()) {
-			System.out.println("FORMATTING: " + m.group().trim()); // Debug
+//			System.out.println("FORMATTING: " + m.group().trim()); // Debug
 			// builder.append(m.group() + "\n");
 			lines.add(m.group());
 		}
@@ -285,7 +286,7 @@ public class SpeechDialogueManager {
 
 	private void loadSpeakerName() {
 		List<String> newLines = new ArrayList<>();
-		
+
 		for (String line : textToDisplay) {
 			if (line.contains("~") && line.contains(":")) {
 				line = line.replace("~", "");

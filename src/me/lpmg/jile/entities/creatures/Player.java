@@ -22,14 +22,16 @@ import me.lpmg.jile.miscgui.Healthbar;
 import me.lpmg.jile.miscgui.StatsGUI;
 import me.lpmg.jile.states.DeadState;
 import me.lpmg.jile.states.MenuState;
+import me.lpmg.jile.states.OptionsState;
 import me.lpmg.jile.states.State;
 import me.lpmg.jile.tiles.Tile;
 
 public class Player extends Creature {
 
 	// Animations
-	private Animation animDown, animDownNormal, animDownFast, animUp, animUpNormal, animUpFast, animLeft, animLeftNormal, animLeftFast, animRight, animRightNormal, animRightFast, animIdleUp, animIdleDown, animIdleLeft, animIdleRight,
-			animAttackDown, animAttackUp, animAttackLeft, animAttackRight;
+	private Animation animDown, animDownNormal, animDownFast, animUp, animUpNormal, animUpFast, animLeft,
+			animLeftNormal, animLeftFast, animRight, animRightNormal, animRightFast, animIdleUp, animIdleDown,
+			animIdleLeft, animIdleRight, animAttackDown, animAttackUp, animAttackLeft, animAttackRight;
 	// Attack timer
 	private long lastAttackTimer, attackCooldown = 100, attackTimer = attackCooldown;
 	// Inventory
@@ -38,7 +40,7 @@ public class Player extends Creature {
 
 	private Healthbar healthbar;
 	private StatsGUI statsGUI;
-	
+
 	private int attackDirection = 0;
 	private int healthTickCount;
 	private int defaultMaxHealth = maxHealth;
@@ -63,12 +65,12 @@ public class Player extends Creature {
 	private String playerName = "???";
 	private int walkingDirection = 2;
 	private boolean invincible = false;
-	
-	private boolean isSprinting=false;
+
+	private boolean isSprinting = false;
 
 	public Player(Handler handler, float x, float y) {
 		super(handler, x, y, Creature.PLAYER_WIDTH, Creature.PLAYER_HEIGHT);
-		
+
 		bounds.x = 6 * multiplier;
 		bounds.y = 16 * multiplier; // 19*3
 		bounds.width = 22 * multiplier; // 9*3
@@ -82,15 +84,15 @@ public class Player extends Creature {
 		animDownNormal = new Animation(250, Assets.player_down);
 		animDownFast = new Animation(100, Assets.player_down);
 		animDown = animDownNormal;
-		
+
 		animUpNormal = new Animation(250, Assets.player_up);
 		animUpFast = new Animation(100, Assets.player_up);
 		animUp = animUpNormal;
-		
+
 		animLeftNormal = new Animation(250, Assets.player_left);
 		animLeftFast = new Animation(100, Assets.player_left);
 		animLeft = animLeftNormal;
-		
+
 		animRightNormal = new Animation(250, Assets.player_right);
 		animRightFast = new Animation(100, Assets.player_right);
 		animRight = animRightNormal;
@@ -123,7 +125,18 @@ public class Player extends Creature {
 					animUp = animUpFast;
 					animLeft = animLeftFast;
 					animRight = animRightFast;
-					isSprinting=true;
+					isSprinting = true;
+				}
+
+				else if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+					if (State.getState() instanceof OptionsState) {
+						State.setState(handler.getGame().gameState);
+					} else {
+						State.setState(new OptionsState(handler));
+					}
+
+				} else if (e.getKeyCode() == KeyEvent.VK_H) {
+					healthWithMana(15);
 				}
 			}
 
@@ -138,7 +151,7 @@ public class Player extends Creature {
 					animUp = animUpNormal;
 					animLeft = animLeftNormal;
 					animRight = animRightNormal;
-					isSprinting=false;
+					isSprinting = false;
 				}
 			}
 		};
@@ -181,9 +194,9 @@ public class Player extends Creature {
 		if (invincible) {
 			health = maxHealth;
 		}
-		
-		if(totalEarnedMoney<money) {
-			totalEarnedMoney=money;
+
+		if (totalEarnedMoney < money) {
+			totalEarnedMoney = money;
 		}
 	}
 
@@ -232,7 +245,7 @@ public class Player extends Creature {
 			if (e.getCollisionBounds(0, 0).intersects(ar)) {
 				healthbar.showCorner();
 				e.hurt(damagePerHit);
-				//System.out.println("Hitting " + e);
+				// System.out.println("Hitting " + e);
 				if (e.getHealth() <= 0 && e instanceof Creature) {
 					addMoney(((Creature) e).getMoneyOnDeath());
 				}
@@ -247,7 +260,7 @@ public class Player extends Creature {
 
 	@Override
 	public void die() {
-		deathCount+=1;
+		deathCount += 1;
 		State.setState(new DeadState(handler));
 	}
 
@@ -274,13 +287,6 @@ public class Player extends Creature {
 			xMove = speed;
 			walkingDirection = 1;
 		}
-
-		if (handler.getKeyManager().esc) {
-			State.setState(new MenuState(handler));
-		}
-		if (handler.getKeyManager().h) {
-			healthWithMana(15);
-		}
 	}
 
 	@Override
@@ -303,9 +309,12 @@ public class Player extends Creature {
 		g2.setColor(Color.WHITE);
 		FontMetrics fontMetrics = g2.getFontMetrics();
 		String moneyString = Integer.toString(money);
-		g2.drawString(moneyString, (handler.getWidth()-32) - fontMetrics.stringWidth(moneyString), 35);
-		
-		g.drawImage(Assets.coin, handler.getWidth()-32, 4, 32, 32, null);
+		// g2.drawImage(Assets.money_bar, (handler.getWidth()-32) -
+		// (fontMetrics.stringWidth(moneyString)+4), 0, 256, 39,null);
+
+		g2.drawString(moneyString, (handler.getWidth() - 32) - fontMetrics.stringWidth(moneyString), 35);
+
+		g.drawImage(Assets.coin, handler.getWidth() - 32, 4, 32, 32, null);
 	}
 
 	private BufferedImage getCurrentAnimationFrame() {
@@ -377,18 +386,18 @@ public class Player extends Creature {
 				health += 1;
 				healthTickCount = 0;
 			}
-		}else if(health>maxHealth) {
-			health=maxHealth;
+		} else if (health > maxHealth) {
+			health = maxHealth;
 		}
-		
+
 		if (mana < maxMana) {
 			manaTickCount++;
 			if (manaTickCount >= manaRegenSpeed) {
 				mana += 1;
 				manaTickCount = 0;
 			}
-		}else if(mana>maxMana) {
-			mana=maxMana;
+		} else if (mana > maxMana) {
+			mana = maxMana;
 		}
 	}
 
@@ -399,7 +408,7 @@ public class Player extends Creature {
 		ArrayList<Item> invItems = inventory.getInventoryItems();
 		invItems.clear();
 		inventory.setInventoryItems(invItems);
-		
+
 		HashMap<String, Integer> equippedItems = inventory.getEquippedItems();
 		equippedItems.clear();
 		inventory.setEquippedItems(equippedItems);
@@ -465,6 +474,7 @@ public class Player extends Creature {
 	public float getDefaultSpeed() {
 		return defaultSpeed;
 	}
+
 	public float getSprintSpeed() {
 		return sprintSpeed;
 	}
@@ -514,7 +524,7 @@ public class Player extends Creature {
 	}
 
 	public void addMoney(int money) {
-		totalEarnedMoney+=money;
+		totalEarnedMoney += money;
 		this.money += money;
 	}
 
@@ -551,7 +561,7 @@ public class Player extends Creature {
 	public void setInvincible(boolean invincible) {
 		this.invincible = invincible;
 	}
-	
+
 	public boolean isSprinting() {
 		return isSprinting;
 	}

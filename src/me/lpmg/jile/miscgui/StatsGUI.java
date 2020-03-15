@@ -38,7 +38,7 @@ public class StatsGUI {
 		this.handler = handler;
 		this.player = player;
 		prevX = handler.getWidth() - prevWidth;
-		y = 64;
+		y = handler.getHeight()/2-height/2;
 		fullX = handler.getWidth() - fullWidth;
 		triggerArea = new Rectangle(prevX, y, prevWidth, height);
 
