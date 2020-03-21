@@ -22,7 +22,7 @@ public class DeadState extends State {
 		uiManager = new UIManager(handler);
 		handler.getMouseManager().setUIManager(uiManager);
 		
-		uiManager.addObject(new UIBackground(0, 0, handler.getWidth(), handler.getHeight(), Assets.black));
+		uiManager.addObject(new UIBackground(0, 0, handler.getWidth(), handler.getHeight(), Assets.blackTile));
 		uiManager.addObject(new UISubtitleWhite(0, 180, handler.getWidth(), handler.getHeight(), "Your vision started fading"));
 		uiManager.addObject(new UISubtitleWhite(0, 208, handler.getWidth(), handler.getHeight(), "and you blacked out...."));
 		uiManager.addObject(new UITitleWhite(5,  handler.getHeight()-50, handler.getWidth(), handler.getHeight(), "Jile", handler.getVersion()));

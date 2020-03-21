@@ -61,7 +61,8 @@ public class Player extends Creature {
 	private int manaRegenSpeed = 260;
 	private int defaultManaRegenSpeed = manaRegenSpeed;
 
-	private int multiplier = PLAYER_HEIGHT / 32;
+	private int multiplierVT= PLAYER_HEIGHT / 32;
+	private int multiplierHZ = PLAYER_WIDTH / 32;
 	private String playerName = "???";
 	private int walkingDirection = 2;
 	private boolean invincible = false;
@@ -71,30 +72,30 @@ public class Player extends Creature {
 	public Player(Handler handler, float x, float y) {
 		super(handler, x, y, Creature.PLAYER_WIDTH, Creature.PLAYER_HEIGHT);
 
-		bounds.x = 6 * multiplier;
-		bounds.y = 16 * multiplier; // 19*3
-		bounds.width = 22 * multiplier; // 9*3
-		bounds.height = 16 * multiplier; // 4*3
+		bounds.x = 6 * multiplierHZ;
+		bounds.y = 16 * multiplierVT; // 19*3
+		bounds.width = 22 * multiplierHZ; // 9*3
+		bounds.height = 16 * multiplierVT; // 4*3
 		speed = 1.5f;
 		defaultSpeed = speed;
 		sprintSpeed = 3.0f;
 		money = 0;
 
 		// Animatons
-		animDownNormal = new Animation(250, Assets.player_down);
-		animDownFast = new Animation(100, Assets.player_down);
+		animDownNormal = new Animation(200, Assets.player_down);
+		animDownFast = new Animation(150, Assets.player_down);
 		animDown = animDownNormal;
 
-		animUpNormal = new Animation(250, Assets.player_up);
-		animUpFast = new Animation(100, Assets.player_up);
+		animUpNormal = new Animation(200, Assets.player_up);
+		animUpFast = new Animation(150, Assets.player_up);
 		animUp = animUpNormal;
 
-		animLeftNormal = new Animation(250, Assets.player_left);
-		animLeftFast = new Animation(100, Assets.player_left);
+		animLeftNormal = new Animation(200, Assets.player_left);
+		animLeftFast = new Animation(150, Assets.player_left);
 		animLeft = animLeftNormal;
 
-		animRightNormal = new Animation(250, Assets.player_right);
-		animRightFast = new Animation(100, Assets.player_right);
+		animRightNormal = new Animation(200, Assets.player_right);
+		animRightFast = new Animation(150, Assets.player_right);
 		animRight = animRightNormal;
 
 		animIdleUp = new Animation(500, Assets.player_idleUp);
@@ -446,9 +447,9 @@ public class Player extends Creature {
 			}
 		}
 		// TODO
-		if (handler.getWorld().getSecondLayerTile(ar.x / 64, ar.y / 64) == Tile.sign1Tile) {
-
-		}
+//		if (handler.getWorld().getSecondLayerTile(ar.x / 64, ar.y / 64) == Tile.sign1Tile) {
+//
+//		}
 	}
 
 	public int getDefaultMaxHealth() {

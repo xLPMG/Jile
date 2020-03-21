@@ -1,9 +1,20 @@
 package me.lpmg.jile.worlds;
 
 import java.awt.Graphics;
-import java.util.ArrayList;
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 import me.lpmg.jile.Handler;
 import me.lpmg.jile.buildings.Building;
@@ -15,12 +26,10 @@ import me.lpmg.jile.entities.EntityManager;
 import me.lpmg.jile.entities.creatures.Hermit;
 import me.lpmg.jile.entities.creatures.Jina;
 import me.lpmg.jile.entities.creatures.Log;
-import me.lpmg.jile.entities.creatures.Player;
 import me.lpmg.jile.entities.creatures.Merchant;
+import me.lpmg.jile.entities.creatures.Player;
 import me.lpmg.jile.entities.statics.Bush;
 import me.lpmg.jile.entities.statics.Rock;
-import me.lpmg.jile.events.Event;
-import me.lpmg.jile.events.JinaFirstEncounter;
 import me.lpmg.jile.gfx.EmoteManager;
 import me.lpmg.jile.ingamemenu.SpeechDialogueManager;
 import me.lpmg.jile.items.ItemManager;
@@ -35,10 +44,12 @@ public class World {
 	private int[][] tiles;
 	private int[][] tilesSecondLayer;
 	private int[][] tilesThirdLayer;
+	private int[][] tilesFourthLayer;
 
 	private HashMap<String, Integer> worldFirstLayer = new HashMap<>();
 	private HashMap<String, Integer> worldSecondLayer = new HashMap<>();
 	private HashMap<String, Integer> worldThirdLayer = new HashMap<>();
+	private HashMap<String, Integer> worldFourthLayer = new HashMap<>();
 	// Entities
 	private EntityManager entityManager;
 	// Buildings
@@ -60,12 +71,12 @@ public class World {
 
 	private int iTick;
 
-	private final int SPAWN_CHANCE_LOG_DEFAULT = 96;
+	private final int SPAWN_CHANCE_LOG_DEFAULT = 195;
 	private final int SPAWN_CHANCE_HERMIT_DEFAULT = 90;
 
 	Map<String, String> eventData;
 
-	public World(Handler handler, String firstLayer, String secondLayer, String thirdLayer) {
+	public World(Handler handler, String world) {
 		this.handler = handler;
 		timeStart = System.currentTimeMillis();
 
@@ -74,10 +85,7 @@ public class World {
 		sDM = new SpeechDialogueManager(handler, "text");
 		entityManager = new EntityManager(handler);
 		eM = new EmoteManager(handler);
-
-		loadWorld(firstLayer);
-		loadSecondLayer(secondLayer);
-		loadThirdLayer(thirdLayer);
+		loadWorld(world);
 
 		loadGameData();
 
@@ -88,12 +96,13 @@ public class World {
 
 	public void initOnWorldLoaded() {
 		sDM.init();
-		
-		for(Building b : buildingManager.getBuildings()) {
+
+		for (Building b : buildingManager.getBuildings()) {
 			b.init();
 			b.checkEntered();
 		}
 	}
+
 	private void initEvents() {
 	}
 
@@ -193,10 +202,26 @@ public class World {
 			}
 		}
 	}
+	
+	public void renderFourthLayer(Graphics g) {
+		int xStart = (int) Math.max(0, handler.getGameCamera().getxOffset() / Tile.TILEWIDTH);
+		int xEnd = (int) Math.min(width,
+				(handler.getGameCamera().getxOffset() + handler.getWidth()) / Tile.TILEWIDTH + 1);
+		int yStart = (int) Math.max(0, handler.getGameCamera().getyOffset() / Tile.TILEHEIGHT);
+		int yEnd = (int) Math.min(height,
+				(handler.getGameCamera().getyOffset() + handler.getHeight()) / Tile.TILEHEIGHT + 1);
+
+		for (int y = yStart; y < yEnd; y++) {
+			for (int x = xStart; x < xEnd; x++) {
+				getFourthLayerTile(x, y).render(g, (int) (x * Tile.TILEWIDTH - handler.getGameCamera().getxOffset()),
+						(int) (y * Tile.TILEHEIGHT - handler.getGameCamera().getyOffset()));
+			}
+		}
+	}
 
 	public Tile getTile(int x, int y) {
 		if (x < 0 || y < 0 || x >= width || y >= height)
-			return Tile.grassTile;
+			return Tile.grass_full;
 
 		Tile t = Tile.tiles[tiles[x][y]];
 		if (t == null)
@@ -222,58 +247,114 @@ public class World {
 			return Tile.placeHolderTile;
 		return t;
 	}
+	
+	public Tile getFourthLayerTile(int x, int y) {
+		if (x < 0 || y < 0 || x >= width || y >= height)
+			return Tile.placeHolderTile;
+		Tile t = Tile.tiles[tilesFourthLayer[x][y]];
+		if (t == null)
+			return Tile.placeHolderTile;
+		return t;
+	}
 
-	private void loadWorld(String path) {
-		String file = Utils.loadFileAsString(path);
-		String[] tokens = file.split(",");
-		width = Utils.parseInt(tokens[0]);
-		height = Utils.parseInt(tokens[1]);
-		spawnX = Utils.parseInt(tokens[2]);
-		spawnY = Utils.parseInt(tokens[3]);
-		System.out.println("width " + width);
-		System.out.println("height " + height);
-		System.out.println("total tiles  " + tokens.length);
+	private void loadWorld(String world) {
+		try {
+			File file = new File(world);
+			
+	         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+	         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+	         Document xmlFile = dBuilder.parse(file);
+	         xmlFile.getDocumentElement().normalize();
+			
+	         Element map =  xmlFile.getDocumentElement();
+	         width = Utils.parseInt(map.getAttribute("width"));
+	         height = Utils.parseInt(map.getAttribute("height"));
+	         
+	         Node layer1Node = xmlFile.getElementsByTagName("layer").item(0);
+	         Node layer2Node = xmlFile.getElementsByTagName("layer").item(1);
+	         Node layer3Node = xmlFile.getElementsByTagName("layer").item(2);
+	         Node layer4Node = xmlFile.getElementsByTagName("layer").item(3);
+	         
+	         String layer1Data = layer1Node.getTextContent();
+	         String layer2Data = layer2Node.getTextContent();
+	         String layer3Data = layer3Node.getTextContent();
+	         String layer4Data = layer4Node.getTextContent();
 
+	         loadFirstLayer(layer1Data);
+	         loadSecondLayer(layer2Data);
+	         loadThirdLayer(layer3Data);
+	         loadFourthLayer(layer4Data);
+	         
+		} catch (SAXException | IOException | ParserConfigurationException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void loadFirstLayer(String layerData) {
+//		String file = Utils.loadFileAsString(path);
+		layerData=layerData.replace("\n", "");
+		layerData=layerData.replace(" ", "");
+		String[] tokens = layerData.split(",");
+//		width = Utils.parseInt(tokens[0]);
+//		height = Utils.parseInt(tokens[1]);
+//		spawnX = Utils.parseInt(tokens[2]);
+//		spawnY = Utils.parseInt(tokens[3]);
+//		System.out.println("width " + width);
+//		System.out.println("height " + height);
+//		System.out.println("total tiles  " + tokens.length);
 		tiles = new int[width][height];
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
-				tiles[x][y] = Utils.parseInt(tokens[(x + y * width) + 4]);
+				tiles[x][y] = Utils.parseInt(tokens[(x + y * width)]);
 				worldFirstLayer.put(x + ":" + y, tiles[x][y]);
 			}
 		}
 	}
 
-	private void loadSecondLayer(String path) {
-		String file = Utils.loadFileAsString(path);
-		String[] tokens = file.split("\\s+");
-
+	private void loadSecondLayer(String layerData) {
+		layerData=layerData.replace("\n", "");
+		layerData=layerData.replace(" ", "");
+		String[] tokens = layerData.split(",");
 		tilesSecondLayer = new int[width][height];
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
 				tilesSecondLayer[x][y] = Utils.parseInt(tokens[(x + y * width)]);
-				worldSecondLayer.put(x + ":" + y, tiles[x][y]);
-				//System.out.println(x + ":" + y +", id: "+ tiles[x][y]);
+				worldSecondLayer.put(x + ":" + y, tilesSecondLayer[x][y]);
+				// System.out.println(x + ":" + y +", id: "+ tiles[x][y]);
 			}
 
 		}
 	}
 
-	private void loadThirdLayer(String path) {
-		String file = Utils.loadFileAsString(path);
-		String[] tokens = file.split("\\s+");
-
+	private void loadThirdLayer(String layerData) {
+		layerData=layerData.replace("\n", "");
+		layerData=layerData.replace(" ", "");
+		String[] tokens = layerData.split(",");
 		tilesThirdLayer = new int[width][height];
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
 				tilesThirdLayer[x][y] = Utils.parseInt(tokens[(x + y * width)]);
-				worldThirdLayer.put(x + ":" + y, tiles[x][y]);
+				worldThirdLayer.put(x + ":" + y, tilesThirdLayer[x][y]);
+			}
+		}
+	}
+	
+	private void loadFourthLayer(String layerData) {
+		layerData=layerData.replace("\n", "");
+		layerData=layerData.replace(" ", "");
+		String[] tokens = layerData.split(",");
+		tilesFourthLayer = new int[width][height];
+		for (int y = 0; y < height; y++) {
+			for (int x = 0; x < width; x++) {
+				tilesFourthLayer[x][y] = Utils.parseInt(tokens[(x + y * width)]);
+				worldFourthLayer.put(x + ":" + y, tilesFourthLayer[x][y]);
 			}
 		}
 	}
 
 	private void spawnBuildings() {
 		buildingManager = new BuildingManager(handler, player);
-		//TODO
+		// TODO
 		buildingManager.addBuilding(new HouseJina(handler, 1000, 840), 10000);
 	}
 
@@ -302,9 +383,9 @@ public class World {
 
 		for (int y = yStart; y < yEnd; y++) {
 			for (int x = xStart; x < xEnd; x++) {
-				if (getTile(x, y) == Tile.grassTile && getSecondLayerTile(x, y) == Tile.placeHolderTile
+				if (getTile(x, y) == Tile.grass_full && getSecondLayerTile(x, y) == Tile.placeHolderTile
 						&& getThirdLayerTile(x, y) == Tile.placeHolderTile) {
-					int spawnChance = (int) (Math.random() * 100) + 1;
+					int spawnChance = (int) (Math.random() * 200) + 1;
 					if (spawnChance > SPAWN_CHANCE_LOG_DEFAULT) {
 						System.out.println("spawnChance log: " + spawnChance);
 						entityManager.addEntity(new Log(handler, x * Tile.TILEWIDTH, y * Tile.TILEHEIGHT));
@@ -327,7 +408,7 @@ public class World {
 
 		for (int y = yStart; y < yEnd; y++) {
 			for (int x = xStart; x < xEnd; x++) {
-				if (getTile(x, y) == Tile.dirtTile && getSecondLayerTile(x, y) == Tile.placeHolderTile
+				if (getTile(x, y) == Tile.grass_full && getSecondLayerTile(x, y) == Tile.placeHolderTile
 						&& getThirdLayerTile(x, y) == Tile.placeHolderTile) {
 					int spawnChance = (int) (Math.random() * 100) + 1;
 					if (spawnChance > SPAWN_CHANCE_HERMIT_DEFAULT) {
@@ -405,8 +486,8 @@ public class World {
 		handler.getGame().setPlayerData(playerData);
 		handler.getGame().savePlayerData();
 
-		handler.getGame().saveWorldFiles(worldFirstLayer, worldSecondLayer, worldThirdLayer);
-		
+		handler.getGame().saveWorldFiles(worldFirstLayer, worldSecondLayer, worldThirdLayer, worldFourthLayer);
+
 	}
 
 	private void calcTime() {
@@ -419,9 +500,9 @@ public class World {
 
 	private void loadStandardEntities() {
 		spawnRandomLogs();
-		entityManager.addEntity(new Rock(handler, 8 * Tile.TILEWIDTH, 4 * Tile.TILEHEIGHT));
-		entityManager.addEntity(new Bush(handler, 4 * Tile.TILEWIDTH, 13 * Tile.TILEHEIGHT));
-		entityManager.addEntity(new Bush(handler, 6 * Tile.TILEWIDTH, 13 * Tile.TILEHEIGHT));
+//		entityManager.addEntity(new Rock(handler, 8 * Tile.TILEWIDTH, 4 * Tile.TILEHEIGHT));
+//		entityManager.addEntity(new Bush(handler, 4 * Tile.TILEWIDTH, 13 * Tile.TILEHEIGHT));
+//		entityManager.addEntity(new Bush(handler, 6 * Tile.TILEWIDTH, 13 * Tile.TILEHEIGHT));
 	}
 
 	private void loadEntities() {

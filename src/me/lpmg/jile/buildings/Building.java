@@ -83,45 +83,45 @@ public abstract class Building {
 	public FloorTile getRandomFlooring(int floorID) {
 		// TODO
 		if (floorID == 1) {
-			return new FloorTile(Assets.floor_1, 110);
+			return new FloorTile(Assets.floor_1, 510);
 		} else if (floorID == 2) {
-			return new FloorTile(Assets.floor_2, 110);
+			return new FloorTile(Assets.floor_2, 510);
 		} else if (floorID == 3) {
-			return new FloorTile(Assets.floor_3, 110);
+			return new FloorTile(Assets.floor_3, 510);
 		} else if (floorID == 4) {
-			return new FloorTile(Assets.floor_4, 110);
+			return new FloorTile(Assets.floor_4, 510);
 		} else if (floorID == 5) {
-			return new FloorTile(Assets.floor_5, 110);
+			return new FloorTile(Assets.floor_5, 510);
 		} else if (floorID == 6) {
-			return new FloorTile(Assets.floor_6, 110);
+			return new FloorTile(Assets.floor_6, 510);
 		} else if (floorID == 7) {
-			return new FloorTile(Assets.floor_7, 110);
+			return new FloorTile(Assets.floor_7, 510);
 		} else if (floorID == 8) {
-			return new FloorTile(Assets.floor_8, 110);
+			return new FloorTile(Assets.floor_8, 510);
 		} else if (floorID == 9) {
-			return new FloorTile(Assets.floor_9, 110);
+			return new FloorTile(Assets.floor_9, 510);
 		} else if (floorID == 10) {
-			return new FloorTile(Assets.floor_10, 110);
+			return new FloorTile(Assets.floor_10, 510);
 		} else if (floorID == 11) {
-			return new FloorTile(Assets.floor_11, 110);
+			return new FloorTile(Assets.floor_11, 510);
 		} else if (floorID == 12) {
-			return new FloorTile(Assets.floor_12, 110);
+			return new FloorTile(Assets.floor_12, 510);
 		} else if (floorID == 13) {
-			return new FloorTile(Assets.floor_13, 110);
+			return new FloorTile(Assets.floor_13, 510);
 		} else if (floorID == 14) {
-			return new FloorTile(Assets.floor_14, 110);
+			return new FloorTile(Assets.floor_14, 510);
 		} else if (floorID == 15) {
-			return new FloorTile(Assets.floor_15, 110);
+			return new FloorTile(Assets.floor_15, 510);
 		} else if (floorID == 16) {
-			return new FloorTile(Assets.floor_16, 110);
+			return new FloorTile(Assets.floor_16, 510);
 		} else if (floorID == 17) {
-			return new FloorTile(Assets.floor_17, 110);
+			return new FloorTile(Assets.floor_17, 510);
 		} else if (floorID == 18) {
-			return new FloorTile(Assets.floor_18, 110);
+			return new FloorTile(Assets.floor_18, 510);
 		} else if (floorID == 19) {
-			return new FloorTile(Assets.floor_19, 110);
+			return new FloorTile(Assets.floor_19, 510);
 		} else if (floorID == 20) {
-			return new FloorTile(Assets.floor_20, 110);
+			return new FloorTile(Assets.floor_20, 510);
 		}
 		return null;
 	}
@@ -129,11 +129,11 @@ public abstract class Building {
 	public WallTileSolid getWallMiddle(int wallID) {
 		// TODO
 		if (wallID == 1) {
-			return new WallTileSolid(Assets.wooden_wall_1, 101);
+			return new WallTileSolid(Assets.wooden_wall_1, 501);
 		} else if (wallID == 2) {
-			return new WallTileSolid(Assets.white_wall_middle, 101);
+			return new WallTileSolid(Assets.white_wall_middle, 501);
 		} else if (wallID == 3) {
-			return new WallTileSolid(Assets.yellowStripes_wall_middle, 101);
+			return new WallTileSolid(Assets.yellowStripes_wall_middle, 501);
 		} else if (wallID == 4) {
 		} else if (wallID == 5) {
 		} else if (wallID == 6) {
@@ -157,11 +157,11 @@ public abstract class Building {
 	public WallTileSolid getWallBottom(int wallID) {
 		// TODO
 		if (wallID == 1) {
-			return new WallTileSolid(Assets.wooden_wall_1, 100);
+			return new WallTileSolid(Assets.wooden_wall_1, 500);
 		} else if (wallID == 2) {
-			return new WallTileSolid(Assets.white_wall_bottom, 100);
+			return new WallTileSolid(Assets.white_wall_bottom, 500);
 		} else if (wallID == 3) {
-			return new WallTileSolid(Assets.yellowStripes_wall_bottom, 100);
+			return new WallTileSolid(Assets.yellowStripes_wall_bottom, 500);
 		} else if (wallID == 4) {
 		} else if (wallID == 5) {
 		} else if (wallID == 6) {

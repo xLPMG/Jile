@@ -18,22 +18,24 @@ public class Merchant extends Creature {
 	private int tickCount;
 	private float defspeed;
 	private int multiplier = 64/32;
+	private int multiplierVT= DEFAULT_CREATURE_HEIGHT / 32;
+	private int multiplierHZ = DEFAULT_CREATURE_WIDTH / 32;
 	
 	public Merchant(Handler handler, float x, float y) {
-		super(handler, x, y, 64, 64);
+		super(handler, x, y, DEFAULT_CREATURE_WIDTH, DEFAULT_CREATURE_HEIGHT);
 		
-		bounds.x = 6*multiplier;
-		bounds.y = 16*multiplier; //19*3
-		bounds.width = 22*multiplier; //9*3
-		bounds.height = 16*multiplier; //4*3
+		bounds.x = 6*multiplierHZ;
+		bounds.y = 16*multiplierVT; //19*3
+		bounds.width = 22*multiplierHZ; //9*3
+		bounds.height = 16*multiplierVT; //4*3
 		speed = 0.5f;
 		defspeed = speed;
 		
 		//Animatons
-		animDown = new Animation(250, Assets.wizard_down);
-		animUp = new Animation(250, Assets.wizard_up);
-		animLeft = new Animation(250, Assets.wizard_left);
-		animRight = new Animation(250, Assets.wizard_right);
+		animDown = new Animation(200, Assets.wizard_down);
+		animUp = new Animation(200, Assets.wizard_up);
+		animLeft = new Animation(200, Assets.wizard_left);
+		animRight = new Animation(200, Assets.wizard_right);
 		animIdle = new Animation(500, Assets.wizard_idle);
 		
 		wizardMenu = new WizardMenu(handler);

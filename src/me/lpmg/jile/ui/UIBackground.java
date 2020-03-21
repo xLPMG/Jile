@@ -19,7 +19,9 @@ public class UIBackground extends UIObject{
 
 	@Override
 	public void render(Graphics g) {		
-		g.drawImage(image, (int) x, (int) y, width, height, null);
+		int scaledImageWidth=(int) (((double)height/(double)image.getHeight())*(double)image.getWidth());
+		g.drawImage(image, (int) x, (int) y, scaledImageWidth, height, null);
+		System.out.println(height/image.getHeight()+"/"+height);
 	}
 
 	@Override

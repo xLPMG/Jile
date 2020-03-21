@@ -31,6 +31,7 @@ public class GameState extends State {
 		world.render(g);
 		world.renderSecondLayer(g);
 		world.renderThirdLayer(g);
+		world.renderFourthLayer(g);
 		world.player.postRender(g);
 		for(Entity e : world.getEntityManager().getEntities()){
 			if(e instanceof Merchant) {

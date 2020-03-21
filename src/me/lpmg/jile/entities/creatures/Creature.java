@@ -8,10 +8,14 @@ import me.lpmg.jile.tiles.Tile;
 public abstract class Creature extends Entity {
 	
 	public static final float DEFAULT_SPEED = 3.0f;
+//	public static final int DEFAULT_CREATURE_WIDTH = 64,
+//							DEFAULT_CREATURE_HEIGHT = 64;
 	public static final int DEFAULT_CREATURE_WIDTH = 64,
-							DEFAULT_CREATURE_HEIGHT = 64;
+			DEFAULT_CREATURE_HEIGHT = 128;
+//	public static final int PLAYER_WIDTH = 64,
+//			PLAYER_HEIGHT = 64;
 	public static final int PLAYER_WIDTH = 64,
-			PLAYER_HEIGHT = 64;
+			PLAYER_HEIGHT = 128;
 	
 	protected float speed;
 	protected float xMove, yMove;

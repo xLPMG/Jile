@@ -16,6 +16,20 @@ import java.util.Map.Entry;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileSystemView;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.xml.sax.SAXException;
 
 import me.lpmg.jile.display.Display;
 import me.lpmg.jile.display.LogoScreen;
@@ -74,13 +88,9 @@ public class Game implements Runnable {
 	private File entitiesFile;
 	private File playerInventoryFile;
 
-	private String orgWorldFirstLayer = "/worlds/world1-firstLayer.txt";
-	private String orgWorldSecondLayer = "/worlds/world1-secondLayer.txt";
-	private String orgWorldThirdLayer = "/worlds/world1-thirdLayer.txt";
+	private String orgWorldFile = "/worlds/world.tmx";
 
-	private File worldFirstLayerFile;
-	private File worldSecondLayerFile;
-	private File worldThirdLayerFile;
+	private File worldFile;
 
 	public Game(String title, int width, int height, String version) {
 		this.width = width;
@@ -108,8 +118,7 @@ public class Game implements Runnable {
 
 		loadGameFolder();
 		loadGameData();
-		world = new World(handler, worldFirstLayerFile.getAbsolutePath(), worldSecondLayerFile.getAbsolutePath(),
-				worldThirdLayerFile.getAbsolutePath());
+		world = new World(handler, worldFile.getAbsolutePath());
 
 		gameState = new GameState(handler, world);
 		State.setState(new MenuState(handler));
@@ -272,9 +281,7 @@ public class Game implements Runnable {
 				entitiesFile = new File(jfc.getSelectedFile().getAbsolutePath() + "/entityData.dat");
 				playerInventoryFile = new File(jfc.getSelectedFile().getAbsolutePath() + "/playerInventoryData.dat");
 
-				worldFirstLayerFile = new File(jfc.getSelectedFile().getAbsolutePath() + "/world1.dat");
-				worldSecondLayerFile = new File(jfc.getSelectedFile().getAbsolutePath() + "/world2.dat");
-				worldThirdLayerFile = new File(jfc.getSelectedFile().getAbsolutePath() + "/world3.dat");
+				worldFile = new File(jfc.getSelectedFile().getAbsolutePath() + "/world.tmx");
 				try {
 					if (!playerDataFile.exists()) {
 						System.exit(0);
@@ -284,8 +291,7 @@ public class Game implements Runnable {
 						entitiesFile.createNewFile();
 					} else if (!playerInventoryFile.exists()) {
 						playerInventoryFile.createNewFile();
-					} else if (!worldFirstLayerFile.exists() || !worldSecondLayerFile.exists()
-							|| !worldThirdLayerFile.exists()) {
+					} else if (!worldFile.exists()) {
 						createWorldFiles(jfc.getSelectedFile().getAbsolutePath());
 					}
 				} catch (IOException e) {
@@ -327,40 +333,75 @@ public class Game implements Runnable {
 	}
 
 	private void createWorldFiles(String path) {
-		worldFirstLayerFile = new File(path + "/world1.dat");
-		worldSecondLayerFile = new File(path + "/world2.dat");
-		worldThirdLayerFile = new File(path + "/world3.dat");
-		String firstLayer = Utils.loadResourceFileAsString(orgWorldFirstLayer);
-		String secondLayer = Utils.loadResourceFileAsString(orgWorldSecondLayer);
-		String thirdLayer = Utils.loadResourceFileAsString(orgWorldThirdLayer);
+		worldFile = new File(path + "/world.tmx");
+		String orgWorldFileData = Utils.loadResourceFileAsString(orgWorldFile);
 		try {
-			worldFirstLayerFile.createNewFile();
-			worldSecondLayerFile.createNewFile();
-			worldThirdLayerFile.createNewFile();
-			FileWriter writer1 = new FileWriter(worldFirstLayerFile.getAbsolutePath());
-			FileWriter writer2 = new FileWriter(worldSecondLayerFile.getAbsolutePath());
-			FileWriter writer3 = new FileWriter(worldThirdLayerFile.getAbsolutePath());
-			writer1.write(firstLayer);
-			writer2.write(secondLayer);
-			writer3.write(thirdLayer);
+			worldFile.createNewFile();
+			FileWriter writer1 = new FileWriter(worldFile.getAbsolutePath());
+			writer1.write(orgWorldFileData);
 			writer1.close();
-			writer2.close();
-			writer3.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
 	public void saveWorldFiles(HashMap<String, Integer> worldFirstLayer, HashMap<String, Integer> worldSecondLayer,
-			HashMap<String, Integer> worldThirdLayer) {
+			HashMap<String, Integer> worldThirdLayer,HashMap<String, Integer> worldFourthLayer) {
 
-		for (String coord : worldSecondLayer.keySet()) {
-			int x = Utils.parseInt(coord.split(":")[0]);
-			int y = Utils.parseInt(coord.split(":")[1]);
-			int id = worldSecondLayer.get(coord);
+		String worldFirstLayerString = getLayerString(worldFirstLayer);
+		String worldSecondLayerString = getLayerString(worldSecondLayer);
+		String worldThirdLayerString = getLayerString(worldThirdLayer);
+		String worldFourthLayerString = getLayerString(worldFourthLayer);
+		try {
+			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+			Document xmlFile = dBuilder.parse(worldFile);
+			xmlFile.getDocumentElement().normalize();
+
+			Node layer1Node = xmlFile.getElementsByTagName("layer").item(0);
+			Node layer2Node = xmlFile.getElementsByTagName("layer").item(1);
+			Node layer3Node = xmlFile.getElementsByTagName("layer").item(2);
+			Node layer4Node = xmlFile.getElementsByTagName("layer").item(2);
+
+			layer1Node.setTextContent(worldFirstLayerString);
+			layer2Node.setTextContent(worldSecondLayerString);
+			layer3Node.setTextContent(worldThirdLayerString);
+			layer4Node.setTextContent(worldFourthLayerString);
+
+			TransformerFactory transformerFactory = TransformerFactory.newInstance();
+			Transformer transformer = transformerFactory.newTransformer();
+			DOMSource domSource = new DOMSource(xmlFile);
+			StreamResult streamResult = new StreamResult(new File(worldFile.getAbsolutePath()));
+			transformer.transform(domSource, streamResult);
+
+		} catch (SAXException | IOException | ParserConfigurationException | TransformerException e) {
+			e.printStackTrace();
 		}
-
 		System.out.println("Done saving world files.");
+	}
+
+	private String getLayerString(HashMap<String, Integer> worldLayer) {
+		StringBuilder sb = new StringBuilder();
+
+//		sb.append("\n  <data  encoding=\"csv\">\n");
+		sb.append("\n");
+		for (int y = 0; y < world.getHeight(); y++) {
+			for (int x = 0; x < world.getWidth(); x++) {
+				String key = x + ":" + y;
+
+				if (y == (world.getHeight() - 1) && x == (world.getWidth() - 1)) {
+					sb.append(worldLayer.get(key));
+					sb.append("\n");
+				} else {
+					sb.append(worldLayer.get(key) + ",");
+					if (x == world.getWidth() - 1) {
+						sb.append("\n");
+					}
+				}
+			}
+		}
+//		sb.append("\n</data>");
+		return sb.toString();
 	}
 
 	private void createEventDataFile(String path) {

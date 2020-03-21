@@ -7,7 +7,7 @@ import me.lpmg.jile.gfx.Assets;
 public class DecorPlantTile extends Tile {
 
 	public DecorPlantTile(int id) {
-		super(Assets.stone, id);
+		super(Assets.plant_flower_1, id);
 	}
 	
 	public DecorPlantTile(BufferedImage image, int id) {
