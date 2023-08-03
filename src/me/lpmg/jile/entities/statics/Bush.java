@@ -31,15 +31,15 @@ public class Bush extends StaticEntity {
 
 	@Override
 	public void render(Graphics g) {
-		if(health>(maxHealth/4)*3) {
-			g.drawImage(Assets.bush, (int) (x - handler.getGameCamera().getxOffset()), (int) (y - handler.getGameCamera().getyOffset()), width, height, null);
-			}else if(health>(maxHealth/4)*2) {
-			g.drawImage(Assets.bush_dmg1, (int) (x - handler.getGameCamera().getxOffset()), (int) (y - handler.getGameCamera().getyOffset()), width, height, null);
-			}else if(health>(maxHealth/4)*1) {
-			g.drawImage(Assets.bush_dmg2, (int) (x - handler.getGameCamera().getxOffset()), (int) (y - handler.getGameCamera().getyOffset()), width, height, null);
-			}else if(health>(maxHealth/4)*0) {
-			g.drawImage(Assets.bush_dmg3, (int) (x - handler.getGameCamera().getxOffset()), (int) (y - handler.getGameCamera().getyOffset()), width, height, null);
-			}
+//		if(health>(maxHealth/4)*3) {
+//			g.drawImage(Assets.bush, (int) (x - handler.getGameCamera().getxOffset()), (int) (y - handler.getGameCamera().getyOffset()), width, height, null);
+//			}else if(health>(maxHealth/4)*2) {
+//			g.drawImage(Assets.bush_dmg1, (int) (x - handler.getGameCamera().getxOffset()), (int) (y - handler.getGameCamera().getyOffset()), width, height, null);
+//			}else if(health>(maxHealth/4)*1) {
+//			g.drawImage(Assets.bush_dmg2, (int) (x - handler.getGameCamera().getxOffset()), (int) (y - handler.getGameCamera().getyOffset()), width, height, null);
+//			}else if(health>(maxHealth/4)*0) {
+//			g.drawImage(Assets.bush_dmg3, (int) (x - handler.getGameCamera().getxOffset()), (int) (y - handler.getGameCamera().getyOffset()), width, height, null);
+//			}
 	}
 
 }

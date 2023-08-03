@@ -13,7 +13,6 @@ import java.util.Iterator;
 import java.util.Map;
 
 import me.lpmg.jile.Handler;
-import me.lpmg.jile.buildings.BuildingManager;
 import me.lpmg.jile.entities.creatures.Player;
 import me.lpmg.jile.gfx.Assets;
 import me.lpmg.jile.gfx.Text;
@@ -36,7 +35,6 @@ public class Inventory {
 	private boolean disabled = false;
 	private ArrayList<Item> inventoryItems;
 	private HashMap<String, Integer> equippedItems;
-	private BuildingManager buildingManager;
 	private Player player;
 
 	private Boots equippedBoots;

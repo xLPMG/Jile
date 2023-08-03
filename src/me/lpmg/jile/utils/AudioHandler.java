@@ -17,18 +17,14 @@ public class AudioHandler {
 	private Thread audioThread;
 	private Player playMP3;
 	private Settings settings;
-	
+
 	public AudioHandler(Settings settings) {
 		this.settings = settings;
 	}
 
 	public synchronized void playSound(final String url, boolean repeat) {
 
-		if (audioThread != null) {
-			if (audioThread.isAlive()) {
-				stopPlaying();
-			}
-		}
+		stopPlaying();
 		
 		audioThread = new Thread(new Runnable() {
 			public void run() {
@@ -52,11 +48,11 @@ public class AudioHandler {
 						playMP3 = new Player(in);
 
 						playMP3.play();
-						if(playMP3.isComplete()) {
-							if(repeat) {
-							playSound(url, repeat);
-							}else {
-						    stopPlaying();
+						if (playMP3.isComplete()) {
+							if (repeat) {
+								playSound(url, repeat);
+							} else {
+								stopPlaying();
 							}
 						}
 
@@ -67,14 +63,20 @@ public class AudioHandler {
 			}
 		});
 		audioThread.start();
-		if (settings != null && settings.SOUND_ON) {
+		if (settings != null && !settings.MUSIC_ON) {
 			mute(true);
 		}
 	}
 
 	public void stopPlaying() {
-		audioThread.interrupt();
-		playMP3.close();
+		if (audioThread != null) {
+			if (audioThread.isAlive()) {
+				audioThread.interrupt();
+			}
+		}
+		if (playMP3 != null) {
+			playMP3.close();
+		}
 	}
 
 	public void mute(boolean mute) {

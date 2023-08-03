@@ -7,6 +7,8 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,7 +22,9 @@ import me.lpmg.jile.inventory.ItemBar;
 import me.lpmg.jile.items.Item;
 import me.lpmg.jile.miscgui.Healthbar;
 import me.lpmg.jile.miscgui.StatsGUI;
+import me.lpmg.jile.miscgui.XPBar;
 import me.lpmg.jile.states.DeadState;
+import me.lpmg.jile.states.GameState;
 import me.lpmg.jile.states.MenuState;
 import me.lpmg.jile.states.OptionsState;
 import me.lpmg.jile.states.State;
@@ -40,11 +44,16 @@ public class Player extends Creature {
 
 	private Healthbar healthbar;
 	private StatsGUI statsGUI;
+	private XPBar xpBar;
+	private State formerState = null;
 
 	private int attackDirection = 0;
 	private int healthTickCount;
 	private int defaultMaxHealth = maxHealth;
 	private int defaultMaxMana = maxMana;
+	private int xp = 0;
+	private int lvl = 0;
+	private int maxXP;
 	private int manaTickCount;
 	private float defaultSpeed;
 	private float sprintSpeed;
@@ -61,57 +70,62 @@ public class Player extends Creature {
 	private int manaRegenSpeed = 260;
 	private int defaultManaRegenSpeed = manaRegenSpeed;
 
-	private int multiplierVT= PLAYER_HEIGHT / 32;
+	private int multiplierVT = PLAYER_HEIGHT / 32;
 	private int multiplierHZ = PLAYER_WIDTH / 32;
 	private String playerName = "???";
-	private int walkingDirection = 2;
+	private int walkingDirection = 3;
 	private boolean invincible = false;
 
 	private boolean isSprinting = false;
+	private boolean attacking = false;
 
 	public Player(Handler handler, float x, float y) {
 		super(handler, x, y, Creature.PLAYER_WIDTH, Creature.PLAYER_HEIGHT);
 
-		bounds.x = 6 * multiplierHZ;
+		bounds.x = 8 * multiplierHZ;
 		bounds.y = 16 * multiplierVT; // 19*3
-		bounds.width = 22 * multiplierHZ; // 9*3
-		bounds.height = 16 * multiplierVT; // 4*3
-		speed = 1.5f;
+		bounds.width = 16 * multiplierHZ; // 9*3
+		bounds.height = 14 * multiplierVT; // 4*3
+		speed = 3f;
 		defaultSpeed = speed;
-		sprintSpeed = 3.0f;
+		sprintSpeed = 5.2f;
 		money = 0;
+		lvl = 1;
+		maxXP = lvl * lvl;
 
 		// Animatons
-		animDownNormal = new Animation(200, Assets.player_down);
-		animDownFast = new Animation(150, Assets.player_down);
+		animDownNormal = new Animation(130, Assets.player_down);
+		animDownFast = new Animation(80, Assets.player_down);
 		animDown = animDownNormal;
 
-		animUpNormal = new Animation(200, Assets.player_up);
-		animUpFast = new Animation(150, Assets.player_up);
+		animUpNormal = new Animation(130, Assets.player_up);
+		animUpFast = new Animation(80, Assets.player_up);
 		animUp = animUpNormal;
 
-		animLeftNormal = new Animation(200, Assets.player_left);
-		animLeftFast = new Animation(150, Assets.player_left);
+		animLeftNormal = new Animation(130, Assets.player_left);
+		animLeftFast = new Animation(80, Assets.player_left);
 		animLeft = animLeftNormal;
 
-		animRightNormal = new Animation(200, Assets.player_right);
-		animRightFast = new Animation(150, Assets.player_right);
+		animRightNormal = new Animation(130, Assets.player_right);
+		animRightFast = new Animation(80, Assets.player_right);
 		animRight = animRightNormal;
 
-		animIdleUp = new Animation(500, Assets.player_idleUp);
-		animIdleDown = new Animation(500, Assets.player_idleDown);
-		animIdleLeft = new Animation(500, Assets.player_idleLeft);
-		animIdleRight = new Animation(500, Assets.player_idleRight);
+		// TODO
+		animIdleUp = new Animation(250, Assets.player_idleUp);
+		animIdleDown = new Animation(250, Assets.player_idleDown);
+		animIdleLeft = new Animation(250, Assets.player_idleLeft);
+		animIdleRight = new Animation(250, Assets.player_idleRight);
 
-		animAttackDown = new Animation(100, Assets.player_attack_down);
-		animAttackUp = new Animation(100, Assets.player_attack_up);
-		animAttackLeft = new Animation(100, Assets.player_attack_left);
-		animAttackRight = new Animation(100, Assets.player_attack_right);
+		animAttackDown = new Animation(180, Assets.player_attack_down);
+		animAttackUp = new Animation(180, Assets.player_attack_up);
+		animAttackLeft = new Animation(180, Assets.player_attack_left);
+		animAttackRight = new Animation(180, Assets.player_attack_right);
 
 		inventory = new Inventory(handler, this);
 		handler.getGame().loadPlayerInventory(this);
 		itemBar = new ItemBar(handler, inventory);
 		healthbar = new Healthbar(handler, this);
+		xpBar = new XPBar(handler, this);
 		statsGUI = new StatsGUI(handler, this);
 
 		KeyAdapter kA = new KeyAdapter() {
@@ -131,13 +145,21 @@ public class Player extends Creature {
 
 				else if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
 					if (State.getState() instanceof OptionsState) {
-						State.setState(handler.getGame().gameState);
-					} else {
+						if(formerState instanceof GameState) {
+							State.setState(handler.getGame().gameState);
+						}else if (formerState instanceof MenuState) {
+							State.setState(new MenuState(handler));
+						}
+						
+					} else if (State.getState() instanceof GameState||State.getState() instanceof MenuState) {
+						formerState = State.getState();
 						State.setState(new OptionsState(handler));
 					}
 
 				} else if (e.getKeyCode() == KeyEvent.VK_H) {
 					healthWithMana(15);
+				} else if (e.getKeyCode() == KeyEvent.VK_J) {
+					handler.getWorld().getEntityManager().addEntity(new Sorcerer(handler, getX()+100, getY()));
 				}
 			}
 
@@ -158,11 +180,72 @@ public class Player extends Creature {
 		};
 		handler.addKeyListener(kA);
 
+		MouseAdapter mA = new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent ev) {
+				if(ev.getButton()==MouseEvent.BUTTON3) {
+				attackTimer += System.currentTimeMillis() - lastAttackTimer;
+				lastAttackTimer = System.currentTimeMillis();
+				if (attackTimer < attackCooldown)
+					return;
+
+				if (inventory.isActive())
+					return;
+				attacking=true;
+				healthbar.showCorner();
+				Rectangle cb = getCollisionBounds(0, 0);
+				Rectangle ar = new Rectangle();
+				int arSize = 20;
+				ar.width = arSize;
+				ar.height = arSize;
+
+				if (walkingDirection == 1) {
+					ar.x = cb.x + cb.width / 2 - arSize / 2;
+					ar.y = cb.y - arSize;
+				} else if (walkingDirection == 3) {
+					ar.x = cb.x + cb.width / 2 - arSize / 2;
+					ar.y = cb.y + cb.height;
+				} else if (walkingDirection == 4) {
+					ar.x = cb.x - arSize;
+					ar.y = cb.y + cb.height / 2 - arSize / 2;
+				} else if (walkingDirection == 2) {
+					ar.x = cb.x + cb.width;
+					ar.y = cb.y + cb.height / 2 - arSize / 2;
+				} else {
+					return;
+				}
+
+				attackTimer = 0;
+
+				for (Entity e : handler.getWorld().getEntityManager().getEntities()) {
+					if (e.equals(this))
+						continue;
+					if (e.getCollisionBounds(0, 0).intersects(ar)) {
+						healthbar.showCorner();
+						e.hurt(damagePerHit);
+						System.out.println("Hitting " + e);
+						if (e.getHealth() <= 0 && e instanceof Creature) {
+							addMoney(((Creature) e).getMoneyOnDeath());
+							addXP(((Creature) e).getXPOnDeath());
+						}
+						if (e instanceof Merchant) {
+							mana -= 1;
+						}
+						return;
+					}
+				}
+				healthbar.hideCorner();
+				attacking=false;
+			}
+			}
+		};
+		handler.addMouseListener(mA);
+
 	}
 
 	@Override
 	public void tick() {
-		// System.out.println(frozen);
+		//System.out.println(attacking);
 		// Animations
 		animDown.tick();
 		animUp.tick();
@@ -183,14 +266,13 @@ public class Player extends Creature {
 		}
 		move();
 		handler.getGameCamera().centerOnEntity(this);
-		// Attack
-		checkAttacks();
 		// Health
 		regenerate();
 		// Inventory
 		inventory.tick();
 		itemBar.tick();
 		healthbar.tick();
+		xpBar.tick();
 		statsGUI.tick();
 		if (invincible) {
 			health = maxHealth;
@@ -199,62 +281,19 @@ public class Player extends Creature {
 		if (totalEarnedMoney < money) {
 			totalEarnedMoney = money;
 		}
-	}
 
-	private void checkAttacks() {
-		attackTimer += System.currentTimeMillis() - lastAttackTimer;
-		lastAttackTimer = System.currentTimeMillis();
-		if (attackTimer < attackCooldown)
-			return;
-
-		if (inventory.isActive())
-			return;
-
-		healthbar.hideCorner();
-		Rectangle cb = getCollisionBounds(0, 0);
-		Rectangle ar = new Rectangle();
-		int arSize = 20;
-		ar.width = arSize;
-		ar.height = arSize;
-
-		if (handler.getKeyManager().up && handler.getMouseManager().isRightPressed()) {
-			ar.x = cb.x + cb.width / 2 - arSize / 2;
-			ar.y = cb.y - arSize;
-			attackDirection = 1;
-		} else if (handler.getKeyManager().down && handler.getMouseManager().isRightPressed()) {
-			ar.x = cb.x + cb.width / 2 - arSize / 2;
-			ar.y = cb.y + cb.height;
-			attackDirection = 2;
-		} else if (handler.getKeyManager().left && handler.getMouseManager().isRightPressed()) {
-			ar.x = cb.x - arSize;
-			ar.y = cb.y + cb.height / 2 - arSize / 2;
-			attackDirection = 3;
-		} else if (handler.getKeyManager().right && handler.getMouseManager().isRightPressed()) {
-			ar.x = cb.x + cb.width;
-			ar.y = cb.y + cb.height / 2 - arSize / 2;
-			attackDirection = 4;
+		if (lvl == 0) {
+			maxXP = 1;
 		} else {
-			attackDirection = 0;
-			return;
+			maxXP = lvl * lvl;
 		}
 
-		attackTimer = 0;
-
-		for (Entity e : handler.getWorld().getEntityManager().getEntities()) {
-			if (e.equals(this))
-				continue;
-			if (e.getCollisionBounds(0, 0).intersects(ar)) {
-				healthbar.showCorner();
-				e.hurt(damagePerHit);
-				// System.out.println("Hitting " + e);
-				if (e.getHealth() <= 0 && e instanceof Creature) {
-					addMoney(((Creature) e).getMoneyOnDeath());
-				}
-				if (e instanceof Merchant) {
-					mana -= 1;
-				}
-				return;
-			}
+		if (xp >= maxXP) {
+			int restXP = xp - maxXP;
+			lvl += 1;
+			maxXP = lvl * lvl;
+			xp = 0;
+			addXP(restXP);
 		}
 
 	}
@@ -269,24 +308,22 @@ public class Player extends Creature {
 		xMove = 0;
 		yMove = 0;
 
-		if (inventory.isActive())
-			return;
-
 		if (handler.getKeyManager().up) {
 			yMove = -speed;
-			walkingDirection = 0;
+			walkingDirection = 1;
 		}
 		if (handler.getKeyManager().down) {
 			yMove = speed;
-			walkingDirection = 2;
-		}
-		if (handler.getKeyManager().left) {
-			xMove = -speed;
 			walkingDirection = 3;
 		}
 		if (handler.getKeyManager().right) {
 			xMove = speed;
-			walkingDirection = 1;
+			walkingDirection = 2;
+		}
+
+		if (handler.getKeyManager().left) {
+			xMove = -speed;
+			walkingDirection = 4;
 		}
 	}
 
@@ -294,14 +331,20 @@ public class Player extends Creature {
 	public void render(Graphics g) {
 		g.drawImage(getCurrentAnimationFrame(), (int) (x - handler.getGameCamera().getxOffset()),
 				(int) (y - handler.getGameCamera().getyOffset()), width, height, null);
+
+//		g.setColor(Color.YELLOW);
+//		 g.drawRect((int) (x - handler.getGameCamera().getxOffset())+bounds.x, (int)
+//		 (y - handler.getGameCamera().getyOffset())+bounds.y, bounds.width,
+//		 bounds.height);		
 	}
 
 	public void postRender(Graphics g) {
 		healthbar.render(g);
 		itemBar.render(g);
-		statsGUI.render(g);
+		xpBar.render(g);
 		renderMoney(g);
 		inventory.render(g);
+		statsGUI.render(g);
 	}
 
 	private void renderMoney(Graphics g) {
@@ -319,45 +362,43 @@ public class Player extends Creature {
 	}
 
 	private BufferedImage getCurrentAnimationFrame() {
-		if (frozen) {
-			if (walkingDirection == 0) {
+		if(xMove!=0||yMove!=0&&!attacking) { //=walking
+			if(walkingDirection==1) {
+				return animUp.getCurrentFrame();
+			}else if(walkingDirection==2) {
+				return animRight.getCurrentFrame();
+			}else if(walkingDirection==3) {
+				return animDown.getCurrentFrame();
+			}else if(walkingDirection==4) {
+				return animLeft.getCurrentFrame();
+			}
+		}else { //=standing still
+			if(!attacking) {
+			if(walkingDirection==1) {
 				return animIdleUp.getCurrentFrame();
-			} else if (walkingDirection == 1) {
+			}else if(walkingDirection==2) {
 				return animIdleRight.getCurrentFrame();
-			} else if (walkingDirection == 2) {
+			}else if(walkingDirection==3) {
 				return animIdleDown.getCurrentFrame();
-			} else if (walkingDirection == 3) {
+			}else if(walkingDirection==4) {
 				return animIdleLeft.getCurrentFrame();
 			}
-		}
-
-		if (xMove < 0) {
-			return animLeft.getCurrentFrame();
-		} else if (xMove > 0) {
-			return animRight.getCurrentFrame();
-		} else if (yMove < 0) {
-			return animUp.getCurrentFrame();
-		} else if (yMove > 0) {
-			return animDown.getCurrentFrame();
-		} else if (attackDirection == 1) {
-			return animAttackUp.getCurrentFrame();
-		} else if (attackDirection == 2) {
-			return animAttackDown.getCurrentFrame();
-		} else if (attackDirection == 3) {
-			return animAttackLeft.getCurrentFrame();
-		} else if (attackDirection == 4) {
-			return animAttackRight.getCurrentFrame();
-		} else {
-			if (walkingDirection == 0) {
-				return animIdleUp.getCurrentFrame();
-			} else if (walkingDirection == 1) {
-				return animIdleRight.getCurrentFrame();
-			} else if (walkingDirection == 2) {
-				return animIdleDown.getCurrentFrame();
-			} else if (walkingDirection == 3) {
-				return animIdleLeft.getCurrentFrame();
 			}
 		}
+		
+		//attacking
+		if(attacking) {
+			if(walkingDirection==1) {
+				return animAttackUp.getCurrentFrame();
+			}else if(walkingDirection==2) {
+				return animAttackRight.getCurrentFrame();
+			}else if(walkingDirection==3) {
+				return animAttackDown.getCurrentFrame();
+			}else if(walkingDirection==4) {
+				return animAttackLeft.getCurrentFrame();
+			}
+		}
+		
 		return animIdleDown.getCurrentFrame();
 	}
 
@@ -402,10 +443,20 @@ public class Player extends Creature {
 		}
 	}
 
+	private void addXP(int xp) {
+		this.xp += xp;
+	}
+
+	private void subtractXP(int xp) {
+		this.xp -= xp;
+	}
+
 	public void resetPlayer() {
 		health = maxHealth;
 		mana = maxMana;
 		money = 0;
+		lvl = 0;
+		xp = 0;
 		ArrayList<Item> invItems = inventory.getInventoryItems();
 		invItems.clear();
 		inventory.setInventoryItems(invItems);
@@ -573,5 +624,29 @@ public class Player extends Creature {
 
 	public void setDeathCount(int deathCount) {
 		this.deathCount = deathCount;
+	}
+
+	public int getXp() {
+		return xp;
+	}
+
+	public void setXp(int xp) {
+		this.xp = xp;
+	}
+
+	public int getLvl() {
+		return lvl;
+	}
+
+	public void setLvl(int lvl) {
+		this.lvl = lvl;
+	}
+
+	public int getMaxXP() {
+		return maxXP;
+	}
+
+	public void setMaxXP(int maxXP) {
+		this.maxXP = maxXP;
 	}
 }

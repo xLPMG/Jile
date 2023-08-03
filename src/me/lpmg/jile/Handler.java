@@ -11,6 +11,7 @@ import me.lpmg.jile.input.KeyManager;
 import me.lpmg.jile.input.MouseManager;
 import me.lpmg.jile.utils.AudioHandler;
 import me.lpmg.jile.utils.Settings;
+import me.lpmg.jile.utils.SfxHandler;
 import me.lpmg.jile.worlds.World;
 
 public class Handler {
@@ -20,6 +21,7 @@ public class Handler {
 	private World world;
 	private Settings settings;
 	private AudioHandler audioHandler;
+	private SfxHandler sfxHandler;
 	private EventHandler eventHandler;
 	
 	public Handler(Game game, Display display){
@@ -27,6 +29,7 @@ public class Handler {
 		this.display=display;
 		this.settings = new Settings();
 		this.audioHandler = new AudioHandler(settings);
+		this.sfxHandler = new SfxHandler(settings);
 		this.eventHandler = new EventHandler();
 		
 	}
@@ -82,6 +85,10 @@ public class Handler {
 
 	public AudioHandler getAudioHandler() {
 		return audioHandler;
+	}
+	
+	public SfxHandler getSfxHandler() {
+		return sfxHandler;
 	}
 
 	public EventHandler getEventHandler() {

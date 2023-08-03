@@ -1,7 +1,6 @@
 package me.lpmg.jile.entities.creatures;
 
 import me.lpmg.jile.Handler;
-import me.lpmg.jile.buildings.Building;
 import me.lpmg.jile.entities.Entity;
 import me.lpmg.jile.tiles.Tile;
 
@@ -14,12 +13,13 @@ public abstract class Creature extends Entity {
 			DEFAULT_CREATURE_HEIGHT = 128;
 //	public static final int PLAYER_WIDTH = 64,
 //			PLAYER_HEIGHT = 64;
-	public static final int PLAYER_WIDTH = 64,
+	public static final int PLAYER_WIDTH = 128,
 			PLAYER_HEIGHT = 128;
 	
 	protected float speed;
 	protected float xMove, yMove;
 	protected int moneyOnDeath;
+	protected int xpOnDeath;
 
 	public Creature(Handler handler, float x, float y, int width, int height) {
 		super(handler, x, y, width, height);
@@ -27,6 +27,7 @@ public abstract class Creature extends Entity {
 		xMove = 0;
 		yMove = 0;
 		moneyOnDeath=5;
+		xpOnDeath=1;
 	}
 	
 	public void move(){
@@ -43,8 +44,8 @@ public abstract class Creature extends Entity {
 			int txExactAndGraphical = (int) (x + xMove + bounds.x + bounds.width + (Player.PLAYER_WIDTH/2)) / (Tile.TILE_BOUND_WIDTH*4);
 			int tyExactAndGraphical = (int) y / (Tile.TILE_BOUND_HEIGHT*4);
 			
-			if(!collisionWithTile(tx, (int) (y + bounds.y) / Tile.TILEHEIGHT, txExactAndGraphical, tyExactAndGraphical) &&
-					!collisionWithTile(tx, (int) (y + bounds.y + bounds.height) / Tile.TILEHEIGHT, txExactAndGraphical, tyExactAndGraphical)){
+			if(!collisionWithTile(tx, (int) (y + bounds.y) / Tile.TILEHEIGHT) &&
+					!collisionWithTile(tx, (int) (y + bounds.y + bounds.height) / Tile.TILEHEIGHT)){
 				x += xMove;
 			}else{
 				x = tx * Tile.TILEWIDTH - bounds.x - bounds.width - 1;
@@ -56,8 +57,8 @@ public abstract class Creature extends Entity {
 			int txExactAndGraphical = (int) (x + xMove + bounds.x + (Player.PLAYER_WIDTH/2)) / (Tile.TILE_BOUND_WIDTH*4);
 			int tyExactAndGraphical = (int) y / (Tile.TILE_BOUND_HEIGHT*4);
 			
-			if(!collisionWithTile(tx, (int) (y + bounds.y) / Tile.TILEHEIGHT, txExactAndGraphical, tyExactAndGraphical) &&
-					!collisionWithTile(tx, (int) (y + bounds.y + bounds.height) / Tile.TILEHEIGHT, txExactAndGraphical, tyExactAndGraphical)){
+			if(!collisionWithTile(tx, (int) (y + bounds.y) / Tile.TILEHEIGHT) &&
+					!collisionWithTile(tx, (int) (y + bounds.y + bounds.height) / Tile.TILEHEIGHT)){
 				x += xMove;
 			}else{
 				x = tx * Tile.TILEWIDTH + Tile.TILEWIDTH - bounds.x;
@@ -72,8 +73,8 @@ public abstract class Creature extends Entity {
 			
 			int txExactAndGraphical = (int) (x+Player.PLAYER_WIDTH/2) / (Tile.TILE_BOUND_HEIGHT*4);
 			int tyExactAndGraphical = (int) (y + yMove + bounds.y) / Tile.TILE_BOUND_HEIGHT;
-			if(!collisionWithTile((int) (x + bounds.x) / Tile.TILEWIDTH, ty, txExactAndGraphical, tyExactAndGraphical) &&
-					!collisionWithTile((int) (x + bounds.x + bounds.width) / Tile.TILEWIDTH, ty, txExactAndGraphical, tyExactAndGraphical)){
+			if(!collisionWithTile((int) (x + bounds.x) / Tile.TILEWIDTH, ty) &&
+					!collisionWithTile((int) (x + bounds.x + bounds.width) / Tile.TILEWIDTH, ty)){
 				y += yMove;
 			}else{
 				y = ty * Tile.TILEHEIGHT + Tile.TILEHEIGHT - bounds.y;
@@ -85,8 +86,8 @@ public abstract class Creature extends Entity {
 			int txExactAndGraphical = (int) (x+Player.PLAYER_WIDTH/2) / (Tile.TILE_BOUND_HEIGHT*4);
 			int tyExactAndGraphical = (int) (y + yMove + bounds.y + bounds.height) / Tile.TILE_BOUND_HEIGHT;
 			
-			if(!collisionWithTile((int) (x + bounds.x) / Tile.TILEWIDTH, ty, txExactAndGraphical, tyExactAndGraphical) &&
-					!collisionWithTile((int) (x + bounds.x + bounds.width) / Tile.TILEWIDTH, ty, txExactAndGraphical, tyExactAndGraphical)){
+			if(!collisionWithTile((int) (x + bounds.x) / Tile.TILEWIDTH, ty) &&
+					!collisionWithTile((int) (x + bounds.x + bounds.width) / Tile.TILEWIDTH, ty)){
 				y += yMove;
 			}else{
 				y = ty * Tile.TILEHEIGHT - bounds.y - bounds.height - 1;
@@ -95,16 +96,9 @@ public abstract class Creature extends Entity {
 		}
 	}
 	
-	protected boolean collisionWithTile(int x, int y, int txEAGLoc, int tyEAGLoc){
+	protected boolean collisionWithTile(int x, int y){
 		if(handler.getWorld().getTile(x, y).isSolid()||handler.getWorld().getSecondLayerTile(x, y).isSolid()||handler.getWorld().getThirdLayerTile(x, y).isSolid()) {
 			return true;
-		}
-		for(Building b : handler.getWorld().getBuildingManager().getBuildings()) {
-			if(b.getMap()!=null) {
-			if(b.getMap().getTile(x, y).isSolid()) {
-				return true;
-			}
-			}
 		}
 		return false;
 	}
@@ -149,6 +143,14 @@ public abstract class Creature extends Entity {
 
 	public void setMoneyOnDeath(int moneyOnDeath) {
 		this.moneyOnDeath = moneyOnDeath;
+	}
+	
+	public int getXPOnDeath() {
+		return moneyOnDeath;
+	}
+
+	public void setXPOnDeath(int xpOnDeath) {
+		this.xpOnDeath = xpOnDeath;
 	}
 	
 }

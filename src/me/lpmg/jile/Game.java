@@ -438,6 +438,7 @@ public class Game implements Runnable {
 				}
 			}
 			br.close();
+			loadSettings();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -445,6 +446,7 @@ public class Game implements Runnable {
 
 	public void savePlayerData() {
 		try {
+			saveSettings();
 			FileWriter writer = new FileWriter(playerDataFile.getAbsolutePath());
 			writer.write("");
 			playerData.remove("placeholder");
@@ -460,6 +462,18 @@ public class Game implements Runnable {
 		}
 		System.out.println("Done saving player data.");
 		loadPlayerData();
+	}
+	
+	public void saveSettings() {
+		playerData.put("music_on", handler.getSettings().MUSIC_ON+"");
+		System.out.println("Saved settings.");
+	}
+	
+	public void loadSettings() {	
+		if (playerData.containsKey("music_on")) {
+			handler.getSettings().MUSIC_ON=Boolean.parseBoolean(playerData.get("music_on"));
+		}
+		System.out.println("Loaded settings.");
 	}
 
 	private void loadEventData() {

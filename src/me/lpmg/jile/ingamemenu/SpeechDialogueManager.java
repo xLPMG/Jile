@@ -6,6 +6,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URISyntaxException;
@@ -82,7 +83,7 @@ public class SpeechDialogueManager {
 			try {
 				String[] resourcePath = speechFile.getAbsolutePath().split("(?=[\\\\]text)");
 				resourcePath[1] = resourcePath[1].replaceAll("[\\\\]", "/");
-//				System.out.println("READING FILE: " + resourcePath[1]);
+				System.out.println("READING FILE: " + resourcePath[1]);
 				loadSpeechText(resourcePath[1]);
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -205,9 +206,9 @@ public class SpeechDialogueManager {
 	}
 
 	private void loadSpeechText(String speechFile) throws IOException {
-
+		FileInputStream file = new FileInputStream(speechFile);
 		BufferedReader speechReader = new BufferedReader(
-				new InputStreamReader(Utils.class.getClass().getResourceAsStream(speechFile)));
+				new InputStreamReader(file));
 		try {
 			String line;
 			while ((line = speechReader.readLine()) != null) {

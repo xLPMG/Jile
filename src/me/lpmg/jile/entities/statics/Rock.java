@@ -32,15 +32,15 @@ public class Rock extends StaticEntity {
 
 	@Override
 	public void render(Graphics g) {
-		if(health>(maxHealth/4)*3) {
-		g.drawImage(Assets.rock, (int) (x - handler.getGameCamera().getxOffset()), (int) (y - handler.getGameCamera().getyOffset()), width, height, null);
-		}else if(health>(maxHealth/4)*2) {
-		g.drawImage(Assets.rock_dmg1, (int) (x - handler.getGameCamera().getxOffset()), (int) (y - handler.getGameCamera().getyOffset()), width, height, null);
-		}else if(health>(maxHealth/4)*1) {
-		g.drawImage(Assets.rock_dmg2, (int) (x - handler.getGameCamera().getxOffset()), (int) (y - handler.getGameCamera().getyOffset()), width, height, null);
-		}else if(health>(maxHealth/4)*0) {
-		g.drawImage(Assets.rock_dmg3, (int) (x - handler.getGameCamera().getxOffset()), (int) (y - handler.getGameCamera().getyOffset()), width, height, null);
-		}
+//		if(health>(maxHealth/4)*3) {
+//		g.drawImage(Assets.rock, (int) (x - handler.getGameCamera().getxOffset()), (int) (y - handler.getGameCamera().getyOffset()), width, height, null);
+//		}else if(health>(maxHealth/4)*2) {
+//		g.drawImage(Assets.rock_dmg1, (int) (x - handler.getGameCamera().getxOffset()), (int) (y - handler.getGameCamera().getyOffset()), width, height, null);
+//		}else if(health>(maxHealth/4)*1) {
+//		g.drawImage(Assets.rock_dmg2, (int) (x - handler.getGameCamera().getxOffset()), (int) (y - handler.getGameCamera().getyOffset()), width, height, null);
+//		}else if(health>(maxHealth/4)*0) {
+//		g.drawImage(Assets.rock_dmg3, (int) (x - handler.getGameCamera().getxOffset()), (int) (y - handler.getGameCamera().getyOffset()), width, height, null);
+//		}
 	}
 
 }

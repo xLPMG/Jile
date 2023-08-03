@@ -187,7 +187,7 @@ public class Hermit extends Creature {
 			if (e.equals(this))
 				continue;
 			// search
-			if (e.getCollisionBounds(0, 0).intersects(searchArea) && e instanceof Log) {
+			if (e.getCollisionBounds(0, 0).intersects(searchArea) && e instanceof Sorcerer) {
 				attackMode = true;
 				focusedLog = e;
 			} else {
@@ -199,7 +199,7 @@ public class Hermit extends Creature {
 				}
 			}
 			// attack
-			if (e.getCollisionBounds(0, 0).intersects(attackArea) && e instanceof Log) {
+			if (e.getCollisionBounds(0, 0).intersects(attackArea) && e instanceof Sorcerer) {
 				e.hurt(1);
 				frozen = true;
 			}

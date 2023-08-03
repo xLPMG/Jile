@@ -19,8 +19,10 @@ public class MenuState extends State {
 		super(handler);
 		uiManager = new UIManager(handler);
 		handler.getMouseManager().setUIManager(uiManager);
-		handler.getAudioHandler().playSound("/audio/loops/adventure_theme.mp3", true);
-
+		handler.getGame().loadSettings();
+		handler.getAudioHandler().playSound("/audio/loops/69_Forest_Night.mp3", true);
+		handler.getAudioHandler().mute(!handler.getSettings().MUSIC_ON);
+		
 //		uiManager.addObject(new UIBackground(0, 0, handler.getWidth(), handler.getHeight(), Assets.parallax_mountain_bg));
 //		uiManager.addObject(new UIBackground(0, 0, handler.getWidth(), handler.getHeight(), Assets.parallax_mountain_mountain_far));
 //		uiManager.addObject(new UIBackground(0, 0, handler.getWidth(), handler.getHeight(), Assets.parallax_mountain_mountains));
@@ -38,7 +40,7 @@ public class MenuState extends State {
 			public void onClick() {
 				handler.getMouseManager().setUIManager(null);
 				State.setState(handler.getGame().gameState);
-				handler.getAudioHandler().playSound("/audio/ost/Spring Walk.mp3", true);
+				handler.getAudioHandler().playSound("/audio/loops/202_Heart_Drowned.mp3", true);
 			}
 		}));
 		

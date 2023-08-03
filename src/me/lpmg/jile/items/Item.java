@@ -74,7 +74,7 @@ public class Item {
 
 		bounds = new Rectangle(x, y, ITEMWIDTH, ITEMHEIGHT);
 
-		System.out.println("ID " + id);
+		//System.out.println("ID " + id);
 		items[id] = this;
 	}
 

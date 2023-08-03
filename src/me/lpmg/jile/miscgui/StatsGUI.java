@@ -101,19 +101,21 @@ public class StatsGUI {
 			
 			Text.drawString(g, "Health: "+player.getHealth()+"/"+player.getMaxHealth(), drawX+10, y+marginTop, false, Color.WHITE, Assets.font16);
 			Text.drawString(g, "Mana: "+player.getMana()+"/"+player.getMaxMana(), drawX+10, y+marginTop+spacing, false, Color.WHITE, Assets.font16);
-			Text.drawString(g, "Speed: "+player.getSpeed(), drawX+10, y+marginTop+spacing*2, false, Color.WHITE, Assets.font16);
+			Text.drawString(g, "XP: "+player.getXp()+"/"+player.getMaxXP(), drawX+10, y+marginTop+spacing*2, false, Color.WHITE, Assets.font16);
+			Text.drawString(g, "Level: "+player.getLvl(), drawX+10, y+marginTop+spacing*3, false, Color.WHITE, Assets.font16);
+			Text.drawString(g, "Speed: "+player.getSpeed(), drawX+10, y+marginTop+spacing*4, false, Color.WHITE, Assets.font16);
 			
-			Text.drawString(g, "Deaths: "+player.getDeathCount(), drawX+10, y+marginTop+spacing*4, false, Color.WHITE, Assets.font16);
-			Text.drawString(g, "Total Earned   :", drawX+10, y+marginTop+spacing*5, false, Color.WHITE, Assets.font16);
-			g.drawImage(Assets.coin, drawX+142, (y+marginTop+spacing*5)-12, 16,16,null);
-			Text.drawString(g, player.getTotalEarnedMoney()+"", drawX+10, y+marginTop+spacing*6, false, Color.WHITE, Assets.font16);
-			Text.drawString(g, "Total Time Played: ", drawX+10, y+marginTop+spacing*7, false, Color.WHITE, Assets.font16);
+			Text.drawString(g, "Deaths: "+player.getDeathCount(), drawX+10, y+marginTop+spacing*6, false, Color.WHITE, Assets.font16);
+			Text.drawString(g, "Total Earned   :", drawX+10, y+marginTop+spacing*7, false, Color.WHITE, Assets.font16);
+			g.drawImage(Assets.coin, drawX+142, (y+marginTop+spacing*7)-12, 16,16,null);
+			Text.drawString(g, player.getTotalEarnedMoney()+"", drawX+10, y+marginTop+spacing*8, false, Color.WHITE, Assets.font16);
+			Text.drawString(g, "Total Time Played: ", drawX+10, y+marginTop+spacing*9, false, Color.WHITE, Assets.font16);
 			int time = handler.getWorld().getTimePlayed();
 			int numberOfDays = time / 86400;
 			int numberOfHours = (time % 86400 ) / 3600 ;
 			int numberOfMinutes = ((time % 86400 ) % 3600 ) / 60;
 			int numberOfSeconds = ((time % 86400 ) % 3600 ) % 60  ;
-			Text.drawString(g, numberOfDays+"d "+numberOfHours+"h "+numberOfMinutes+"m "+numberOfSeconds+"s ", drawX+10, y+marginTop+spacing*8, false, Color.WHITE, Assets.font16);
+			Text.drawString(g, numberOfDays+"d "+numberOfHours+"h "+numberOfMinutes+"m "+numberOfSeconds+"s ", drawX+10, y+marginTop+spacing*10, false, Color.WHITE, Assets.font16);
 		}
 //		else {
 //			g.drawImage(Assets.statsGUI_full, fullX, y, fullWidth, height, null);
