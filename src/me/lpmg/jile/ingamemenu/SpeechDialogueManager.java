@@ -207,7 +207,7 @@ public class SpeechDialogueManager {
 	private void loadSpeechText(String speechFile) throws IOException {
 
 		BufferedReader speechReader = new BufferedReader(
-				new InputStreamReader(Utils.class.getClass().getResourceAsStream(speechFile)));
+				new InputStreamReader(Utils.class.getResourceAsStream(speechFile)));
 		try {
 			String line;
 			while ((line = speechReader.readLine()) != null) {

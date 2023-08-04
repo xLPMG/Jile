@@ -10,7 +10,7 @@ public class Utils {
 	public static String loadResourceFileAsString(String path){
 		StringBuilder builder = new StringBuilder();
 		try{
-			BufferedReader br = new BufferedReader(new InputStreamReader(Utils.class.getClass().getResourceAsStream(path)));
+			BufferedReader br = new BufferedReader(new InputStreamReader(Utils.class.getResourceAsStream(path)));
 			String line;
 			while((line = br.readLine()) != null)
 				builder.append(line + "\n");

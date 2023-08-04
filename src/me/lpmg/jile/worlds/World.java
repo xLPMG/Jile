@@ -225,6 +225,7 @@ public class World {
 
 	private void loadWorld(String path) {
 		String file = Utils.loadFileAsString(path);
+		file = file.replace("\n", "").replace("\r", "");
 		String[] tokens = file.split(",");
 		width = Utils.parseInt(tokens[0]);
 		height = Utils.parseInt(tokens[1]);
@@ -248,8 +249,8 @@ public class World {
 		String[] tokens = file.split("\\s+");
 
 		tilesSecondLayer = new int[width][height];
-		for (int y = 0; y < height; y++) {
-			for (int x = 0; x < width; x++) {
+		for (int y = 0; y < height; ++y) {
+			for (int x = 0; x < width; ++x) {
 				tilesSecondLayer[x][y] = Utils.parseInt(tokens[(x + y * width)]);
 				worldSecondLayer.put(x + ":" + y, tiles[x][y]);
 				//System.out.println(x + ":" + y +", id: "+ tiles[x][y]);
