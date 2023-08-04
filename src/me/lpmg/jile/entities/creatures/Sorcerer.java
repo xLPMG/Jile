@@ -99,8 +99,8 @@ public class Sorcerer extends Creature {
 			searchArea.x = cb.x + cb.width / 2 - (searchArea.width / 2);
 			searchArea.y = cb.y + cb.height / 2 - (searchArea.height / 2);
 
-//			g.drawRect((int) ((searchArea.x) - handler.getGameCamera().getxOffset()),
-//					(int) ((searchArea.y) - handler.getGameCamera().getyOffset()), searchArea.width, searchArea.height);
+			g.drawRect((int) ((searchArea.x) - handler.getGameCamera().getxOffset()),
+					(int) ((searchArea.y) - handler.getGameCamera().getyOffset()), searchArea.width, searchArea.height);
 
 			g.setColor(Color.RED);
 			Rectangle attackArea = new Rectangle();
@@ -109,8 +109,8 @@ public class Sorcerer extends Creature {
 			attackArea.height = attackAreaSize + (attackAreaSize / 2);
 			attackArea.x = cb.x + cb.width / 2 - (attackArea.width / 2) + 8;
 			attackArea.y = cb.y + cb.height / 2 - (attackArea.height / 2);
-//			g.drawRect((int) ((attackArea.x) - handler.getGameCamera().getxOffset()),
-//					(int) ((attackArea.y) - handler.getGameCamera().getyOffset()), attackArea.width, attackArea.height);
+			g.drawRect((int) ((attackArea.x) - handler.getGameCamera().getxOffset()),
+					(int) ((attackArea.y) - handler.getGameCamera().getyOffset()), attackArea.width, attackArea.height);
 
 			
 			int tileLeftY = (int) ((int)y- handler.getGameCamera().getyOffset())+Tile.TILEHEIGHT-8;
@@ -179,10 +179,37 @@ public class Sorcerer extends Creature {
 			tickCount++;
 			if (tickCount == 240) {
 				walkingDirection = (int) (Math.random() * 15) + 1;
-				System.out.println("test");
 				tickCount = 0;
 			}
-
+			int up = 1;
+			int up_right = 2;
+			int right = 3;
+			int down_right = 4;
+			int down = 5;
+			int down_left = 6;
+			int left = 7;
+			int up_left = 8;
+				if (walkingDirection == up) {
+					yMove = -1 * speed;
+				} else if (walkingDirection == up_right) {
+					yMove = -1 * speed;
+					xMove = 1 * speed;
+				} else if (walkingDirection == right) {
+					xMove = 1 * speed;
+				} else if (walkingDirection == down_right) {
+					yMove = 1 * speed;
+					xMove = 1 * speed;
+				} else if (walkingDirection == down) {
+					yMove = 1 * speed;
+				} else if (walkingDirection == down_left) {
+					yMove = 1 * speed;
+					xMove = -1 * speed;
+				} else if (walkingDirection == left) {
+					xMove = -1 * speed;
+				} else if (walkingDirection == up_left) {
+					yMove = -1 * speed;
+					xMove = -1 * speed;
+				}
 		} else {
 			int xDiff = 0;
 			int yDiff = 0;
@@ -242,8 +269,8 @@ public class Sorcerer extends Creature {
 			
 			int tileSideY = (int) ((int)y)+Tile.TILEHEIGHT-8;
 
-			System.out.println(handler.getWorld().getTile(txRight/ Tile.TILEWIDTH, tileSideY/Tile.TILEHEIGHT));
-			System.out.println(txRight/ Tile.TILEWIDTH+":"+tileSideY/Tile.TILEHEIGHT);
+//			System.out.println(handler.getWorld().getTile(txRight/ Tile.TILEWIDTH, tileSideY/Tile.TILEHEIGHT));
+//			System.out.println(txRight/ Tile.TILEWIDTH+":"+tileSideY/Tile.TILEHEIGHT);
 			
 			if (!collisionWithTile(txLeft/ Tile.TILEWIDTH, tileSideY/Tile.TILEHEIGHT)
 					&& !collisionWithTile(txRight/ Tile.TILEWIDTH, tileSideY/Tile.TILEHEIGHT)) {
@@ -259,12 +286,12 @@ public class Sorcerer extends Creature {
 				//move around
 			}
 
-			if (Math.abs(xDiff) == 100) {
+			if (Math.abs(xDiff) <= 100) {
 				xMove = 0;
-			} else if (xDiff > 0 && xDiff < 100) {
+			} else if (xDiff < 0) {
 				walkingDirection = 7;
 				xMove = -5 * speed;
-			} else if (xDiff < 0 && xDiff > -100) {
+			} else if (xDiff > 0) {
 				walkingDirection = 3;
 				xMove = 5 * speed;
 			}
@@ -273,38 +300,6 @@ public class Sorcerer extends Creature {
 				attackMode = false;
 			}
 
-		}
-
-		int up = 1;
-		int up_right = 2;
-		int right = 3;
-		int down_right = 4;
-		int down = 5;
-		int down_left = 6;
-		int left = 7;
-		int up_left = 8;
-		if (!attackMode) {
-			if (walkingDirection == up) {
-				yMove = -1 * speed;
-			} else if (walkingDirection == up_right) {
-				yMove = -1 * speed;
-				xMove = 1 * speed;
-			} else if (walkingDirection == right) {
-				xMove = 1 * speed;
-			} else if (walkingDirection == down_right) {
-				yMove = 1 * speed;
-				xMove = 1 * speed;
-			} else if (walkingDirection == down) {
-				yMove = 1 * speed;
-			} else if (walkingDirection == down_left) {
-				yMove = 1 * speed;
-				xMove = -1 * speed;
-			} else if (walkingDirection == left) {
-				xMove = -1 * speed;
-			} else if (walkingDirection == up_left) {
-				yMove = -1 * speed;
-				xMove = -1 * speed;
-			}
 		}
 	}
 

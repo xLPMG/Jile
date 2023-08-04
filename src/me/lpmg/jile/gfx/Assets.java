@@ -154,9 +154,7 @@ public class Assets {
 
 		SpriteSheet player_sheet = new SpriteSheet(ImageLoader.loadImage("/textures/knight_sheet_full.png"));
 		SpriteSheet wizard_sheet = new SpriteSheet(ImageLoader.loadImage("/textures/wizard_sheet.png"));
-		SpriteSheet jina_sheet = new SpriteSheet(ImageLoader.loadImage("/textures/jina_sheet.png"));
 		SpriteSheet sorcerer_sheet = new SpriteSheet(ImageLoader.loadImage("/textures/sorcerer_sheet.png"));
-		SpriteSheet hermit_sheet = new SpriteSheet(ImageLoader.loadImage("/textures/hermit_sheet.png"));
 
 		SpriteSheet item_sheet = new SpriteSheet(ImageLoader.loadImage("/textures/item_sheet.png"));
 

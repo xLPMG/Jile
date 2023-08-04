@@ -23,7 +23,7 @@ public class StatsGUI {
 	private int fullX;
 	private int y;
 
-	private int prevWidth = 8, height = 384;
+	private int prevWidth = 16, height = 384;
 	private int fullWidth = 200;
 
 	private int drawX = 8;
