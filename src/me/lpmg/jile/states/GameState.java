@@ -1,20 +1,24 @@
 package me.lpmg.jile.states;
 
+import java.awt.Color;
 import java.awt.Graphics;
 
 import me.lpmg.jile.Handler;
 import me.lpmg.jile.entities.Entity;
-import me.lpmg.jile.entities.creatures.Wizard;
+import me.lpmg.jile.entities.creatures.Merchant;
+import me.lpmg.jile.gfx.Assets;
+import me.lpmg.jile.gfx.Text;
 import me.lpmg.jile.worlds.World;
 
 public class GameState extends State {
 	
 	private World world;
 	
-	public GameState(Handler handler){
+	public GameState(Handler handler, World world){
 		super(handler);
-		world = new World(handler, "/worlds/world1-firstLayer.txt", "/worlds/world1-secondLayer.txt", "/worlds/world1-thirdLayer.txt");
+		this.world = world;
 		handler.setWorld(world);
+		world.initOnWorldLoaded();
 	}
 	
 	@Override
@@ -27,13 +31,17 @@ public class GameState extends State {
 		world.render(g);
 		world.renderSecondLayer(g);
 		world.renderThirdLayer(g);
+		world.renderFourthLayer(g);
 		world.player.postRender(g);
 		for(Entity e : world.getEntityManager().getEntities()){
-			if(e instanceof Wizard) {
-			((Wizard) e).renderMenu(g);
+			if(e instanceof Merchant) {
+			((Merchant) e).renderMenu(g);
 			}
 		}
-		world.getSpeechToastManager().render(g);
+		world.getEmoteManager().render(g);
+		world.getSpeechDialogueManager().render(g);
+		
+		Text.drawString(g, Integer.toString(handler.getGame().getFPS())+" FPS", (handler.getWidth()) - 38, (handler.getHeight()) - 14, true, Color.WHITE, Assets.font16);
 	}
 
 }

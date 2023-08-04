@@ -7,7 +7,7 @@ import java.util.Iterator;
 
 import me.lpmg.jile.Handler;
 import me.lpmg.jile.entities.creatures.Player;
-import me.lpmg.jile.entities.creatures.Wizard;
+import me.lpmg.jile.entities.creatures.Merchant;
 
 public class EntityManager {
 	
@@ -45,7 +45,11 @@ public class EntityManager {
 			if(!e.isActive())
 				it.remove();
 		}
+		try{
 		entities.sort(renderSorter);
+		}catch(Exception e) {
+			System.out.println("Entity Sorting Error: "+e);
+		}
 	}
 	
 	public void render(Graphics g){

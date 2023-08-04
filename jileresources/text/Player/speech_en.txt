@@ -1,0 +1,14 @@
+!PlayerPassedOut
+~~playerName:
+I must have passed out...
+My money and items seem to be gone! 
+I should be more careful from now on.
+//
+!JinaWalkingLogsPlayerResponse2
+~~playerName:
+And there is nothing to do about it except fighting them off?
+//
+!JinaWalkingLogsPlayerResponse3
+~~playerName:
+I'm sorry but i don't think that I am the one you're looking for.
+I don't even have a weapon nor any skills to use it!

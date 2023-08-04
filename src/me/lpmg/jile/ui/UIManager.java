@@ -35,6 +35,10 @@ public class UIManager {
 		for(UIObject o : objects)
 			o.onMouseRelease(e);
 	}
+	public void onMouseClicked(MouseEvent e){
+		for(UIObject o : objects)
+			o.onMouseClicked(e);
+	}
 	
 	public void addObject(UIObject o){
 		objects.add(o);

@@ -5,8 +5,6 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 
 import me.lpmg.jile.Handler;
-import me.lpmg.jile.buildings.Building;
-import me.lpmg.jile.buildings.BuildingManager;
 
 public abstract class Entity {
 
@@ -56,10 +54,6 @@ public abstract class Entity {
 			if(e.equals(this))
 				continue;
 			if(e.getCollisionBounds(0f, 0f).intersects(getCollisionBounds(xOffset, yOffset)))
-				return true;
-		}
-		for(Building b : handler.getWorld().getBuildingManager().getBuildings()){
-			if(b.getCollisionBounds(0f, 0f).intersects(getCollisionBounds(xOffset, yOffset)))
 				return true;
 		}
 		return false;
@@ -113,7 +107,7 @@ public abstract class Entity {
 		return maxHealth;
 	}
 
-	public void setMaxHealth(int health) {
+	public void setMaxHealth(int maxHealth) {
 		this.maxHealth = maxHealth;
 	}
 	//mana

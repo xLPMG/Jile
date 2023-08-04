@@ -9,7 +9,7 @@ public class PlaceHolderTile extends Tile {
 	public PlaceHolderTile(int id) {
 		super(Assets.placeholder, id);
 	}
-	public PlaceHolderTile(int id, BufferedImage image) {
+	public PlaceHolderTile(BufferedImage image, int id) {
 		super(image, id);
 	}
 

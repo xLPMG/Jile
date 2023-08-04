@@ -67,7 +67,8 @@ public class LogoScreen extends javax.swing.JFrame {
     } 
     
     private void playSound() {
-        AudioHandler.playSound("/audio/KRLogo.wav");
+    	AudioHandler audioHandler= new AudioHandler(null);
+    	audioHandler.playSound("/audio/KRLogo.wav", false);
     }
     
     private void makeTransparent(){

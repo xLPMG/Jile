@@ -36,6 +36,10 @@ public class ItemManager {
 		items.add(i);
 	}
 	
+	public Item getItemByID(int id) {
+		return Item.items[id];
+	}
+	
 	// Getters and Setters
 
 	public Handler getHandler() {

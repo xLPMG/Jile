@@ -3,14 +3,15 @@ package me.lpmg.jile.states;
 import java.awt.Graphics;
 
 import me.lpmg.jile.Handler;
+import me.lpmg.jile.entities.EntityManager;
 import me.lpmg.jile.entities.creatures.Player;
 import me.lpmg.jile.gfx.Assets;
 import me.lpmg.jile.ui.ClickListener;
 import me.lpmg.jile.ui.UIBackground;
 import me.lpmg.jile.ui.UIImageButton;
 import me.lpmg.jile.ui.UIManager;
-import me.lpmg.jile.ui.UISubtitle;
-import me.lpmg.jile.ui.UITitle;
+import me.lpmg.jile.ui.UISubtitleWhite;
+import me.lpmg.jile.ui.UITitleWhite;
 
 public class DeadState extends State {
 
@@ -21,23 +22,29 @@ public class DeadState extends State {
 		uiManager = new UIManager(handler);
 		handler.getMouseManager().setUIManager(uiManager);
 		
-		uiManager.addObject(new UIBackground(0, 0, handler.getWidth(), handler.getHeight(), Assets.dirt_full));
-		uiManager.addObject(new UITitle(0, 180, handler.getWidth(), handler.getHeight(), "You passed out."));
-		uiManager.addObject(new UITitle(5,  handler.getHeight()-50, handler.getWidth(), handler.getHeight(), "Jile", handler.getVersion()));
-		uiManager.addObject(new UISubtitle(5,  handler.getHeight()-10, handler.getWidth(), handler.getHeight(), "by LPMG Game Studios"));
-		uiManager.addObject(new UIImageButton((handler.getWidth()-128)/2, 200, 128, 64, Assets.btn_start, new ClickListener() {
+		uiManager.addObject(new UIBackground(0, 0, handler.getWidth(), handler.getHeight(), Assets.blackTile));
+		uiManager.addObject(new UISubtitleWhite(0, 180, handler.getWidth(), handler.getHeight(), "Your vision started fading"));
+		uiManager.addObject(new UISubtitleWhite(0, 208, handler.getWidth(), handler.getHeight(), "and you blacked out...."));
+		uiManager.addObject(new UITitleWhite(5,  handler.getHeight()-50, handler.getWidth(), handler.getHeight(), "Jile", handler.getVersion()));
+		uiManager.addObject(new UISubtitleWhite(5,  handler.getHeight()-10, handler.getWidth(), handler.getHeight(), "by LPMG Game Studios"));
+		uiManager.addObject(new UIImageButton((handler.getWidth()-128)/2, 400, 128, 64, Assets.btn_start, new ClickListener() {
 			@Override
 			public void onClick() {
 				handler.getMouseManager().setUIManager(null);
 				
-				Player player = new Player(handler, 300, 300);
+				//Player player = new Player(handler, 300, 300);
+				EntityManager entityManager = handler.getWorld().getEntityManager();
+				Player player = handler.getWorld().player;
+				player.setActive(true);
+				player.resetPlayer();
 				handler.getWorld().setPlayer(player);
 				int spawnX = handler.getWorld().getSpawnX();
 				int spawnY = handler.getWorld().getSpawnY();
-				player.setX(spawnX);
-				player.setY(spawnY);
+				entityManager.setPlayer(player);
+				entityManager.getPlayer().setX(spawnX);
+				entityManager.getPlayer().setY(spawnY);
 				State.setState(handler.getGame().gameState);
-				handler.getWorld().getSpeechToastManager().showToast("I must´ve passed out...:All my money and items are gone too.:I´ll be more careful now.");
+				handler.getWorld().getSpeechDialogueManager().showDialog("!PlayerPassedOut");
 			}
 		}));
 	}
