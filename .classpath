@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<classpath>
-	<classpathentry excluding="null|null|null|null|null" kind="src" path="src"/>
-	<classpathentry kind="src" path="jileresources"/>
-	<classpathentry kind="lib" path="lib/jl1.0.1.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk-20"/>
-	<classpathentry kind="output" path="bin"/>
-</classpath>
