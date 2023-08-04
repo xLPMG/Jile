@@ -124,7 +124,7 @@ public abstract class Entity {
 	}
 
 	public void setMaxMana(int mana) {
-		this.maxMana = maxMana;
+		this.maxMana = mana;
 	}
 
 	public boolean isActive() {

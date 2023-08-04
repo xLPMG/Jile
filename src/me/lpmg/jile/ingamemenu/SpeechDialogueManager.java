@@ -8,6 +8,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -206,7 +207,7 @@ public class SpeechDialogueManager {
 	}
 
 	private void loadSpeechText(String speechFile) throws IOException {
-		FileInputStream file = new FileInputStream(speechFile);
+		InputStream file = SpeechDialogueManager.class.getResourceAsStream(speechFile);
 		BufferedReader speechReader = new BufferedReader(
 				new InputStreamReader(file));
 		try {

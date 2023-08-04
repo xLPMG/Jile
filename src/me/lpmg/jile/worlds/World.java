@@ -56,7 +56,6 @@ public class World {
 	private ItemManager itemManager;
 	public Player player;
 	private SpeechDialogueManager sDM;
-	private int spawnTicker;
 	private int savedTicker;
 	private boolean justSaved = false;
 	// emote
@@ -68,9 +67,6 @@ public class World {
 	long timeDelta;
 
 	private int iTick;
-
-	private final int SPAWN_CHANCE_LOG_DEFAULT = 195;
-	private final int SPAWN_CHANCE_HERMIT_DEFAULT = 90;
 
 	Map<String, String> eventData;
 
@@ -116,7 +112,6 @@ public class World {
 	}
 
 	public void tick() {
-		spawnTicker++;
 		itemManager.tick();
 		entityManager.tick();
 		iTick++;
@@ -125,13 +120,6 @@ public class World {
 			// once per 30 second
 			calcTime();
 			iTick = 0;
-		}
-
-		if (spawnTicker > 3000) {
-//			System.out.println("Spawning new entities...");
-//			spawnRandomLogs();
-//			spawnHermits();
-			spawnTicker = 0;
 		}
 
 		if (justSaved) {
@@ -217,7 +205,6 @@ public class World {
 
 		Tile t = Tile.tiles[tiles[x][y]];
 		if (t == null) {
-			System.out.println("t is null");
 			return Tile.placeHolderTile;
 		}
 		return t;
@@ -350,65 +337,10 @@ public class World {
 		entityManager.setPlayer(player);
 		entityManager.addEntity(new Merchant(handler, 200, 300));
 		if (handler.getGame().getSavedEntities().isEmpty()) {
-			loadStandardEntities();
+			//loadStandardEntities();
 		} else {
 			loadEntities();
 		}
-
-		spawnHermits();
-	}
-
-	private void spawnRandomLogs() {
-		System.out.println("Spawning random logs...");
-//		int xStart = (int) Math.max(0, handler.getGameCamera().getxOffset() / Tile.TILEWIDTH);
-//		int xEnd = (int) Math.min(width, (handler.getGameCamera().getxOffset() + handler.getWidth()) / Tile.TILEWIDTH + 1);
-//		int yStart = (int) Math.max(0, handler.getGameCamera().getyOffset() / Tile.TILEHEIGHT);
-//		int yEnd = (int) Math.min(height, (handler.getGameCamera().getyOffset() + handler.getHeight()) / Tile.TILEHEIGHT + 1);
-		int xStart = 0;
-		int xEnd = width;
-		int yStart = 0;
-		int yEnd = height;
-
-		for (int y = yStart; y < yEnd; y++) {
-			for (int x = xStart; x < xEnd; x++) {
-				if (getTile(x, y) == Tile.blackTile && getSecondLayerTile(x, y) == Tile.placeHolderTile
-						&& getThirdLayerTile(x, y) == Tile.placeHolderTile) {
-					int spawnChance = (int) (Math.random() * 200) + 1;
-					if (spawnChance > SPAWN_CHANCE_LOG_DEFAULT) {
-						System.out.println("spawnChance log: " + spawnChance);
-						entityManager.addEntity(new Sorcerer(handler, x * Tile.TILEWIDTH, y * Tile.TILEHEIGHT));
-					}
-				}
-			}
-		}
-	}
-
-	private void spawnRandomHermits() {
-		System.out.println("Spawning random hermits...");
-//		int xStart = (int) Math.max(0, handler.getGameCamera().getxOffset() / Tile.TILEWIDTH);
-//		int xEnd = (int) Math.min(width, (handler.getGameCamera().getxOffset() + handler.getWidth()) / Tile.TILEWIDTH + 1);
-//		int yStart = (int) Math.max(0, handler.getGameCamera().getyOffset() / Tile.TILEHEIGHT);
-//		int yEnd = (int) Math.min(height, (handler.getGameCamera().getyOffset() + handler.getHeight()) / Tile.TILEHEIGHT + 1);
-		int xStart = 0;
-		int xEnd = width;
-		int yStart = 0;
-		int yEnd = height;
-
-		for (int y = yStart; y < yEnd; y++) {
-			for (int x = xStart; x < xEnd; x++) {
-				if (getTile(x, y) == Tile.blackTile && getSecondLayerTile(x, y) == Tile.placeHolderTile
-						&& getThirdLayerTile(x, y) == Tile.placeHolderTile) {
-					int spawnChance = (int) (Math.random() * 100) + 1;
-					if (spawnChance > SPAWN_CHANCE_HERMIT_DEFAULT) {
-						System.out.println("spawnChance hermit: " + spawnChance);
-						entityManager.addEntity(new Hermit(handler, x * Tile.TILEWIDTH, y * Tile.TILEHEIGHT));
-					}
-				}
-			}
-		}
-	}
-
-	private void spawnHermits() {
 	}
 
 	private void loadGameData() {
@@ -487,13 +419,6 @@ public class World {
 		int elapsedSeconds = (int) (tDelta / 1000.0);
 		timePlayed += elapsedSeconds;
 		timeStart = System.currentTimeMillis();
-	}
-
-	private void loadStandardEntities() {
-		spawnRandomLogs();
-//		entityManager.addEntity(new Rock(handler, 8 * Tile.TILEWIDTH, 4 * Tile.TILEHEIGHT));
-//		entityManager.addEntity(new Bush(handler, 4 * Tile.TILEWIDTH, 13 * Tile.TILEHEIGHT));
-//		entityManager.addEntity(new Bush(handler, 6 * Tile.TILEWIDTH, 13 * Tile.TILEHEIGHT));
 	}
 
 	private void loadEntities() {

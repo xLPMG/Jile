@@ -9,7 +9,7 @@ public class FontLoader {
 	
 	public static Font loadFont(String path, float size){
 		try {
-			InputStream stream = FontLoader.class.getClass().getResourceAsStream(path);		
+			InputStream stream = FontLoader.class.getResourceAsStream(path);		
 			return Font.createFont(Font.TRUETYPE_FONT, stream).deriveFont(Font.PLAIN, size);
 		} catch (FontFormatException | IOException e) {
 			e.printStackTrace();

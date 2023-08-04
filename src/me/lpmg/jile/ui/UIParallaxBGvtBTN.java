@@ -103,7 +103,7 @@ public class UIParallaxBGvtBTN extends UIObject {
 		FontMetrics metrics16 = g.getFontMetrics(Assets.font16);
 		
 		int drawXTitle = rect.x + (rect.width - metrics96.stringWidth(text)) / 2;
-		int drawY = (int) (y + tickCount) - 200;
+		int drawY = (int) (y + tickCountNoWait);
 		Graphics g2 = g;
 		
 		if (drawY <= height / 3+(height/8)) {

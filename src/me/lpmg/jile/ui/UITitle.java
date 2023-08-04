@@ -1,12 +1,10 @@
 package me.lpmg.jile.ui;
 
-import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
 import me.lpmg.jile.gfx.Assets;
-import me.lpmg.jile.gfx.FontLoader;
 
 public class UITitle extends UIObject{
 

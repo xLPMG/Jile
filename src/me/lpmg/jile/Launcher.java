@@ -1,8 +1,5 @@
 package me.lpmg.jile;
 
-import java.awt.Dimension;
-import java.awt.Toolkit;
-
 public class Launcher {
 
 	private final static String VERSION = "v0.5-pre1";

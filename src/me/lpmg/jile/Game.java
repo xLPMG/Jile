@@ -20,14 +20,12 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
@@ -41,10 +39,8 @@ import me.lpmg.jile.input.MouseManager;
 import me.lpmg.jile.inventory.Inventory;
 import me.lpmg.jile.items.Item;
 import me.lpmg.jile.items.ItemManager;
-import me.lpmg.jile.states.DeadState;
 import me.lpmg.jile.states.GameState;
 import me.lpmg.jile.states.MenuState;
-import me.lpmg.jile.states.OptionsState;
 import me.lpmg.jile.states.State;
 import me.lpmg.jile.utils.Utils;
 import me.lpmg.jile.worlds.World;
@@ -126,10 +122,8 @@ public class Game implements Runnable {
 
 	private void tick() {
 		keyManager.tick();
-
 		if (State.getState() != null)
 			State.getState().tick();
-//		State.getState().tick();
 	}
 
 	private void render() {
@@ -142,20 +136,15 @@ public class Game implements Runnable {
 		// Clear Screen
 		g.clearRect(0, 0, width, height);
 		// Draw Here!
-
 		if (State.getState() != null)
 			State.getState().render(g);
-//		State.getState().render(g);
-
 		// End Drawing!
 		bs.show();
 		g.dispose();
 	}
 
 	public void run() {
-
 		init();
-
 		int fps = 60;
 		double timePerTick = 1000000000 / fps;
 		double delta = 0;
@@ -178,15 +167,13 @@ public class Game implements Runnable {
 			}
 
 			if (timer >= 1000000000) {
-				System.out.println("FPS: " + ticks);
+				//System.out.println("FPS: " + ticks);
 				FPS = ticks;
 				ticks = 0;
 				timer = 0;
 			}
 		}
-
 		stop();
-
 	}
 
 	public KeyManager getKeyManager() {

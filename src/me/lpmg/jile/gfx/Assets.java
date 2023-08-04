@@ -135,20 +135,20 @@ public class Assets {
 
 	static {
 		
-//		font9 = FontLoader.loadFont("/fonts/slkscr.ttf", 9);
-//		font14 = FontLoader.loadFont("/fonts/slkscr.ttf", 14);
-//		font16 = FontLoader.loadFont("/fonts/slkscr.ttf", 16);
-//		font28 = FontLoader.loadFont("/fonts/slkscr.ttf", 28);
-//		font32 = FontLoader.loadFont("/fonts/slkscr.ttf", 32);
-//		font48 = FontLoader.loadFont("/fonts/slkscr.ttf", 48);
-//		font96 = FontLoader.loadFont("/fonts/slkscr.ttf", 96);
-		font9 = new Font("TimesRoman", Font.PLAIN, 9); 
-		font14 = new Font("TimesRoman", Font.PLAIN, 14); 
-		font16 = new Font("TimesRoman", Font.PLAIN, 16); 
-		font28 = new Font("TimesRoman", Font.PLAIN, 28); 
-		font32 = new Font("TimesRoman", Font.PLAIN, 32); 
-		font48 = new Font("TimesRoman", Font.PLAIN, 48); 
-		font96 = new Font("TimesRoman", Font.PLAIN, 96); 
+		font9 = FontLoader.loadFont("/fonts/slkscr.ttf", 9);
+		font14 = FontLoader.loadFont("/fonts/slkscr.ttf", 14);
+		font16 = FontLoader.loadFont("/fonts/slkscr.ttf", 16);
+		font28 = FontLoader.loadFont("/fonts/slkscr.ttf", 28);
+		font32 = FontLoader.loadFont("/fonts/slkscr.ttf", 32);
+		font48 = FontLoader.loadFont("/fonts/slkscr.ttf", 48);
+		font96 = FontLoader.loadFont("/fonts/slkscr.ttf", 96);
+//		font9 = new Font("TimesRoman", Font.PLAIN, 9); 
+//		font14 = new Font("TimesRoman", Font.PLAIN, 14); 
+//		font16 = new Font("TimesRoman", Font.PLAIN, 16); 
+//		font28 = new Font("TimesRoman", Font.PLAIN, 28); 
+//		font32 = new Font("TimesRoman", Font.PLAIN, 32); 
+//		font48 = new Font("TimesRoman", Font.PLAIN, 48); 
+//		font96 = new Font("TimesRoman", Font.PLAIN, 96); 
 
 		SpriteSheet tilesheet = new SpriteSheet(ImageLoader.loadImage("/textures/tilesheet.png"));
 
