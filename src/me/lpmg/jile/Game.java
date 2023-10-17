@@ -262,6 +262,7 @@ public class Game implements Runnable {
 
 			int returnValue = jfc.showOpenDialog(null);
 			if (returnValue == JFileChooser.APPROVE_OPTION) {
+				System.out.println("loading files...");
 				System.out.println(jfc.getSelectedFile());
 				playerDataFile = new File(jfc.getSelectedFile().getAbsolutePath() + "/playerData.dat");
 				eventDataFile = new File(jfc.getSelectedFile().getAbsolutePath() + "/eventData.dat");

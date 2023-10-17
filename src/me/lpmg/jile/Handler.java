@@ -28,7 +28,7 @@ public class Handler {
 		this.game = game;
 		this.display=display;
 		this.settings = new Settings();
-		this.audioHandler = new AudioHandler(settings);
+		//this.audioHandler = new AudioHandler(settings);
 		this.sfxHandler = new SfxHandler(settings);
 		this.eventHandler = new EventHandler();
 		

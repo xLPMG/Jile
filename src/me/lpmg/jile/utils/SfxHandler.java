@@ -9,13 +9,13 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.Line;
 import javax.sound.sampled.Mixer;
 
-import javazoom.jl.player.Player;
+//import javazoom.jl.player.Player;
 import me.lpmg.jile.Handler;
 
 public class SfxHandler {
 
 	private Thread audioThread;
-	private Player playMP3;
+//	private Player playMP3;
 	private Settings settings;
 
 	public SfxHandler(Settings settings) {
@@ -44,16 +44,15 @@ public class SfxHandler {
 						InputStream in = SfxHandler.class.getResourceAsStream(respath);
 						if (in == null)
 							throw new Exception("resource not found: " + respath);
-						playMP3 = new Player(in);
-
-						playMP3.play();
-						if (playMP3.isComplete()) {
-							if (repeat) {
-								playSound(url, repeat);
-							} else {
-								stopPlaying();
-							}
-						}
+//						playMP3 = new Player(in);
+//						playMP3.play();
+//						if (playMP3.isComplete()) {
+//							if (repeat) {
+//								playSound(url, repeat);
+//							} else {
+//								stopPlaying();
+//							}
+//						}
 
 					} catch (Exception e) {
 						System.out.println(e);
@@ -73,9 +72,9 @@ public class SfxHandler {
 				audioThread.interrupt();
 			}
 		}
-		if (playMP3 != null) {
-			playMP3.close();
-		}
+//		if (playMP3 != null) {
+//			playMP3.close();
+//		}
 	}
 
 	public boolean isPlaying() {

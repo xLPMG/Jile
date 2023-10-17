@@ -25,7 +25,7 @@ public class LogoScreen extends javax.swing.JFrame {
     	setIconImage(ImageLoader.loadImage("/logo/own-logo.png"));
         initComponents();
         makeTransparent();
-        playSound();
+        //playSound();
         try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
@@ -67,8 +67,8 @@ public class LogoScreen extends javax.swing.JFrame {
     } 
     
     private void playSound() {
-    	AudioHandler audioHandler= new AudioHandler(null);
-    	audioHandler.playSound("/audio/KRLogo.wav", false);
+    	//AudioHandler audioHandler= new AudioHandler(null);
+    	//audioHandler.playSound("/audio/KRLogo.wav", false);
     }
     
     private void makeTransparent(){
